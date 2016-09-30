@@ -1,0 +1,9 @@
+1、在官网http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html，下载java se
+
+2、安装SSH
+
+3、在官网http://hadoop.apache.org/，下载hadoop2.6.0
+core-site.xml
+hdfs-site.xml
+
+http://blog.sina.com.cn/s/blog_53a99cf30102v6o4.html
