@@ -1,43 +1,11 @@
-1.下载zlib
-下载地址www.zlib.net
+1.更新OpenSSL
+# yum update openssl
 
-2.解压安装
-$ tar -zxvf zlib-1.2.3.tar.gz
-$ cd zlib-1.2.3
-$ ./configure
-$ make
-$ make install
-
-
-3.下载ssl
-下载地址https://www.openssl.org/source/
-
-4.解压安装
-$ cd /usr/local
-$ mkdir ssl
-$ tar -zxvf /..目录/openssl-1.1.0b.tar.gz -C /usr/local/ssl
-$ cd ssl/openssl-1.1.0b
-$ ./config --prefix=/usr/local --openssldir=/usr/local/ssl
-$ make
-$ make install
-$ ./config shared --prefix=/usr/local --openssldir=/usr/local/ssl
-$ make clean
-
-5.测试ssl
-$ openssl version -a
-如果出现以下内容，就表示ssl安装成功了
-OpenSSL 1.1.0b  26 Sep 2016
-built on: reproducible build, date unspecified
-platform: linux-elf
-
-6.下载ssh
-下载地址http://www.openssh.com/
-
-7.解压安装
-$ cd /usr/local
-$ mkdir ssh
-$ tar -zxvf /..目录/openssh-7.0p1.tar.gz -C /usr/local/ssh
-$ cd ssh/openssh-7.0p1
-$ ./configure --with-ssl-dir=/usr/local/openssl
-$ make
-$ make install
+2.修改SSH配置文件
+# vim /etc/ssh/sshd_config
+开放以下三个配置：
+RSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+:wq保存退出
+# service sshd restart
