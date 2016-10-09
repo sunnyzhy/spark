@@ -15,7 +15,7 @@ export PATH=${JAVA_HOME}/bin:$PATH
 # source ~/.bashrc
 
 4.测试
-$ java -version
+# java -version
 如果显示以下内容，就表示java安装成功了
 java version "1.8.0_101"
 Java(TM) SE Runtime Environment (build 1.8.0_101-b13)
