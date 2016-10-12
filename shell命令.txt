@@ -12,10 +12,8 @@ i    进入编辑模式
 Esc  退出编辑模式
 u    一次，撤销上一步的操作；两次，撤销所有的操作
 
-
 显示主机名
 # hostname
-
 
 修改主机名
 # vim /etc/sysconfig/network
@@ -23,7 +21,6 @@ HOSTNAME=your hostname
 # vim /etc/hosts
 127.0.0.1   localhost your hostname
 # shutdown -r now
-
 
 查看主机网络配置
 # ifconfig
