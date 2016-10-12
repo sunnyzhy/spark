@@ -1,0 +1,44 @@
+1.下载hadoop-2.6.0
+下载地址http://hadoop.apache.org/
+
+2.解压
+# tar -zxvf /..目录/hadoop-2.6.0.tar.gz -C /usr/lib/hadoop
+
+3.在hadoop目录下创建子目录
+# cd /usr/lib/hadoop/hadoop-2.6.0
+# mkdir tmp
+# mkdir name
+# mkdir data
+
+4.配置hadoop-env.sh
+# cd /usr/lib/hadoop/hadoop-2.6.0/etc/hadoop
+# vim hadoop-env.sh
+设置JAVA_HOME和PATH路径
+export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
+export PATH=$PATH:/usr/lib/hadoop/hadoop-2.6.0/bin
+# source hadoop-env.sh
+# hadoop version
+如果显示以下内容，就表示配置生效了
+Hadoop 2.6.0
+Subversion https://git-wip-us.apache.org/repos/asf/hadoop.git -r e3496499ecb8d220fba99dc5ed4c99c8f9e33bb1
+Compiled by jenkins on 2014-11-13T21:10Z
+Compiled with protoc 2.5.0
+From source with checksum 18e43357c8f927c0695f1e9522859d6a
+This command was run using /usr/lib/hadoop/hadoop-2.6.0/share/hadoop/common/hadoop-common-2.6.0.jar
+
+5.配置yarn-env.sh
+# cd /usr/lib/hadoop/hadoop-2.6.0/etc/hadoop
+# vim yarn-env.sh
+设置JAVA_HOME路径
+1).先找到以下内容
+# some Java parameters
+# export JAVA_HOME=/home/y/libexec/jdk1.6.0/
+if [ "$JAVA_HOME" != "" ]; then
+  #echo "run java in $JAVA_HOME"
+  JAVA_HOME=$JAVA_HOME
+fi
+2).修改第二行配置
+export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
+# source yarn-env.sh
+
+
