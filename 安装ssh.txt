@@ -7,5 +7,47 @@
 RSAAuthentication yes
 PubkeyAuthentication yes
 AuthorizedKeysFile .ssh/authorized_keys
-:wq保存退出
 # service sshd restart
+
+3.配置SSH无密码登录
+# ssh-keygen -t rsa
+# cd ~  --打开登录帐号的目录
+# ls -a --显示隐藏目录
+# cd .ssh
+
+# ll -a
+total 16
+drwx------.  2 root root 4096 Oct 12 14:00 .
+dr-xr-x---. 31 root root 4096 Oct 12 14:20 ..
+-rw-------.  1 root root 1675 Oct 12 15:11 id_rsa
+-rw-r--r--.  1 root root  394 Oct 12 15:11 id_rsa.pub
+
+# cp id_rsa.pub authorized_keys_hadoop1 --把公钥命名为authorized_keys_hadoop1
+
+# ll -a
+total 20
+drwx------.  2 root root 4096 Oct 12 15:40 .
+dr-xr-x---. 31 root root 4096 Oct 12 14:20 ..
+-rw-r--r--.  1 root root  394 Oct 12 15:40 authorized_keys_hadoop1
+-rw-------.  1 root root 1675 Oct 12 15:11 id_rsa
+-rw-r--r--.  1 root root  394 Oct 12 15:11 id_rsa.pub
+
+4.设置Host映射文件
+# vim /etc/hosts
+在文件的末尾添加以下内容
+192.168.29.131 hadoop1
+192.168.29.132 hadoop2
+# service network restart
+
+关闭防火墙
+# service iptables status --查看防火墙状态
+# chkconfig iptables off  --关闭防火墙
+
+关闭SElinux
+# getenforce
+Enforcing
+# vim /etc/selinux/config
+#SELINUX=enforcing
+SELINUX=disabled  --把enforcing改为disabled
+
+
