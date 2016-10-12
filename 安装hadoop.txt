@@ -41,4 +41,7 @@ fi
 export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
 # source yarn-env.sh
 
+6.配置core-site.xml
+# cd /usr/lib/hadoop/hadoop-2.6.0/etc/hadoop
+# vim core-site.xml
 
