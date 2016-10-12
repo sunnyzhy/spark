@@ -1,7 +1,25 @@
-1.更新OpenSSL
+1.设置Host映射文件
+# vim /etc/hosts
+在文件的末尾添加以下内容
+192.168.29.131 hadoop1
+192.168.29.132 hadoop2
+# service network restart
+
+2.关闭防火墙
+# service iptables status --查看防火墙状态
+# chkconfig iptables off  --关闭防火墙
+
+3.关闭SElinux
+# getenforce
+Enforcing
+# vim /etc/selinux/config
+#SELINUX=enforcing
+SELINUX=disabled  --把enforcing改为disabled
+
+4.更新OpenSSL
 # yum update openssl
 
-2.修改SSH配置文件
+5.修改SSH配置文件
 # vim /etc/ssh/sshd_config
 开放以下三个配置：
 RSAAuthentication yes
@@ -9,7 +27,7 @@ PubkeyAuthentication yes
 AuthorizedKeysFile .ssh/authorized_keys
 # service sshd restart
 
-3.配置SSH无密码登录
+6.配置SSH无密码登录
 # ssh-keygen -t rsa
 # cd ~  --打开登录帐号的目录
 # ls -a --显示隐藏目录
@@ -32,22 +50,6 @@ dr-xr-x---. 31 root root 4096 Oct 12 14:20 ..
 -rw-------.  1 root root 1675 Oct 12 15:11 id_rsa
 -rw-r--r--.  1 root root  394 Oct 12 15:11 id_rsa.pub
 
-4.设置Host映射文件
-# vim /etc/hosts
-在文件的末尾添加以下内容
-192.168.29.131 hadoop1
-192.168.29.132 hadoop2
-# service network restart
 
-关闭防火墙
-# service iptables status --查看防火墙状态
-# chkconfig iptables off  --关闭防火墙
-
-关闭SElinux
-# getenforce
-Enforcing
-# vim /etc/selinux/config
-#SELINUX=enforcing
-SELINUX=disabled  --把enforcing改为disabled
 
 
