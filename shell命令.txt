@@ -1,0 +1,9 @@
+显示主机名
+# hostname
+
+修改主机名
+# vim /etc/sysconfig/network
+HOSTNAME=your hostname
+# vim /etc/hosts
+127.0.0.1   localhost your hostname
+# shutdown -r now
