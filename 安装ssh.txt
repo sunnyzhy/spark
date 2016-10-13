@@ -69,7 +69,7 @@ authorized_keys_hadoop1  authorized_keys_hadoop2  id_rsa  id_rsa.pub
 [root@hadoop1 .ssh]# ls
 authorized_keys          authorized_keys_hadoop2  id_rsa.pub
 [root@hadoop1 .ssh]# cat authorized_keys_hadoop2 >> authorized_keys
-[root@hadoop1 .ssh]# scp authorized_keys root@192.168.29.132:/root/.ssh --把authorized_key到hadoop2节点的/root/.ssh目录中
+[root@hadoop1 .ssh]# scp authorized_keys root@192.168.29.132:/root/.ssh --把authorized_key复制到hadoop2节点的/root/.ssh目录中
 [root@hadoop1 .ssh]# ls
 authorized_keys          authorized_keys_hadoop2  id_rsa.pub
 authorized_keys_hadoop1  id_rsa                   known_hosts
