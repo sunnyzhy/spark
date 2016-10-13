@@ -285,6 +285,3 @@ SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
 11753 NameNode
 14121 ResourceManager
 12079 SecondaryNameNode
-
-
-
