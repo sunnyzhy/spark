@@ -250,7 +250,41 @@ export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
 在文件中添加以下配置
 hadoop1
 hadoop2
-hadoop3
 
 11.向各节点分发Hadoop程序
+# cd /usr/lib/hadoop
+# scp -r hadoop-2.6.0 root@hadoop2:/usr/lib/hadoop
+
+12.格式化NameNode
+# cd /usr/lib/hadoop/hadoop-2.6.0
+# ./bin/hdfs namenode -format
+16/10/13 11:12:51 INFO common.Storage: Storage directory /usr/lib/hadoop/hadoop-2.6.0/name has been successfully formatted.
+16/10/13 11:12:51 INFO namenode.NNStorageRetentionManager: Going to retain 1 images with txid >= 0
+16/10/13 11:12:51 INFO util.ExitUtil: Exiting with status 0
+16/10/13 11:12:51 INFO namenode.NameNode: SHUTDOWN_MSG: 
+/************************************************************
+SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
+************************************************************/
+
+13.启动HDFS
+# cd /usr/lib/hadoop/hadoop-2.6.0/sbin
+# ./start-dfs.sh
+# jps --验证HDFS启动，hadoop1上面运行的进程有：NameNode、SecondaryNameNode和DataNode
+13315 Jps
+11878 DataNode
+11753 NameNode
+12079 SecondaryNameNode
+
+14.启动YARN
+# cd /usr/lib/hadoop/hadoop-2.6.0/sbin
+# ./start-yarn.sh
+# jps --验证YARN启动，此时在hadoop1上运行的进程有：NameNode、SecondaryNameNode、DataNode、NodeManager和ResourceManager
+14449 Jps
+13970 NodeManager
+11878 DataNode
+11753 NameNode
+14121 ResourceManager
+12079 SecondaryNameNode
+
+
 
