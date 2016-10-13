@@ -44,7 +44,7 @@ export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
 6.配置core-site.xml
 # cd /usr/lib/hadoop/hadoop-2.6.0/etc/hadoop
 # vim core-site.xml
-按照如下内容进行配置
+按照如下内容进行配置，fs.default.name的值是hdfs://master:9000
 <configuration>
 
   <property>
