@@ -43,22 +43,26 @@ anaconda-ks.cfg  Desktop    .gstreamer-0.10  Music               Templates
 .bashrc~         .gconfd    .imsettings.log  .pulse              .xinputrc
 .cache           .gnome2    install.log      .pulse-cookie
 # cd .ssh
-# ls -a
-.  ..  id_rsa  id_rsa.pub
+# ls
+id_rsa  id_rsa.pub
 # cp id_rsa.pub authorized_keys_hadoop1 --把公钥命名为authorized_keys_hadoop1
-# ls -a
-.  ..  authorized_keys_hadoop1  id_rsa  id_rsa.pub
+# ls
+authorized_keys_hadoop1  id_rsa  id_rsa.pub
 
 2).用root账户登录192.168.29.132
 # ssh-keygen -t rsa
 # cd ~
 # ls -a
 # cd .ssh
-# ls -a
-.  ..  id_rsa  id_rsa.pub
+# ls
+id_rsa  id_rsa.pub
 # cp id_rsa.pub authorized_keys_hadoop2 --把公钥命名为authorized_keys_hadoop2
-# ls -a
-.  ..  authorized_keys_hadoop2  id_rsa  id_rsa.pub
+# ls
+authorized_keys_hadoop2  id_rsa  id_rsa.pub
+# scp /root/.ssh/authorized_keys_hadoop2 root@192.168.29.131:/root/.ssh
+
+3).切换到192.168.29.131
+
 
 
 
