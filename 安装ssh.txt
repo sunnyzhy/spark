@@ -70,6 +70,9 @@ authorized_keys_hadoop1  authorized_keys_hadoop2  id_rsa  id_rsa.pub
 authorized_keys          authorized_keys_hadoop2  id_rsa.pub
 [root@hadoop1 .ssh]# cat authorized_keys_hadoop2 >> authorized_keys
 [root@hadoop1 .ssh]# scp authorized_keys root@192.168.29.132:/root/.ssh --把authorized_key到hadoop2节点的/root/.ssh目录中
+[root@hadoop1 .ssh]# ls
+authorized_keys          authorized_keys_hadoop2  id_rsa.pub
+authorized_keys_hadoop1  id_rsa                   known_hosts
 
 4).切换到192.168.29.132
 [root@hadoop2 .ssh]# cd /root/.ssh
@@ -81,3 +84,10 @@ authorized_keys  authorized_keys_hadoop2  id_rsa  id_rsa.pub  known_hosts
 # chmod 400 authorized_keys
 
 6).测试ssh无密码登录是否生效
+
+附加说明：
+# ssh -o StrictHostKeyChecking=no|ask|yes  IP地址 --修改ssh对主机的public_key的检查等级
+参数说明：
+  no，最不安全的级别，如果连接server的key在本地不存在，那么就自动添加到文件中（默认是known_hosts），并且给出一个警告。
+  ask，默认的级别，如果连接和key不匹配，给出提示，并拒绝登录。
+  yes，最安全的级别，如果连接与key不匹配，就拒绝连接，不会有信息提示。
