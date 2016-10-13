@@ -29,9 +29,9 @@ AuthorizedKeysFile .ssh/authorized_keys
 
 6.配置SSH无密码登录
 1).用root账户登录192.168.29.131
-# ssh-keygen -t rsa
-# cd ~  --打开登录帐号的目录
-# ls -a --显示隐藏目录
+[root@hadoop1 /]# ssh-keygen -t rsa
+[root@hadoop1 /]# cd ~  --打开登录帐号的目录
+[root@hadoop1 ~]# ls -a --显示隐藏目录
 .                .config    .gnome2_private  install.log.syslog  .scala_history
 ..               .cshrc     .gnote           .local              .ssh
 .abrt            .dbus      .gnupg           .mozilla            .tcshrc
@@ -42,40 +42,42 @@ anaconda-ks.cfg  Desktop    .gstreamer-0.10  Music               Templates
 .bashrc          .gconf     .icons           Public              .viminfo
 .bashrc~         .gconfd    .imsettings.log  .pulse              .xinputrc
 .cache           .gnome2    install.log      .pulse-cookie
-# cd .ssh
-# ls
+[root@hadoop1 ~]# cd .ssh
+[root@hadoop1 .ssh]# ls
 id_rsa  id_rsa.pub
-# cp id_rsa.pub authorized_keys_hadoop1 --把公钥命名为authorized_keys_hadoop1
-# ls
+[root@hadoop1 .ssh]# cp id_rsa.pub authorized_keys_hadoop1 --把公钥命名为authorized_keys_hadoop1
+[root@hadoop1 .ssh]# ls
 authorized_keys_hadoop1  id_rsa  id_rsa.pub
 
 2).用root账户登录192.168.29.132
-# ssh-keygen -t rsa
-# cd ~
-# ls -a
-# cd .ssh
-# ls
+[root@hadoop2 /]# ssh-keygen -t rsa
+[root@hadoop2 /]# cd ~
+[root@hadoop2 ~]# ls -a
+[root@hadoop2 ~]# cd .ssh
+[root@hadoop2 .ssh]# ls
 id_rsa  id_rsa.pub
-# cp id_rsa.pub authorized_keys_hadoop2 --把公钥命名为authorized_keys_hadoop2
-# ls
+[root@hadoop2 .ssh]# cp id_rsa.pub authorized_keys_hadoop2 --把公钥命名为authorized_keys_hadoop2
+[root@hadoop2 .ssh]# ls
 authorized_keys_hadoop2  id_rsa  id_rsa.pub  known_hosts
-# scp /root/.ssh/authorized_keys_hadoop2 root@192.168.29.131:/root/.ssh --把hadoop2节点的公钥复制到hadoop1节点的/root/.ssh目录中
+[root@hadoop2 .ssh]# scp authorized_keys_hadoop2 root@192.168.29.131:/root/.ssh --把hadoop2节点的公钥复制到hadoop1节点的/root/.ssh目录中
 
 3).切换到192.168.29.131
-# cd /root/.ssh
-# ls
+[root@hadoop1 .ssh]# cd /root/.ssh
+[root@hadoop1 .ssh]# ls
 authorized_keys_hadoop1  authorized_keys_hadoop2  id_rsa  id_rsa.pub
-# cat authorized_keys_hadoop1 >> authorized_keys  --把公钥信息保存到authorized_key文件中
-# ls
+[root@hadoop1 .ssh]# cat authorized_keys_hadoop1 >> authorized_keys  --把公钥信息保存到authorized_key文件中
+[root@hadoop1 .ssh]# ls
 authorized_keys          authorized_keys_hadoop2  id_rsa.pub
-# cat authorized_keys_hadoop2 >> authorized_keys
-# scp /root/.ssh/authorized_keys root@192.168.29.132:/root/.ssh --把authorized_key到hadoop2节点的/root/.ssh目录中
+[root@hadoop1 .ssh]# cat authorized_keys_hadoop2 >> authorized_keys
+[root@hadoop1 .ssh]# scp authorized_keys root@192.168.29.132:/root/.ssh --把authorized_key到hadoop2节点的/root/.ssh目录中
 
 4).切换到192.168.29.132
-# cd /root/.ssh
-# ls
+[root@hadoop2 .ssh]# cd /root/.ssh
+[root@hadoop2 .ssh]# ls
 authorized_keys  authorized_keys_hadoop2  id_rsa  id_rsa.pub  known_hosts
 
 5).在各个节点中设置authorized_keys读写权限
 # cd /root/.ssh
 # chmod 400 authorized_keys
+
+6).测试ssh无密码登录是否生效
