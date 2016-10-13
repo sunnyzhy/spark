@@ -59,12 +59,15 @@ id_rsa  id_rsa.pub
 # cp id_rsa.pub authorized_keys_hadoop2 --把公钥命名为authorized_keys_hadoop2
 # ls
 authorized_keys_hadoop2  id_rsa  id_rsa.pub
-# scp /root/.ssh/authorized_keys_hadoop2 root@192.168.29.131:/root/.ssh
+# scp /root/.ssh/authorized_keys_hadoop2 root@192.168.29.131:/root/.ssh --把hadoop2节点的公钥复制到hadoop1节点的/root/.ssh目录中
 
 3).切换到192.168.29.131
+# ls /root/.ssh
+authorized_keys_hadoop1  authorized_keys_hadoop2  id_rsa  id_rsa.pub
+# cat authorized_keys_hadoop1 >> authorized_keys  --把公钥信息保存到authorized_key文件中
+# ls
+authorized_keys          authorized_keys_hadoop2  id_rsa.pub
+# cat authorized_keys_hadoop2 >> authorized_keys
+# scp /root/.ssh/authorized_keys root@192.168.29.132:/root/.ssh --把authorized_key到hadoop2节点的/root/.ssh目录中
 
-
-
-
-
-
+4).切换到192.168.29.132
