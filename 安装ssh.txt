@@ -84,8 +84,25 @@ authorized_keys  authorized_keys_hadoop2  id_rsa  id_rsa.pub  known_hosts
 # chmod 400 authorized_keys
 
 6).测试ssh无密码登录是否生效
-ssh连接远程主机时，会检查主机的公钥。如果是第一次该主机，会显示该主机的公钥摘要，提示用户是否信任该主机：
-当选择接受，就会将该主机的公钥追加到文件 ~/.ssh/known_hosts 中。当再次连接该主机时，就不会再提示该问题了。 
+ssh连接远程主机时，会检查主机的公钥。如果是第一次连接该主机，会显示该主机的公钥摘要，提示用户是否信任该主机：
+[root@hadoop1 .ssh]# ssh root@hadoop2
+The authenticity of host 'hadoop2 (192.168.29.132)' can't be established.
+RSA key fingerprint is ad:6e:15:9b:c9:d1:9c:09:1a:a5:91:a0:77:af:cd:e2.
+Are you sure you want to continue connecting (yes/no)?
+当输入 yes 也就是选择接受之后，就会将该主机的公钥添加到文件 ~/.ssh/known_hosts 中。当再次连接该主机时，就不会再提示该问题了。
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'hadoop2' (RSA) to the list of known hosts.
+
+[root@hadoop1 .ssh]# ssh root@hadoop2
+Last login: Thu Oct 13 09:55:45 2016 from hadoop1
+[root@hadoop2 ~]# ls
+anaconda-ks.cfg  Documents  install.log         Music     Public     Videos
+Desktop          Downloads  install.log.syslog  Pictures  Templates
+[root@hadoop2 ~]# exit
+logout
+Connection to hadoop2 closed.
+
+
 附加说明：
 # ssh -o StrictHostKeyChecking=no|ask|yes  IP地址 --修改ssh对主机的public_key的检查等级
 参数说明：
