@@ -28,27 +28,38 @@ AuthorizedKeysFile .ssh/authorized_keys
 # service sshd restart
 
 6.配置SSH无密码登录
+1).用root账户登录192.168.29.131
 # ssh-keygen -t rsa
 # cd ~  --打开登录帐号的目录
 # ls -a --显示隐藏目录
+.                .config    .gnome2_private  install.log.syslog  .scala_history
+..               .cshrc     .gnote           .local              .ssh
+.abrt            .dbus      .gnupg           .mozilla            .tcshrc
+anaconda-ks.cfg  Desktop    .gstreamer-0.10  Music               Templates
+.bash_history    Documents  .gtk-bookmarks   .nautilus           .themes
+.bash_logout     Downloads  .gvfs            .oracle_jre_usage   .thumbnails
+.bash_profile    .esd_auth  .ICEauthority    Pictures            Videos
+.bashrc          .gconf     .icons           Public              .viminfo
+.bashrc~         .gconfd    .imsettings.log  .pulse              .xinputrc
+.cache           .gnome2    install.log      .pulse-cookie
 # cd .ssh
-
-# ll -a
-total 16
-drwx------.  2 root root 4096 Oct 12 14:00 .
-dr-xr-x---. 31 root root 4096 Oct 12 14:20 ..
--rw-------.  1 root root 1675 Oct 12 15:11 id_rsa
--rw-r--r--.  1 root root  394 Oct 12 15:11 id_rsa.pub
-
+# ls -a
+.  ..  id_rsa  id_rsa.pub
 # cp id_rsa.pub authorized_keys_hadoop1 --把公钥命名为authorized_keys_hadoop1
+# ls -a
+.  ..  authorized_keys_hadoop1  id_rsa  id_rsa.pub
 
-# ll -a
-total 20
-drwx------.  2 root root 4096 Oct 12 15:40 .
-dr-xr-x---. 31 root root 4096 Oct 12 14:20 ..
--rw-r--r--.  1 root root  394 Oct 12 15:40 authorized_keys_hadoop1
--rw-------.  1 root root 1675 Oct 12 15:11 id_rsa
--rw-r--r--.  1 root root  394 Oct 12 15:11 id_rsa.pub
+2).用root账户登录192.168.29.132
+# ssh-keygen -t rsa
+# cd ~
+# ls -a
+# cd .ssh
+# ls -a
+.  ..  id_rsa  id_rsa.pub
+# cp id_rsa.pub authorized_keys_hadoop2 --把公钥命名为authorized_keys_hadoop2
+# ls -a
+.  ..  authorized_keys_hadoop2  id_rsa  id_rsa.pub
+
 
 
 
