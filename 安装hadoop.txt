@@ -46,57 +46,36 @@ export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
 # vim core-site.xml
 按照如下内容进行配置，fs.default.name的值是hdfs://master:9000
 <configuration>
-
   <property>
-
     <name>fs.default.name</name>
-
     <value>hdfs://hadoop1:9000</value>
-
   </property>
 
   <property>
-
     <name>fs.defaultFS</name>
-
     <value>hdfs://hadoop1:9000</value>
-
   </property>
 
   <property>
-
     <name>io.file.buffer.size</name>
-
     <value>131072</value>
-
   </property>
 
   <property>
-
     <name>hadoop.tmp.dir</name>
-
     <value>file:/usr/lib/hadoop/hadoop-2.6.0/tmp</value>
-
-    <description>Abase for other temporary directories.</description>
-
+    <description>A base for other temporary directories.</description>
   </property>
 
   <property>
-
     <name>hadoop.proxyuser.hduser.hosts</name>
-
     <value>*</value>
-
   </property>
 
   <property>
-
     <name>hadoop.proxyuser.hduser.groups</name>
-
     <value>*</value>
-
   </property>
-
 </configuration>
 
 7.配置hdfs-site.xml
@@ -104,47 +83,30 @@ export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
 # vim hdfs-site.xml
 按照如下内容进行配置
 <configuration>
-
   <property>
-
    <name>dfs.namenode.secondary.http-address</name>
-
    <value>hadoop1:9001</value>
-
   </property>
 
   <property>
-
    <name>dfs.namenode.name.dir</name>
-
    <value>file:/usr/lib/hadoop/hadoop-2.6.0/name</value>
-
   </property>
 
   <property>
-
    <name>dfs.datanode.data.dir</name>
-
    <value>file:/usr/lib/hadoop/hadoop-2.6.0/data</value>
-
   </property>
 
   <property>
-
    <name>dfs.replication</name>
-
    <value>2</value>
-
   </property>
 
   <property>
-
    <name>dfs.webhdfs.enabled</name>
-
    <value>true</value>
-
   </property>
-
 </configuration>
 
 8.配置mapred-site.xml
@@ -153,31 +115,20 @@ export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
 # vim mapred-site.xml
 按照如下内容进行配置
 <configuration>
-
   <property>
-
     <name>mapreduce.framework.name</name>
-
     <value>yarn</value>
-
   </property>
 
   <property>
-
     <name>mapreduce.jobhistory.address</name>
-
     <value>hadoop1:10020</value>
-
   </property>
 
   <property>
-
     <name>mapreduce.jobhistory.webapp.address</name>
-
     <value>hadoop1:19888</value>
-
   </property>
-
 </configuration>
 
 9.配置yarn-site.xml
@@ -185,63 +136,40 @@ export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
 # vim yarn-site.xml
 按照如下内容进行配置
 <configuration>
-
   <property>
-
     <name>yarn.nodemanager.aux-services</name>
-
     <value>mapreduce_shuffle</value>
-
   </property>
 
   <property>
-
     <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
-
     <value>org.apache.hadoop.mapred.ShuffleHandler</value>
-
   </property>
 
   <property>
-
     <name>yarn.resourcemanager.address</name>
-
     <value>hadoop1:8032</value>
-
   </property>
 
   <property>
-
     <name>yarn.resourcemanager.scheduler.address</name>
-
     <value>hadoop1:8030</value>
-
   </property>
 
   <property>
-
     <name>yarn.resourcemanager.resource-tracker.address</name>
-
     <value>hadoop1:8031</value>
-
   </property>
 
   <property>
-
     <name>yarn.resourcemanager.admin.address</name>
-
     <value>hadoop1:8033</value>
-
   </property>
 
   <property>
-
     <name>yarn.resourcemanager.webapp.address</name>
-
     <value>hadoop1:8088</value>
-
   </property>
-
 </configuration>
 
 10.配置Slaves文件
@@ -265,6 +193,10 @@ hadoop2
 /************************************************************
 SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
 ************************************************************/
+
+注意：
+HDFS把namenode的格式化信息存在了系统的tmp目录下，该目录每次开机都会被清空，因此每次重新启动机器，都需要重新格式化HDFS。
+http://www.tuicool.com/articles/eAbuEvE
 
 13.启动HDFS
 # cd /usr/lib/hadoop/hadoop-2.6.0/sbin
