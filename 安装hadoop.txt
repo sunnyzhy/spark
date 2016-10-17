@@ -194,10 +194,6 @@ hadoop2
 SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
 ************************************************************/
 
-注意：
-HDFS把namenode的格式化信息存在了系统的tmp目录下，该目录每次开机都会被清空，因此每次重新启动机器，都需要重新格式化HDFS。
-http://www.tuicool.com/articles/eAbuEvE
-
 13.启动HDFS
 # cd /usr/lib/hadoop/hadoop-2.6.0/sbin
 # ./start-dfs.sh
@@ -206,6 +202,20 @@ http://www.tuicool.com/articles/eAbuEvE
 11878 DataNode
 11753 NameNode
 12079 SecondaryNameNode
+
+注意：
+1).NameNode启动失败，解决方法：
+HDFS把namenode的格式化信息存在了系统的tmp目录下，该目录每次开机都会被清空，因此每次重新启动机器，都需要重新格式化HDFS。
+
+2).DataNode启动失败，要保持name和data的namespaceID、clusterID一致，解决方法：
+# cd /usr/lib/hadoop/hadoop-2.6.0/name/current
+# vim VERSION
+namespaceID=1891453947
+clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
+# cd /usr/lib/hadoop/hadoop-2.6.0/data/current
+# vim VERSION
+namespaceID=1891453947
+clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
 
 14.启动YARN
 # cd /usr/lib/hadoop/hadoop-2.6.0/sbin
