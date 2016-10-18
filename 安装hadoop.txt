@@ -1,3 +1,68 @@
+1.安装maven
+1.1下载maven
+下载地址http://maven.apache.org/
+
+1.2解压
+# tar -zxvf /..目录/apache-maven-3.3.9-bin.tar.gz -C /usr/local/maven
+
+1.3配置
+# vim /etc/profile
+配置PATH路径
+export PATH=${JAVA_HOME}/bin:/usr/local/maven/apache-maven-3.3.9/bin:$PATH
+# source /etc/profile
+# mvn -version
+Apache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-11T00:41:47+08:00)
+Maven home: /usr/local/maven/apache-maven-3.3.9
+Java version: 1.8.0_101, vendor: Oracle Corporation
+Java home: /usr/lib/java/jdk1.8.0_101/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "2.6.32-504.el6.i686", arch: "i386", family: "unix"
+
+2.安装cmake
+2.1下载cmake
+下载地址https://cmake.org/
+
+2.2解压
+# tar -zxvf /..目录/cmake-3.6.2-Linux-i386.tar.gz -C /usr/local/cmake
+
+2.3配置
+# vim /etc/profile
+配置PATH路径
+export PATH=${JAVA_HOME}/bin:/usr/local/maven/apache-maven-3.3.9/bin:/usr/local/cmake/cmake-3.6.2-Linux-i386/bin:$PATH
+# source /etc/profile
+# cmake -version
+cmake version 3.6.2
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+
+3.安装gcc
+# yum -y install gcc
+# yum -y install glibc-headers
+# yum -y install gcc-c++
+
+4.安装protocolbuffer
+4.1下载protocolbuffer
+下载地址http://developers.google.com/protocol-buffers/
+
+4.2解压
+# tar -zxvf /..目录/protobuf-2.5.0.tar.gz -C /usr/local/protobuf
+
+4.3安装
+# cd /usr/local/protobuf/protobuf-2.5.0
+# ./configure --prefix=/usr/local/protobuf  --指定安装目录
+# make
+# make check
+注意：安装成功后，将它的bin和lib目录分别加入到PATH和LD_LIBRARY_PATH环境变量，以方便直接调用。
+
+通常建议安装到/usr/local目录下，执行configure时，指定--prefix=/usr/local/protobuf即可               
+
+设置环境变量过程：编辑/etc/profile，在文件末尾添加：
+
+export PATH=$PATH:/usr/local/protobuf/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/protobuf/lib
+
+4.4验证是否安装成功
+
+
 1.下载hadoop-2.6.0
 下载地址http://hadoop.apache.org/
 
