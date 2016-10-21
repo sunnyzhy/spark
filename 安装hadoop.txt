@@ -1,6 +1,18 @@
 http://blog.csdn.net/lnho2015/article/details/51095614
 http://blog.csdn.net/sagaryu/article/details/52137989
 http://www.cnblogs.com/shishanyuan/p/4701646.html
+
+1.安装maven
+2.安装autoconf automake libtool cmake
+3.安装ncurses-devel
+4.安装openssl-devel
+5.安装gcc*
+6.安装并设置protobuf
+1.8报错
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-antrun-plugin:1.7:run (create-testdirs) on project hadoop-project: Execution create-testdirs of goal org.apache.maven.plugins:maven-antrun-plugin:1.7:run failed: Plugin org.apache.maven.plugins:maven-antrun-plugin:1.7 or one of its dependencies could not be resolved: Could not transfer artifact org.apache.ant:ant:jar:1.8.2 from/to central (https://repo.maven.apache.org/maven2): GET request of: org/apache/ant/ant/1.8.2/ant-1.8.2.jar from central failed: Connection reset -> [Help 1]
+
+
+
 1.安装maven
 1.1下载maven
 下载地址http://maven.apache.org/
