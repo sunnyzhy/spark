@@ -1,6 +1,6 @@
 1.下载JDK
 下载地址http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
-
+http://jingyan.baidu.com/article/9989c746064d46f648ecfe9a.html
 2.解压
 # tar -zxvf /..目录/jdk-8u101-linux-i586.tar.gz -C /usr/lib/java
 
