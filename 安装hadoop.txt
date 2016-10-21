@@ -71,22 +71,25 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PROTOC_HOME/lib
 # protoc --version
 libprotoc 2.5.0
 
-5.编译hadoop
-5.1下载hadoop-2.6.0源码
+7.编译hadoop
+7.1下载hadoop-2.6.0源码
 下载地址http://hadoop.apache.org/
 
-5.2.解压
+7.2解压
 # tar -zxvf /..目录/hadoop-2.6.0-src.tar.gz -C /usr/local/hadoop
+
+7.3编译
 # cd /usr/local/hadoop/hadoop-2.6.0-src
 # mvn package -Pdist,native -DskipTests -Dtar
 
-3.在hadoop目录下创建子目录
+8.安装hadoop
+8.1在hadoop目录下创建子目录
 # cd /usr/lib/hadoop/hadoop-2.6.0
 # mkdir tmp
 # mkdir name
 # mkdir data
 
-4.配置hadoop-env.sh
+8.2配置hadoop-env.sh
 # cd /usr/lib/hadoop/hadoop-2.6.0/etc/hadoop
 # vim hadoop-env.sh
 设置JAVA_HOME和PATH路径
@@ -102,7 +105,7 @@ Compiled with protoc 2.5.0
 From source with checksum 18e43357c8f927c0695f1e9522859d6a
 This command was run using /usr/lib/hadoop/hadoop-2.6.0/share/hadoop/common/hadoop-common-2.6.0.jar
 
-5.配置yarn-env.sh
+8.3配置yarn-env.sh
 # cd /usr/lib/hadoop/hadoop-2.6.0/etc/hadoop
 # vim yarn-env.sh
 设置JAVA_HOME路径
@@ -117,7 +120,7 @@ fi
 export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
 # source yarn-env.sh
 
-6.配置core-site.xml
+8.4配置core-site.xml
 # cd /usr/lib/hadoop/hadoop-2.6.0/etc/hadoop
 # vim core-site.xml
 按照如下内容进行配置，fs.default.name的值是hdfs://master:9000
@@ -154,7 +157,7 @@ export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
   </property>
 </configuration>
 
-7.配置hdfs-site.xml
+8.5配置hdfs-site.xml
 # cd /usr/lib/hadoop/hadoop-2.6.0/etc/hadoop
 # vim hdfs-site.xml
 按照如下内容进行配置
@@ -185,7 +188,7 @@ export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
   </property>
 </configuration>
 
-8.配置mapred-site.xml
+8.6配置mapred-site.xml
 # cd /usr/lib/hadoop/hadoop-2.6.0/etc/hadoop
 # cp mapred-site.xml.template mapred-site.xml  --默认情况下不存在mapred-site.xml文件，可以从模板拷贝一份
 # vim mapred-site.xml
@@ -207,7 +210,7 @@ export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
   </property>
 </configuration>
 
-9.配置yarn-site.xml
+8.7配置yarn-site.xml
 # cd /usr/lib/hadoop/hadoop-2.6.0/etc/hadoop
 # vim yarn-site.xml
 按照如下内容进行配置
@@ -248,18 +251,19 @@ export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
   </property>
 </configuration>
 
-10.配置Slaves文件
+8.8配置Slaves文件
 # cd /usr/lib/hadoop/hadoop-2.6.0/etc/hadoop
 # vim slaves
 在文件中添加以下配置
 hadoop1
 hadoop2
 
-11.向各节点分发Hadoop程序
+8.9向各节点分发Hadoop程序
 # cd /usr/lib/hadoop
 # scp -r hadoop-2.6.0 root@hadoop2:/usr/lib/hadoop
 
-12.格式化NameNode
+9.启动部署
+9.1格式化NameNode
 # cd /usr/lib/hadoop/hadoop-2.6.0
 # ./bin/hdfs namenode -format
 16/10/13 11:12:51 INFO common.Storage: Storage directory /usr/lib/hadoop/hadoop-2.6.0/name has been successfully formatted.
@@ -270,7 +274,7 @@ hadoop2
 SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
 ************************************************************/
 
-13.启动HDFS
+9.2启动HDFS
 # cd /usr/lib/hadoop/hadoop-2.6.0/sbin
 # ./start-dfs.sh
 # jps --验证HDFS启动，hadoop1上面运行的进程有：NameNode、SecondaryNameNode和DataNode
@@ -293,7 +297,7 @@ clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
 namespaceID=1891453947
 clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
 
-14.启动YARN
+9.3启动YARN
 # cd /usr/lib/hadoop/hadoop-2.6.0/sbin
 # ./start-yarn.sh
 # jps --验证YARN启动，此时在hadoop1上运行的进程有：NameNode、SecondaryNameNode、DataNode、NodeManager和ResourceManager
@@ -304,14 +308,14 @@ clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
 14121 ResourceManager
 12079 SecondaryNameNode
 
-15.配置环境变量
+9.4配置环境变量
 # vim /etc/profile
 在 pathmunge () { 的上方添加以下内容:
 export HADOOP_HOME=/usr/lib/hadoop/hadoop-2.6.0
 export PATH=.:$HADOOP_HOME/bin:$JAVA_HOME/bin:$PATH
 # source /etc/profile
 
-16.测试
+9.5测试
 # hadoop version
 Hadoop 2.6.0
 Subversion https://git-wip-us.apache.org/repos/asf/hadoop.git -r e3496499ecb8d220fba99dc5ed4c99c8f9e33bb1
