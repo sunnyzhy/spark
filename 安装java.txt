@@ -1,23 +1,21 @@
-1.下载JDK
-下载地址http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
-http://jingyan.baidu.com/article/9989c746064d46f648ecfe9a.html
+1.下载JDK1.7
+下载地址http://www.oracle.com/
+Downloads -> Java for Developers -> Java Archive -> Download ->  Java SE 7
+
 2.解压
-# tar -zxvf /..目录/jdk-8u101-linux-i586.tar.gz -C /usr/lib/java
+# tar -zxvf /..目录/jdk-7u79-linux-i586.tar.gz -C /usr/local/java
 
 3.配置环境变量
 # vim /etc/profile
 在 pathmunge () { 的上方添加以下内容:
-export JAVA_HOME=/usr/lib/java/jdk1.8.0_101
-export JRE_HOME=${JAVA_HOME}/jre 
+export JAVA_HOME=/usr/local/java/jdk1.7.0_79
+export JRE_HOME=${JAVA_HOME}/jre
 export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
 export PATH=${JAVA_HOME}/bin:$PATH
 # source /etc/profile
 
 4.测试
 # java -version
-如果显示以下内容，就表示java安装成功了
-java version "1.8.0_101"
-Java(TM) SE Runtime Environment (build 1.8.0_101-b13)
-Java HotSpot(TM) Client VM (build 25.101-b13, mixed mode)
-
-
+java version "1.7.0_79"
+Java(TM) SE Runtime Environment (build 1.7.0_79-b15)
+Java HotSpot(TM) Client VM (build 24.79-b02, mixed mode)
