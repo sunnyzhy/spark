@@ -27,6 +27,15 @@ http://www.zlib.net/
 # make
 # make install
 
+安装ant
+http://ant.apache.org/
+# tar -zvxf /root/Downloads/apache-ant-1.9.7-bin.tar.gz -C /usr/local/ant
+# cd /usr/local/ant/apache-ant-1.9.7
+# vim /etc/profile
+export ANT_HOME=/usr/local/ant/apache-ant-1.9.7
+export PATH=$ANT_HOME/bin:$PATH
+# source /etc/profile
+
 1.安装maven
 1.1下载maven
 下载地址http://maven.apache.org/
