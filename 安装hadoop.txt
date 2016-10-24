@@ -103,6 +103,7 @@ libprotoc 2.5.0
 
 7.3编译
 # cd /usr/local/hadoop/hadoop-2.6.0-src
+# mvn clean install -DskipTests
 # mvn package -Pdist,native -DskipTests -Dtar
 
 8.安装hadoop
@@ -350,6 +351,6 @@ This command was run using /usr/lib/hadoop/hadoop-2.6.0/share/hadoop/common/hado
 9.6查看
 # cd /usr/local/hadoop/hadoop-2.6.0
 # cd lib/native
-]# file ./libhadoop.so.1.0.0
+# file ./libhadoop.so.1.0.0
 ./libhadoop.so.1.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, not stripped
  ELF 64-bit LSB，说明是64位
