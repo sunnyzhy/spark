@@ -119,7 +119,6 @@ libprotoc 2.5.0
 设置JAVA_HOME和PATH路径
 export JAVA_HOME=/usr/local/java/jdk1.7.0_80
 export PATH=$PATH:/usr/local/hadoop/hadoop-2.6.0/bin
-export HADOOP_CONF_DIR=/usr/local/hadoop/hadoop-2.6.0/etc/hadoop
 # source hadoop-env.sh
 # hadoop version
 如果显示以下内容，就表示配置生效了
@@ -321,6 +320,21 @@ clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
 # vim VERSION
 namespaceID=1891453947
 clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
+
+3). Cannot find configuration directory: /etc/hadoop
+WARN  [main] util.NativeCodeLoader (NativeCodeLoader.java:<clinit>(62)) - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable]
+Error: Cannot find configuration directory: /etc/hadoop
+Error: Cannot find configuration directory: /etc/hadoop
+解决方法：
+# vim /etc/hosts
+把127.0.0.1修改为本地IP地址
+#127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4
+192.168.29.131 localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+192.168.29.131 hadoop1
+192.168.29.132 hadoop2
+# service network restart
 
 9.3启动YARN
 # cd /usr/local/hadoop/hadoop-2.6.0/sbin
