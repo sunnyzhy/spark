@@ -142,7 +142,7 @@ export JAVA_HOME=/usr/local/java/jdk1.7.0_80
   </property>
 
   <property>
-    <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+    <name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
     <value>org.apache.hadoop.mapred.ShuffleHandler</value>
   </property>
 
