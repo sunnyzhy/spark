@@ -119,6 +119,7 @@ libprotoc 2.5.0
 设置JAVA_HOME和PATH路径
 export JAVA_HOME=/usr/local/java/jdk1.7.0_80
 export PATH=$PATH:/usr/local/hadoop/hadoop-2.6.0/bin
+export HADOOP_CONF_DIR=/usr/local/hadoop/hadoop-2.6.0/etc/hadoop
 # source hadoop-env.sh
 # hadoop version
 如果显示以下内容，就表示配置生效了
@@ -284,11 +285,11 @@ hadoop2
 
 8.9向各节点分发Hadoop程序
 # cd /usr/local/hadoop
-# scp -r hadoop-2.6.0 root@hadoop2:/usr/local/hadoop
+# scp -r hadoop-2.6.0 root@hadoop2:/usr/local/hadoop/hadoop-2.6.0
 
 9.启动部署
 9.1格式化NameNode
-# cd /usr/lib/hadoop/hadoop-2.6.0
+# cd /usr/local/hadoop/hadoop-2.6.0
 # ./bin/hdfs namenode -format
 16/10/13 11:12:51 INFO common.Storage: Storage directory /usr/lib/hadoop/hadoop-2.6.0/name has been successfully formatted.
 16/10/13 11:12:51 INFO namenode.NNStorageRetentionManager: Going to retain 1 images with txid >= 0
@@ -299,7 +300,7 @@ SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
 ************************************************************/
 
 9.2启动HDFS
-# cd /usr/lib/hadoop/hadoop-2.6.0/sbin
+# cd /usr/local/hadoop/hadoop-2.6.0/sbin
 # ./start-dfs.sh
 # jps --验证HDFS启动，hadoop1上面运行的进程有：NameNode、SecondaryNameNode和DataNode
 13315 Jps
@@ -322,7 +323,7 @@ namespaceID=1891453947
 clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
 
 9.3启动YARN
-# cd /usr/lib/hadoop/hadoop-2.6.0/sbin
+# cd /usr/local/hadoop/hadoop-2.6.0/sbin
 # ./start-yarn.sh
 # jps --验证YARN启动，此时在hadoop1上运行的进程有：NameNode、SecondaryNameNode、DataNode、NodeManager和ResourceManager
 14449 Jps
@@ -335,7 +336,7 @@ clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
 9.4配置环境变量
 # vim /etc/profile
 在 pathmunge () { 的上方添加以下内容:
-export HADOOP_HOME=/usr/lib/hadoop/hadoop-2.6.0
+export HADOOP_HOME=/usr/local/hadoop/hadoop-2.6.0
 export PATH=.:$HADOOP_HOME/bin:$JAVA_HOME/bin:$PATH
 # source /etc/profile
 
