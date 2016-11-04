@@ -29,7 +29,7 @@ AuthorizedKeysFile .ssh/authorized_keys
 
 6.配置SSH无密码登录
 1).用root账户登录192.168.29.131
-[root@hadoop1 /]# ssh-keygen -t rsa
+[root@hadoop1 /]# ssh-keygen -t rsa  --生成公钥，一路回车
 [root@hadoop1 /]# cd ~  --打开登录帐号的目录
 [root@hadoop1 ~]# ls -a --显示隐藏目录
 .                .config    .gnome2_private  install.log.syslog  .scala_history
