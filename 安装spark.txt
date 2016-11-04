@@ -2,24 +2,24 @@
 下载地址http://spark.apache.org/
 
 2.解压
-# tar -zxvf /..目录/spark-2.0.1-bin-hadoop2.6.tgz -C /usr/lib/spark
+# tar -zxvf /..目录/spark-2.0.1-bin-hadoop2.6.tgz -C /usr/local/spark
 
 3.配置/etc/profile
 # vim /etc/profile
 在 pathmunge () { 的上方添加以下内容:
-export SPARK_HOME=/usr/lib/spark/spark-2.0.1-bin-hadoop2.6
+export SPARK_HOME=/usr/local/spark/spark-2.0.1-bin-hadoop2.6
 export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 # source /etc/profile
 
 4.配置conf/slaves
-# cd /usr/lib/spark/spark-2.0.1-bin-hadoop2.6/conf
+# cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/conf
 # vim slaves
 加入slave配置节点
 hadoop1
 hadoop2
 
 5.配置conf/spark-env.sh
-# cd /usr/lib/spark/spark-2.0.1-bin-hadoop2.6/conf
+# cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/conf
 # cp spark-env.sh.template spark-env.sh
 # vim spark-env.sh
 设置hadoop1为Master节点
@@ -30,11 +30,11 @@ export SPARK_WORKER_INSTANCES=1
 export SPARK_WORKER_MEMORY=512M
 
 6.向各节点分发spark程序
-# cd /usr/lib/spark
-# scp -r spark-2.0.1-bin-hadoop2.6 root@hadoop2:/usr/lib/spark
+# cd /usr/local/spark
+# scp -r spark-2.0.1-bin-hadoop2.6 root@hadoop2:/usr/local/spark/spark-2.0.1-bin-hadoop2.6
 
 7.启动Spark
-# cd /usr/lib/spark
+# cd /usr/local/spark
 # cd spark-2.0.1-bin-hadoop2.6/sbin
 # ./start-all.sh
 starting org.apache.spark.deploy.master.Master, logging to /usr/lib/spark/spark-2.0.1-bin-hadoop2.6/logs/spark-root-org.apache.spark.deploy.master.Master-1-hadoop1.out
@@ -70,6 +70,7 @@ tcp        0      0 :::8080                     :::*                        LIST
     Status: ALIVE
 
 9.验证客户端连接
+# cd /usr/local/spark
 # cd spark-2.0.1-bin-hadoop2.6/bin
 # spark-shell --master spark://hadoop1:7077 --executor-memory 500m
 Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
