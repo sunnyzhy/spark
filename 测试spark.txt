@@ -1,16 +1,19 @@
 1.使用Spark-shell测试
 1).启动HDFS
-# cd /usr/lib/hadoop/hadoop-2.6.0/sbin
+# cd /usr/local/hadoop/hadoop-2.6.0/sbin
 # ./start-dfs.sh
-在hadoop1上面运行的进程有：NameNode、SecondaryNameNode和DataNode
+hadoop1上面运行的进程：
 # jps
-3943 SecondaryNameNode
-3783 DataNode
-2921 Master
-4058 Jps
-2988 Worker
+22471 Jps
+18252 DataNode
+20144 NameNode
+22002 Worker
+20619 NodeManager
+21928 Master
+19896 SecondaryNameNode
+20504 ResourceManager
 
-hadoop2上面运行的进程有：DataNode
+hadoop2上面运行的进程有：
 # jps
 5734 DataNode
 6070 Jps
