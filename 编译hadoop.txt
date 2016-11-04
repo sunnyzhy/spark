@@ -1,6 +1,7 @@
 http://blog.csdn.net/lnho2015/article/details/51095614
 http://blog.csdn.net/sagaryu/article/details/52137989
 http://www.cnblogs.com/shishanyuan/p/4701646.html
+
 1.安装maven
 2.安装autoconf automake libtool cmake
 3.安装ncurses-devel
@@ -31,17 +32,21 @@ http://ant.apache.org/
 export ANT_HOME=/usr/local/ant/apache-ant-1.9.7
 export PATH=$ANT_HOME/bin:$PATH
 # source /etc/profile
+
 1.安装maven
 1.1下载maven
 下载地址http://maven.apache.org/
+
 1.2解压
 # tar -zxvf /..目录/apache-maven-3.3.9-bin.tar.gz -C /usr/local/maven
+
 1.3配置
 # vim /etc/profile
 配置PATH路径
 export MAVEN_HOME=/usr/local/maven/apache-maven-3.3.9
 export PATH=$MAVEN_HOME/bin:$PATH
 # source /etc/profile
+
 1.4验证
 # mvn --version
 Apache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-11T00:41:47+08:00)
@@ -50,19 +55,26 @@ Java version: 1.7.0_79, vendor: Oracle Corporation
 Java home: /usr/local/java/jdk1.7.0_79/jre
 Default locale: en_US, platform encoding: UTF-8
 OS name: "linux", version: "2.6.32-504.el6.i686", arch: "i386", family: "unix"
+
 2.安装autoconf automake libtool cmake
 # yum install autoconf automake libtool cmake
+
 3.安装ncurses-devel
 # yum install ncurses-devel
+
 4.安装openssl-devel
 # yum install openssl-devel
+
 5.安装gcc*
 # yum install gcc*
+
 6.安装protobuf
 6.1下载protocolbuffer
 下载地址http://developers.google.com/protocol-buffers/
+
 6.2解压
 # tar -zxvf /..目录/protobuf-2.5.0.tar.gz -C /usr/local/protobuf
+
 6.3安装
 # cd /usr/local/protobuf/protobuf-2.5.0
 # ./configure --prefix=/usr/local/protobuf --指定安装目录
@@ -74,14 +86,18 @@ export PROTOC_HOME=/usr/local/protobuf
 export PATH=$PROTOC_HOME/bin:$PATH
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PROTOC_HOME/lib
 # source /etc/profile
+
 6.4验证是否安装成功
 # protoc --version
 libprotoc 2.5.0
+
 7.编译hadoop
 7.1下载hadoop-2.6.0源码
 下载地址http://hadoop.apache.org/
+
 7.2解压
 # tar -zxvf /..目录/hadoop-2.6.0-src.tar.gz -C /usr/local/hadoop
+
 7.3编译
 # cd /usr/local/hadoop/hadoop-2.6.0-src
 # mvn clean install -DskipTests
