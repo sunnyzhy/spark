@@ -105,7 +105,16 @@ Connection to hadoop2 closed.
 
 
 附加说明：
-# ssh -o StrictHostKeyChecking=no|ask|yes  IP地址 --修改ssh对主机的public_key的检查等级
+1、登录时提示Agent admitted failure to sign using the key
+[root@hadoop1 .ssh]# ssh root@hadoop2
+Agent admitted failure to sign using the key.
+root@hadoop2's password: 
+解决方法：
+[root@hadoop1 .ssh]# ssh-add
+Identity added: /root/.ssh/id_rsa (/root/.ssh/id_rsa)
+
+2、修改ssh对主机的public_key的检查等级
+# ssh -o StrictHostKeyChecking=no|ask|yes  IP地址
 参数说明：
   no，最不安全的级别，如果连接server的key在本地不存在，那么就自动添加到文件中（默认是known_hosts），并且给出一个警告。
   ask，默认的级别，如果连接和key不匹配，给出提示，并拒绝登录。
