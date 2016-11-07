@@ -236,6 +236,23 @@ Error: Cannot find configuration directory: /etc/hadoop
 192.168.29.132 hadoop2
 # service network restart
 
+4).WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable
+debug调试提示"libc.so.6: version `GLIBC_2.14' not found"
+因为系统的gblci版本太低，需要安装2.14以上的版本：
+下载glibc2.14，http://www.gnu.org/software/libc/
+# tar -zxvf /..目录/glibc-2.14.tar.gz -C /usr/local/glibc
+# cd /usr/local/glibc
+# ./glibc-2.14/configure --prefix=/usr/local/glibc  --一定要在上一级目录执行 configure
+# make
+# make install
+注意：
+安装过程中，如果出现Can't open configuration file /usr/local/glibc/etc/ld.so.conf: No such file or directory
+# cp /etc/ld.so.c* /usr/local/glibc/etc
+
+# vim /etc/profile
+export LD_LIBRARY_PATH=/usr/local/glibc/lib:$LD_LIBRARY_PATH
+# source /etc/profile
+
 14.启动YARN
 # cd /usr/local/hadoop/hadoop-2.6.0/sbin
 # ./start-yarn.sh
