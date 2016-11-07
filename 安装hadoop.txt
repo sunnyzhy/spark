@@ -243,6 +243,11 @@ Error: Cannot find configuration directory: /etc/hadoop
 14121 ResourceManager
 12079 SecondaryNameNode
 
+# jps --此时在hadoop1上运行的进程有：DataNode和NodeManager
+25245 Jps
+25163 NodeManager
+24910 DataNode
+
 15.配置环境变量
 # vim /etc/profile
 在 pathmunge () { 的上方添加以下内容:
