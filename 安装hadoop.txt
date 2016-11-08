@@ -242,7 +242,7 @@ debug调试提示"libc.so.6: version `GLIBC_2.14' not found"
 下载glibc2.14，http://www.gnu.org/software/libc/
 # tar -zxvf /..目录/glibc-2.14.tar.gz -C /usr/local/glibc
 # cd /usr/local/glibc
-# ./glibc-2.14/configure --prefix=/usr/local/glibc  --一定要在上一级目录执行 configure
+# ./glibc-2.14/configure --prefix=/usr/local/glibc  --glibc不允许在源码目录树下编译，必须在其他目录configure和build，这样一旦出错将整个目录移除即可
 # make
 # make install
 注意：
