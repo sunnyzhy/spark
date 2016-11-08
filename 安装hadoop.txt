@@ -27,8 +27,8 @@ From source with checksum 18e43357c8f927c0695f1e9522859d6a
 This command was run using /usr/lib/hadoop/hadoop-2.6.0/share/hadoop/common/hadoop-common-2.6.0.jar
 
 说明：
-# export HADOOP_ROOT_LOGGER=DEBUG,console --开启调试信息
-# export HADOOP_ROOT_LOGGER=INFO,console  --关闭调试信息
+# export HADOOP_ROOT_LOGGER=DEBUG,console //开启调试信息
+# export HADOOP_ROOT_LOGGER=INFO,console  //关闭调试信息
 
 5.配置yarn-env.sh
 # cd /usr/local/hadoop/hadoop-2.6.0/etc/hadoop
@@ -115,7 +115,7 @@ export JAVA_HOME=/usr/local/java/jdk1.7.0_80
 
 8.配置mapred-site.xml
 # cd /usr/local/hadoop/hadoop-2.6.0/etc/hadoop
-# cp mapred-site.xml.template mapred-site.xml  --默认情况下不存在mapred-site.xml文件，可以从模板拷贝一份
+# cp mapred-site.xml.template mapred-site.xml  //默认情况下不存在mapred-site.xml文件，可以从模板拷贝一份
 # vim mapred-site.xml
 按照如下内容进行配置
 <configuration>
@@ -201,7 +201,7 @@ SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
 13.启动HDFS
 # cd /usr/local/hadoop/hadoop-2.6.0/sbin
 # ./start-dfs.sh
-# jps --验证HDFS启动，hadoop1上面运行的进程有：NameNode、SecondaryNameNode和DataNode
+# jps //验证HDFS启动，hadoop1上面运行的进程有：NameNode、SecondaryNameNode和DataNode
 13315 Jps
 11878 DataNode
 11753 NameNode
@@ -242,21 +242,20 @@ debug调试提示"libc.so.6: version `GLIBC_2.14' not found"
 下载glibc2.14，http://www.gnu.org/software/libc/
 # tar -zxvf /..目录/glibc-2.14.tar.gz -C /usr/local/glibc
 # cd /usr/local/glibc
-# ./glibc-2.14/configure --prefix=/usr/local/glibc  --glibc不允许在源码目录树下编译，必须在其他目录configure和build，这样一旦出错将整个目录移除即可
+# ./glibc-2.14/configure --prefix=/usr/local/glibc  //glibc不允许在源码目录树下编译，必须在其他目录configure和build，这样一旦出错将整个目录移除即可
 # make
 # make install
 注意：
 安装过程中，如果出现Can't open configuration file /usr/local/glibc/etc/ld.so.conf: No such file or directory
 # cp /etc/ld.so.c* /usr/local/glibc/etc
 
-# vim /etc/profile
-export LD_LIBRARY_PATH=/usr/local/glibc/lib:$LD_LIBRARY_PATH
-# source /etc/profile
+# rm -rf /lib64/libc.so.6 			//删除先前的libc.so.6软链
+# ln -s /opt/glibc-2.14/lib/libc-2.14.so /lib64/libc.so.6 //建立软链指向glibc-2.14
 
 14.启动YARN
 # cd /usr/local/hadoop/hadoop-2.6.0/sbin
 # ./start-yarn.sh
-# jps --验证YARN启动，此时在hadoop1上运行的进程有：NameNode、SecondaryNameNode、DataNode、NodeManager和ResourceManager
+# jps //验证YARN启动，此时在hadoop1上运行的进程有：NameNode、SecondaryNameNode、DataNode、NodeManager和ResourceManager
 14449 Jps
 13970 NodeManager
 11878 DataNode
@@ -264,7 +263,7 @@ export LD_LIBRARY_PATH=/usr/local/glibc/lib:$LD_LIBRARY_PATH
 14121 ResourceManager
 12079 SecondaryNameNode
 
-# jps --此时在hadoop1上运行的进程有：DataNode和NodeManager
+# jps //此时在hadoop1上运行的进程有：DataNode和NodeManager
 25245 Jps
 25163 NodeManager
 24910 DataNode
