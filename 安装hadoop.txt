@@ -273,6 +273,12 @@ GLIBC_2.13
 GLIBC_2.14
 GLIBC_PRIVATE
 
+5).Failed to start namenode.
+java.io.IOException: There appears to be a gap in the edit log.  We expected txid 1, but got txid 197.
+解决方法：
+# hadoop namenode -recover
+选 c 
+
 14.启动YARN
 # cd /usr/local/hadoop/hadoop-2.6.0/sbin
 # ./start-yarn.sh
