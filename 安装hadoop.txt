@@ -179,8 +179,7 @@ export JAVA_HOME=/usr/local/java/jdk1.7.0_80
 10.配置Slaves文件
 # cd /usr/local/hadoop/hadoop-2.6.0/etc/hadoop
 # vim slaves
-在文件中添加以下配置
-hadoop1
+删除原来的配置，在文件中添加以下配置
 hadoop2
 
 11.向各节点分发Hadoop程序
@@ -211,15 +210,13 @@ SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
 1).NameNode启动失败，解决方法：
 HDFS把namenode的格式化信息存在了系统的tmp目录下，该目录每次开机都会被清空，因此每次重新启动机器，都需要重新格式化HDFS。
 
-2).DataNode启动失败，要保持name和data的namespaceID、clusterID一致，解决方法：
+2).DataNode启动失败，要保持name和data的clusterID一致，解决方法：
 # cd /usr/lib/hadoop/hadoop-2.6.0/name/current
 # vim VERSION
-namespaceID=1891453947
 clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
 # cd /usr/lib/hadoop/hadoop-2.6.0/data/current
 # vim VERSION
-namespaceID=1891453947
-clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
+clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 #复制name的clusterID
 
 3). Cannot find configuration directory: /etc/hadoop
 WARN  [main] util.NativeCodeLoader (NativeCodeLoader.java:<clinit>(62)) - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable]
