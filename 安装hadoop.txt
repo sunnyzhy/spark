@@ -294,23 +294,18 @@ java.io.IOException: There appears to be a gap in the edit log.  We expected txi
 
 15.配置环境变量
 # vim /etc/profile
-在 pathmunge () { 的上方添加以下内容:
 export HADOOP_HOME=/usr/local/hadoop/hadoop-2.6.0
 export PATH=.:$HADOOP_HOME/bin:$JAVA_HOME/bin:$PATH
 # source /etc/profile
 
-16.测试
-# hadoop version
-Hadoop 2.6.0
-Subversion https://git-wip-us.apache.org/repos/asf/hadoop.git -r e3496499ecb8d220fba99dc5ed4c99c8f9e33bb1
-Compiled by jenkins on 2014-11-13T21:10Z
-Compiled with protoc 2.5.0
-From source with checksum 18e43357c8f927c0695f1e9522859d6a
-This command was run using /usr/lib/hadoop/hadoop-2.6.0/share/hadoop/common/hadoop-common-2.6.0.jar
-
-17.查看
+16.查看
 # cd /usr/local/hadoop/hadoop-2.6.0
 # cd lib/native
 # file ./libhadoop.so.1.0.0
 ./libhadoop.so.1.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, not stripped
  ELF 64-bit LSB，说明是64位
+ 
+ 17.验证
+ 1).在浏览器的地址栏中输入http://hadoop1:50070
+ 2).Live Nodes 	:	2 (Decommissioned: 0)
+ 3).点开Live Nodes就可以看到集群hadoop1、hadoop2的监控信息
