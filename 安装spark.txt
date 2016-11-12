@@ -6,7 +6,6 @@
 
 3.配置/etc/profile
 # vim /etc/profile
-在 pathmunge () { 的上方添加以下内容:
 export SPARK_HOME=/usr/local/spark/spark-2.0.1-bin-hadoop2.6
 export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 # source /etc/profile
@@ -23,19 +22,20 @@ hadoop2
 # cp spark-env.sh.template spark-env.sh
 # vim spark-env.sh
 设置hadoop1为Master节点
+export JAVA_HOME=/usr/local/java/jdk1.7.0_80
 export SPARK_MASTER_IP=hadoop1
 export SPARK_MASTER_PORT=7077
 export SPARK_WORKER_CORES=1
 export SPARK_WORKER_INSTANCES=1
 export SPARK_WORKER_MEMORY=512M
+# source spark-env.sh
 
 6.向各节点分发spark程序
 # cd /usr/local/spark
 # scp -r spark-2.0.1-bin-hadoop2.6 root@hadoop2:/usr/local/spark/spark-2.0.1-bin-hadoop2.6
 
 7.启动Spark
-# cd /usr/local/spark
-# cd spark-2.0.1-bin-hadoop2.6/sbin
+# cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/sbin
 # ./start-all.sh
 starting org.apache.spark.deploy.master.Master, logging to /usr/lib/spark/spark-2.0.1-bin-hadoop2.6/logs/spark-root-org.apache.spark.deploy.master.Master-1-hadoop1.out
 hadoop2: starting org.apache.spark.deploy.worker.Worker, logging to /usr/lib/spark/spark-2.0.1-bin-hadoop2.6/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-hadoop2.out
@@ -60,38 +60,21 @@ tcp        0      0 :::111                      :::*                        LIST
 tcp        0      0 :::8080                     :::*                        LISTEN      
 
 在浏览器中输入 http://hadoop1:8080，可以进入Spark集群状态页面
-    URL: spark://localhost:7077
-    REST URL: spark://localhost:6066 (cluster mode)
-    Alive Workers: 1
-    Cores in use: 1 Total, 0 Used
-    Memory in use: 512.0 MB Total, 0.0 B Used
+    URL: spark://hadoop1:7077
+    REST URL: spark://hadoop1:6066 (cluster mode)
+    Alive Workers: 2
+    Cores in use: 2 Total, 0 Used
+    Memory in use: 1024.0 MB Total, 0.0 B Used
     Applications: 0 Running, 0 Completed
     Drivers: 0 Running, 0 Completed
     Status: ALIVE
+显示以下内容就说明spark集群启动成功：
+1).Alive Workers: 2  
+2).Workers列表包含hadoop1、hadoop2的地址
 
 9.验证客户端连接
-# cd /usr/local/spark
-# cd spark-2.0.1-bin-hadoop2.6/bin
-# spark-shell --master spark://hadoop1:7077 --executor-memory 500m
-Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
-Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel).
-16/10/15 16:31:46 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-16/10/15 16:31:46 WARN SparkConf: 
-SPARK_WORKER_INSTANCES was detected (set to '1').
-This is deprecated in Spark 1.0+.
-
-Please instead use:
- - ./spark-submit with --num-executors to specify the number of executors
- - Or set SPARK_EXECUTOR_INSTANCES
- - spark.executor.instances to configure the number of instances in the spark config.
-        
-16/10/15 16:31:46 WARN Utils: Your hostname, hadoop1 resolves to a loopback address: 127.0.0.1; using 192.168.29.131 instead (on interface eth0)
-16/10/15 16:31:46 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
-16/10/15 16:31:48 WARN SparkContext: Use an existing SparkContext, some configuration may not take effect.
-Spark context Web UI available at http://192.168.29.131:4040
-Spark context available as 'sc' (master = spark://hadoop1:7077, app id = app-20161015163147-0000).
-Spark session available as 'spark'.
+# cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/bin
+# ./spark-shell --master spark://hadoop1:7077 --executor-memory 500m
 Welcome to
       ____              __
      / __/__  ___ _____/ /__
@@ -99,7 +82,7 @@ Welcome to
    /___/ .__/\_,_/_/ /_/\_\   version 2.0.1
       /_/
          
-Using Scala version 2.11.8 (Java HotSpot(TM) Client VM, Java 1.8.0_101)
+Using Scala version 2.11.8 (Java HotSpot(TM) 64-Bit Server VM, Java 1.7.0_80)
 Type in expressions to have them evaluated.
 Type :help for more information.
 
