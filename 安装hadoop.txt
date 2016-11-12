@@ -307,5 +307,5 @@ export PATH=.:$HADOOP_HOME/bin:$JAVA_HOME/bin:$PATH
  
  17.验证
  1).在浏览器的地址栏中输入http://hadoop1:50070
- 2).Live Nodes 	:	2 (Decommissioned: 0)
+ 2).Live Nodes 	:	2 (Decommissioned: 0)，节点数为2就说明hadoop集群启动成功
  3).点开Live Nodes就可以看到集群hadoop1、hadoop2的监控信息
