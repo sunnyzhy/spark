@@ -7,6 +7,28 @@ hadoop1上面运行的进程：
 22471 Jps
 18252 DataNode
 20144 NameNode
+20619 NodeManager
+19896 SecondaryNameNode
+20504 ResourceManager
+
+hadoop2上面运行的进程有：
+# jps
+13815 DataNode
+13913 NodeManager
+17527 Jps
+
+2).上传数据到HDFS中
+# hadoop fs -mkdir -p /user/hadoop/testdata //打开Browse the filesystem，就可以看到新建的目录，其中user就HDFS的系统目录
+# hadoop fs -put /usr/local/hadoop/hadoop-2.6.0/etc/hadoop/core-site.xml /user/hadoop/testdata  //把hadoop配置文件core-site.xml上传到HDFS中，打开Browse the filesystem，就会在testdata看到core-site.xml
+
+3).启动Spark
+# cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/sbin
+# ./start-all.sh
+hadoop1上面运行的进程：
+# jps
+22471 Jps
+18252 DataNode
+20144 NameNode
 22002 Worker
 20619 NodeManager
 21928 Master
@@ -15,6 +37,34 @@ hadoop1上面运行的进程：
 
 hadoop2上面运行的进程有：
 # jps
-25245 Jps
-25163 NodeManager
-24910 DataNode
+13815 DataNode
+13913 NodeManager
+18069 Worker
+17527 Jps
+
+4).启动Spark-shell
+# cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/bin
+# ./spark-shell --master spark://hadoop1:7077 --executor-memory 512m --driver-memory 500m
+
+5).运行WordCount脚本
+scala> val rdd=sc.textFile("hdfs://hadoop1:9000/user/hadoop/testdata/core-site.xml")
+rdd: org.apache.spark.rdd.RDD[String] = hdfs://hadoop1:9000/user/hadoop/testdata/core-site.xml MapPartitionsRDD[1] at textFile at <console>:24
+
+scala> rdd.cache()
+res0: rdd.type = hdfs://hadoop1:9000/user/hadoop/testdata/core-site.xml MapPartitionsRDD[1] at textFile at <console>:24
+
+scala> val wordcount=rdd.flatMap(_.split(" ")).map(x=>(x,1)).reduceByKey(_+_)
+wordcount: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[4] at reduceByKey at <console>:26
+
+scala> wordcount.take(10)
+res1: Array[(String, Int)] = Array((type="text/xsl",1), (<name>hadoop.proxyuser.hduser.groups</name>,1), (Unless,1), (this,2), (KIND,,1), (</property>,6), (is,1), (under,3), (-->,2), (other,1))
+
+scala> val wordsort=wordcount.map(x=>(x._2,x._1)).sortByKey(false).map(x=>(x._2,x._1))
+wordsort: org.apache.spark.rdd.RDD[(String, Int)] = MapPartitionsRDD[9] at map at <console>:28
+
+scala> wordsort.take(10)
+res2: Array[(String, Int)] = Array(("",24), (the,7), (</property>,6), (<property>,6), (under,3), (in,3), (License,3), (this,2), (-->,2), (file.,2))
+
+词频统计结果如下：
+Array[(String, Int)] = Array(("",24), (the,7), (</property>,6), (<property>,6), (under,3), (in,3), (License,3), (this,2), (-->,2), (file.,2))
+
