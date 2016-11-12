@@ -47,6 +47,11 @@ hadoop2上面运行的进程有：
 # ./spark-shell --master spark://hadoop1:7077 --executor-memory 512m --driver-memory 500m
 
 5).运行WordCount脚本
+5.1)单行实现
+scala> sc.textFile("hdfs://hadoop1:9000/user/hadoop/testdata/core-site.xml").flatMap(_.split(" ")).map(x=>(x,1)).reduceByKey(_+_).map(x=>(x._2,x._1)).sortByKey(false).map(x=>(x._2,x._1)).take(10)
+res0: Array[(String, Int)] = Array(("",24), (the,7), (<property>,6), (</property>,6), (in,3), (License,3), (under,3), (<value>hdfs://hadoop1:9000</value>,2), (See,2), (License.,2))
+
+5.2)逐行实现
 scala> val rdd=sc.textFile("hdfs://hadoop1:9000/user/hadoop/testdata/core-site.xml")
 rdd: org.apache.spark.rdd.RDD[String] = hdfs://hadoop1:9000/user/hadoop/testdata/core-site.xml MapPartitionsRDD[1] at textFile at <console>:24
 
@@ -68,3 +73,27 @@ res2: Array[(String, Int)] = Array(("",24), (the,7), (</property>,6), (<property
 词频统计结果如下：
 Array[(String, Int)] = Array(("",24), (the,7), (</property>,6), (<property>,6), (under,3), (in,3), (License,3), (this,2), (-->,2), (file.,2))
 
+在浏览器中查看：
+ Running Applications
+Application ID	Name	Cores	Memory per Node	Submitted Time	User	State	Duration
+app-20161112140848-0003(kill)   Spark shell 	2 	512.0 MB 	2016/11/12 14:08:48 	root 	RUNNING 	35 s
+
+2.使用Spark-submit测试
+# cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/bin
+# ./spark-submit --master spark://hadoop1:7077 --class org.apache.spark.examples.SparkPi --executor-memory 512m ../examples/jars/spark-examples_2.11-2.0.1.jar 200
+Pi is roughly 3.1420885571044277
+
+在浏览器中查看：
+ Completed Applications
+Application ID	Name	Cores	Memory per Node	Submitted Time	User	State	Duration
+app-20161112135836-0002 	Spark Pi 	2 	512.0 MB 	2016/11/12 13:58:36 	root 	FINISHED 	2.3 min
+app-20161112121433-0001 	Spark shell 	2 	512.0 MB 	2016/11/12 12:14:33 	root 	FINISHED 	1.4 h
+app-20161112113953-0000 	Spark shell 	2 	500.0 MB 	2016/11/12 11:39:53 	root 	FINISHED 	13 min
+
+spark-submit参数说明：
+--master Master所在地址，可以有Mesos、Spark、YARN和Local四种，在这里为Spark Standalone集群，地址为spark://hadoop1:7077
+--class 应用程序调用的类名，这里为org.apache.spark.examples.SparkPi
+--executor-memory，每个executor所分配的内存大小，这里为512M
+--total-executor-cores 2，每个executor分配的内核数
+../lib/spark-examples-1.1.0-hadoop2.2.0.jar，执行jar包
+200，分片数目
