@@ -22,7 +22,7 @@ hadoop2
 # cp spark-env.sh.template spark-env.sh
 # vim spark-env.sh
 设置hadoop1为Master节点
-export JAVA_HOME=/usr/local/java/jdk1.7.0_80
+export JAVA_HOME=/usr/local/java/jdk1.7.0_80 #得明确指定java_home
 export SPARK_MASTER_IP=hadoop1
 export SPARK_MASTER_PORT=7077
 export SPARK_WORKER_CORES=1
