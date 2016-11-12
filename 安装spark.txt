@@ -93,3 +93,4 @@ Spark的日志配置
 # vim log4j.properties
 log4j.rootCategory=INFO, console    //显示所有信息
 log4j.rootCategory=WARN, console    //显示警告信息
+log4j.rootCategory=DEBUG, console    //显示调试信息
