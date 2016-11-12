@@ -87,3 +87,9 @@ Type in expressions to have them evaluated.
 Type :help for more information.
 
 scala> 
+
+Spark的日志配置
+# cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/conf
+# vim log4j.properties
+log4j.rootCategory=INFO, console    //显示所有信息
+log4j.rootCategory=WARN, console    //显示警告信息
