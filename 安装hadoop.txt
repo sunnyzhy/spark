@@ -221,7 +221,7 @@ clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
 # cd /usr/lib/hadoop/hadoop-2.6.0/data/current
 # vim VERSION
 clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 //复制name的clusterID
-第二种情况，重启hadoop之后，datanode不启动
+第二种情况，重启系统之后，DataNode不启动
 # cd /usr/local/hadoop/hadoop-2.6.0/sbin
 # ./hadoop-daemon.sh start datanode
 
@@ -290,6 +290,10 @@ GLIBC_PRIVATE
 11753 NameNode
 14121 ResourceManager
 12079 SecondaryNameNode
+
+重启系统之后，NodeManager不启动
+# cd /usr/local/hadoop/hadoop-2.6.0/sbin
+# ./yarn-daemon.sh start nodemanager
 
 # jps //此时在hadoop1上运行的进程有：DataNode和NodeManager
 25245 Jps
