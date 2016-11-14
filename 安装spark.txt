@@ -22,7 +22,8 @@ hadoop2
 # cp spark-env.sh.template spark-env.sh
 # vim spark-env.sh
 设置hadoop1为Master节点
-export JAVA_HOME=/usr/local/java/jdk1.7.0_80 #得明确指定java_home
+export JAVA_HOME=/usr/local/java/jdk1.7.0_80    #得明确指定java_home
+export HADOOP_HOME=/usr/local/hadoop/hadoop-2.6.0   #得明确指定HADOOP_HOME，否则会有错误：HADOOP_HOME or hadoop.home.dir are not set.
 export SPARK_MASTER_IP=hadoop1
 export SPARK_MASTER_PORT=7077
 export SPARK_WORKER_CORES=1
@@ -88,7 +89,8 @@ Type :help for more information.
 
 scala> 
 
-Spark的日志配置
+注意：
+1.Spark的日志配置
 # cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/conf
 # vim log4j.properties
 log4j.rootCategory=INFO, console    //显示所有信息
