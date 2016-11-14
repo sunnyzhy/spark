@@ -234,7 +234,9 @@ Error: Cannot find configuration directory: /etc/hadoop
 # service network restart
 
 4).WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable
-debug调试提示"libc.so.6: version `GLIBC_2.14' not found"
+查看日志，根据不同的情况选择不同的解决方法
+第一种情况：
+libc.so.6: version `GLIBC_2.14' not found
 因为系统的gblci版本太低，需要安装2.14以上的版本：
 下载glibc2.14，http://www.gnu.org/software/libc/
 # tar -zxvf /..目录/glibc-2.14.tar.gz -C /usr/local/glibc
@@ -269,6 +271,9 @@ GLIBC_2.12
 GLIBC_2.13
 GLIBC_2.14
 GLIBC_PRIVATE
+
+第二种情况：
+Failed to load native-hadoop with error: java.lang.UnsatisfiedLinkError: no hadoop in java.library.path
 
 5).Failed to start namenode.
 java.io.IOException: There appears to be a gap in the edit log.  We expected txid 1, but got txid 197.
@@ -309,3 +314,20 @@ export PATH=.:$HADOOP_HOME/bin:$JAVA_HOME/bin:$PATH
  1).在浏览器的地址栏中输入http://hadoop1:50070
  2).Live Nodes 	:	2 (Decommissioned: 0)，节点数为2就说明hadoop集群启动成功
  3).点开Live Nodes就可以看到集群hadoop1、hadoop2的监控信息
+
+# hadoop checknative
+2016-11-14 10:07:38,227 WARN  [main] bzip2.Bzip2Factory (Bzip2Factory.java:isNativeBzip2Loaded(73)) - Failed to load/initialize native-bzip2 library system-native, will use pure-Java version
+2016-11-14 10:07:38,231 INFO  [main] zlib.ZlibFactory (ZlibFactory.java:<clinit>(49)) - Successfully loaded & initialized native-zlib library
+Native library checking:
+hadoop:  true /usr/local/hadoop/hadoop-2.6.0/lib/native/libhadoop.so.1.0.0
+zlib:    true /lib64/libz.so.1
+snappy:  true /usr/lib64/libsnappy.so.1
+lz4:     true revision:99
+bzip2:   false 
+openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object file: No such file or directory)!
+解决方法：
+1.bzip2:   false
+# yum install bzip2 //安装bzip2
+2.openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object file: No such file or directory)!
+# cd /usr/lib64/
+# ln -s libcrypto.so.1.0.1e libcrypto.so
