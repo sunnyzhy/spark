@@ -21,10 +21,17 @@ hadoop2
 # cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/conf
 # cp spark-env.sh.template spark-env.sh
 # vim spark-env.sh
-设置hadoop1为Master节点
 export JAVA_HOME=/usr/local/java/jdk1.7.0_80    #得明确指定java_home
+
 export HADOOP_HOME=/usr/local/hadoop/hadoop-2.6.0   #得明确指定HADOOP_HOME，否则会有错误：HADOOP_HOME or hadoop.home.dir are not set.
-export SPARK_MASTER_IP=hadoop1
+
+#Failed to load native-hadoop with error: java.lang.UnsatisfiedLinkError: no hadoop in java.library.path的解决方法
+export JAVA_LIBRARY_PATH=$JAVA_LIBRARY_PATH:$HADOOP_HOME/lib/native
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_HOME/lib/native
+export SPARK_YARN_USER_ENV="JAVA_LIBRARY_PATH=$JAVA_LIBRARY_PATH,LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
+#The first 2 lines make spark-shell able to read snappy files from when run in local mode and the third makes it possible for spark-shell to read snappy files when in yarn mode.
+
+export SPARK_MASTER_IP=hadoop1  #设置hadoop1为Master节点
 export SPARK_MASTER_PORT=7077
 export SPARK_WORKER_CORES=1
 export SPARK_WORKER_INSTANCES=1
