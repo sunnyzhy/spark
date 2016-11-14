@@ -278,7 +278,14 @@ GLIBC_2.13
 GLIBC_2.14
 GLIBC_PRIVATE
 
-第二种情况，Failed to load native-hadoop with error: java.lang.UnsatisfiedLinkError: no hadoop in java.library.path
+第二种情况，在调用spark-shell时，提示Failed to load native-hadoop with error: java.lang.UnsatisfiedLinkError: no hadoop in java.library.path
+# cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/conf
+# cp spark-env.sh.template spark-env.sh
+# vim spark-env.sh
+export JAVA_LIBRARY_PATH=$JAVA_LIBRARY_PATH:$HADOOP_HOME/lib/native
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_HOME/lib/native
+export SPARK_YARN_USER_ENV="JAVA_LIBRARY_PATH=$JAVA_LIBRARY_PATH,LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
+# source spark-env.sh
 
 14.启动YARN
 # cd /usr/local/hadoop/hadoop-2.6.0/sbin
