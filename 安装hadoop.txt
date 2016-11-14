@@ -208,7 +208,10 @@ SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
 
 注意：
 1).NameNode启动失败，解决方法：
-HDFS把namenode的格式化信息存在了系统的tmp目录下，该目录每次开机都会被清空，因此每次重新启动机器，都需要重新格式化HDFS。
+第一种情况，HDFS把namenode的格式化信息存在了系统的tmp目录下，该目录每次开机都会被清空，因此每次重新启动机器，都需要重新格式化HDFS。
+第二种情况，Failed to start namenode.java.io.IOException: There appears to be a gap in the edit log.  We expected txid 1, but got txid 197.
+# hadoop namenode -recover
+选 c 
 
 2).DataNode启动失败，根据不同的情况选择不同的解决方法：
 第一种情况，name和data的clusterID不一致
@@ -276,12 +279,6 @@ GLIBC_2.14
 GLIBC_PRIVATE
 
 第二种情况，Failed to load native-hadoop with error: java.lang.UnsatisfiedLinkError: no hadoop in java.library.path
-
-5).Failed to start namenode.
-java.io.IOException: There appears to be a gap in the edit log.  We expected txid 1, but got txid 197.
-解决方法：
-# hadoop namenode -recover
-选 c 
 
 14.启动YARN
 # cd /usr/local/hadoop/hadoop-2.6.0/sbin
