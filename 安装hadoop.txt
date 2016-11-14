@@ -210,13 +210,17 @@ SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
 1).NameNode启动失败，解决方法：
 HDFS把namenode的格式化信息存在了系统的tmp目录下，该目录每次开机都会被清空，因此每次重新启动机器，都需要重新格式化HDFS。
 
-2).DataNode启动失败，要保持name和data的clusterID一致，解决方法：
+2).DataNode启动失败，根据不同的情况选择不同的解决方法：
+第一种情况，name和data的clusterID不一致
 # cd /usr/lib/hadoop/hadoop-2.6.0/name/current
 # vim VERSION
 clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
 # cd /usr/lib/hadoop/hadoop-2.6.0/data/current
 # vim VERSION
-clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 #复制name的clusterID
+clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 //复制name的clusterID
+第二种情况，重启hadoop之后，datanode不启动
+# cd /usr/local/hadoop/hadoop-2.6.0/sbin
+# ./hadoop-daemon.sh start datanode
 
 3). Cannot find configuration directory: /etc/hadoop
 WARN  [main] util.NativeCodeLoader (NativeCodeLoader.java:<clinit>(62)) - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable]
@@ -235,8 +239,7 @@ Error: Cannot find configuration directory: /etc/hadoop
 
 4).WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable
 查看日志，根据不同的情况选择不同的解决方法
-第一种情况：
-libc.so.6: version `GLIBC_2.14' not found
+第一种情况，libc.so.6: version `GLIBC_2.14' not found
 因为系统的gblci版本太低，需要安装2.14以上的版本：
 下载glibc2.14，http://www.gnu.org/software/libc/
 # tar -zxvf /..目录/glibc-2.14.tar.gz -C /usr/local/glibc
@@ -272,8 +275,7 @@ GLIBC_2.13
 GLIBC_2.14
 GLIBC_PRIVATE
 
-第二种情况：
-Failed to load native-hadoop with error: java.lang.UnsatisfiedLinkError: no hadoop in java.library.path
+第二种情况，Failed to load native-hadoop with error: java.lang.UnsatisfiedLinkError: no hadoop in java.library.path
 
 5).Failed to start namenode.
 java.io.IOException: There appears to be a gap in the edit log.  We expected txid 1, but got txid 197.
