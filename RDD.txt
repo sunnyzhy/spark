@@ -3,11 +3,27 @@
 2.action是得到一个值，或者一个结果（直接将RDDcache到内存中）
 所有的transformation都是采用的懒策略，就是如果只是将transformation提交是不会执行计算的，计算只有在action被提交的时候才被触发。
 
-transformation操作：
+scala> val rdd = sc.parallelize(List(1,2,3,4,5,6,7,8,9))
+rdd: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[0] at parallelize at <console>:24
 
+transformation操作：
 map(func):对调用map的RDD数据集中的每个element都使用func，然后返回一个新的RDD,这个返回的数据集是分布式的数据集
- 
+scala> val newrdd = rdd.map(3 * _)
+newrdd: org.apache.spark.rdd.RDD[Int] = MapPartitionsRDD[9] at map at <console>:26
+
+scala> rdd.collect()
+res20: Array[Int] = Array(1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+scala> newrdd.collect()
+res17: Array[Int] = Array(3, 6, 9, 12, 15, 18, 21, 24, 27)
+
 filter(func): 对调用filter的RDD数据集中的每个元素都使用func，然后返回一个包含使func为true的元素构成的RDD
+scala> rdd.filter(_ > 5).collect()
+res12: Array[Int] = Array(6, 7, 8, 9)
+
+scala> newrdd.filter(_ > 10).collect()
+res18: Array[Int] = Array(12, 15, 18, 21, 24, 27)
+
 flatMap(func):和map差不多，但是flatMap生成的是多个结果
 mapPartitions(func):和map很像，但是map是每个element，而mapPartitions是每个partition
 mapPartitionsWithSplit(func):和mapPartitions很像，但是func作用的是其中一个split上，所以func中应该有index
@@ -23,10 +39,23 @@ cartesian(otherDataset)：笛卡尔积就是m*n，大家懂的
 
 action操作：
 reduce(func)：说白了就是聚集，但是传入的函数是两个参数输入返回一个值，这个函数必须是满足交换律和结合律的
+
 collect()：一般在filter或者足够小的结果的时候，再用collect封装返回一个数组
+scala> rdd.collect()
+res10: Array[Int] = Array(1, 2, 3, 4, 5, 6, 7, 8, 9)
+
 count():返回的是dataset中的element的个数
+scala> rdd.count()
+res14: Long = 9
+
 first():返回的是dataset中的第一个元素
+scala> rdd.first()
+res15: Int = 1
+
 take(n):返回前n个elements，这个士driverprogram返回的
+scala> rdd.take(3)
+res16: Array[Int] = Array(1, 2, 3)
+
 takeSample(withReplacement，num，seed)：抽样返回一个dataset中的num个元素，随机种子seed
 saveAsTextFile（path）：把dataset写到一个textfile中，或者hdfs，或者hdfs支持的文件系统中，Spark把每条记录都转换为一行记录，然后写到file中
 saveAsSequenceFile(path):只能用在key-value对上，然后生成SequenceFile写到本地或者hadoop文件系统
