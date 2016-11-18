@@ -3,7 +3,7 @@
 2.action是得到一个值，或者一个结果（直接将RDDcache到内存中）
 所有的transformation都是采用的懒策略，就是如果只是将transformation提交是不会执行计算的，计算只有在action被提交的时候才被触发。
 
-scala> val rdd = sc.parallelize(List(1,2,3,4,5,6,7,8,9))
+scala> val rdd = sc.parallelize(List(1,2,3,4,5,6,7,8,9))  //sc是 Spark-shell 自动生成的 SparkContext 的实例
 rdd: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[0] at parallelize at <console>:24
 
 transformation操作：
