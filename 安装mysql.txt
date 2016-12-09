@@ -1,0 +1,31 @@
+1.安装Mysql
+# yum list mysql-server
+# yum -y install mysql-server
+
+2.启动Mysql服务
+# service mysqld start
+
+3.链接
+# mysql
+mysql> 
+ctr + c，退出
+
+4.设置Mysql开机启动
+# chkconfig mysqld on
+
+5.修改密码并设置远程访问
+# mysql
+mysql> use mysql;
+mysql> update user set password=password('root') where user='root'; --修改root登录msql的密码
+mysql> flush privileges;
+mysql> grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;
+mysql> -- 'root'@'%' identified by 'root'，允许任何IP地址（%）的电脑用帐户（root）和密码（root）来访问MySQL Server
+mysql> -- 'root'@'192.168.0.1'，%号可以用IP地址替换，意思是仅允许指定的IP地址访问MySQL Server
+
+6.解决Mysql乱码
+# vim /etc/my.cnf
+在[mysqld]下面添加
+default-character-set=utf8
+
+7.重启mysql服务
+# service mysqld restart
