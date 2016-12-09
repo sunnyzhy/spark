@@ -22,15 +22,20 @@ mysql> grant all privileges on *.* to 'root'@'%' identified by 'root' with grant
 mysql> -- 'root'@'%' identified by 'root'，允许任何IP地址（%）的电脑用帐户（root）和密码（root）来访问MySQL Server
 mysql> -- 'root'@'192.168.0.1'，%号可以用IP地址替换，意思是仅允许指定的IP地址访问MySQL Server
 
-6.解决Mysql乱码
+6.MySql登录
+# mysql -u root -p
+Enter password: 
+mysql> 
+
+7.解决Mysql乱码
 # vim /etc/my.cnf
 在[mysqld]下面添加
 default-character-set=utf8
 
-7.重启mysql服务
+8.重启mysql服务
 # service mysqld restart
 
-8.安装phpMyAdmin
+9.安装phpMyAdmin
 1).安装php5
 yum -y update
 yum -y install epel-release
@@ -63,7 +68,7 @@ https://www.phpmyadmin.net/downloads/
 # mv phpMyAdmin-4.0.10.18-all-languages phpMyAdmin  --重命名文件夹
 # cd phpMyAdmin
 # cp config.sample.inc.php config.inc.php
-# service httpd restart
+# service httpd restart --重启apache
 
 4).验证是否安装成功
 输入http://127.0.0.1/phpMyAdmin/
