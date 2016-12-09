@@ -58,9 +58,12 @@ httpd-2.2.15-55.el6.centos.2.x86_64
 
 3).安装phpMyAdmin
 https://www.phpmyadmin.net/downloads/
-# tar -zxvf /..目录/phpMyAdmin-4.6.5.2-all-languages.tar.gz -C /var/www/html
+# tar -zxvf /..目录/phpMyAdmin-4.0.10.18-all-languages.tar.gz -C /var/www/html
 # cd /var/www/html
-# mv phpMyAdmin-4.6.5.2-all-languages phpMyAdmin  --重命名文件夹
+# mv phpMyAdmin-4.0.10.18-all-languages phpMyAdmin  --重命名文件夹
 # cd phpMyAdmin
 # cp config.sample.inc.php config.inc.php
 # service httpd restart
+
+4).验证是否安装成功
+输入http://127.0.0.1/phpMyAdmin/
