@@ -39,7 +39,18 @@ wget https://centos6.iuscommunity.org/ius-release.rpm
 rpm -Uvh ius-release*.rpm
 yum -y update
 yum -y install php55u php55u-opcache php55u-xml php55u-mcrypt php55u-gd php55u-devel php55u-mysql php55u-intl php55u-mbstring php55u-bcmath
-
+如果失败，就用一下方法：
+# rpm -Uvh http://ftp.iij.ad.jp/pub/linux/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
+# rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+# yum list --enablerepo=remi --enablerepo=remi-php56 | grep php
+# yum -y install --enablerepo=remi --enablerepo=remi-php56 php php-opcache php-devel php-mbstring php-mcrypt php-mysqlnd php-phpunit-PHPUnit php-pecl-xdebug php-pecl-xhprof
+# php --version
+PHP 5.6.29 (cli) (built: Dec  8 2016 08:51:50) 
+Copyright (c) 1997-2016 The PHP Group
+Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies
+    with Zend OPcache v7.0.6-dev, Copyright (c) 1999-2016, by Zend Technologies
+    with Xdebug v2.5.0, Copyright (c) 2002-2016, by Derick Rethans
+    
 2).更新apache
 # rpm -qa httpd  --查看是否安装了apache
 httpd-2.2.15-55.el6.centos.2.x86_64
