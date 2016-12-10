@@ -18,8 +18,8 @@ hadoop2上面运行的进程有：
 17527 Jps
 
 2).上传数据到HDFS中
-# hadoop fs -mkdir -p /user/hadoop/testdata //http://hadoop1:50070/dfshealth.jsp，打开Browse the filesystem，就可以看到新建的目录，其中user就HDFS的系统目录
-# hadoop fs -put /usr/local/hadoop/hadoop-2.6.0/etc/hadoop/core-site.xml /user/hadoop/testdata  //把hadoop配置文件core-site.xml上传到HDFS中，打开Browse the filesystem，就会在testdata看到core-site.xml
+# hadoop fs -mkdir -p /user/hadoop/testdata --http://hadoop1:50070/dfshealth.jsp，打开Browse the filesystem，就可以看到新建的目录，其中user就HDFS的系统目录
+# hadoop fs -put /usr/local/hadoop/hadoop-2.6.0/etc/hadoop/core-site.xml /user/hadoop/testdata  --把hadoop配置文件core-site.xml上传到HDFS中，打开Browse the filesystem，就会在testdata看到core-site.xml
 
 3).启动Spark
 # cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/sbin
