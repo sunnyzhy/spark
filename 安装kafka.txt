@@ -1,0 +1,7 @@
+1.下载kafka
+http://kafka.apache.org/downloads
+
+# tar -zxvf kafka_2.11-0.10.1.1.tgz
+# cd kafka_2.11-0.10.1.1
+# bin/zookeeper-server-start.sh config/zookeeper.properties
+# bin/kafka-server-start.sh config/server.properties
