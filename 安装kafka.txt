@@ -73,6 +73,7 @@ listeners=PLAINTEXT://:9094
 log.dirs=/tmp/kafka-logs-2
 
 7.3.启动集群节点
+# cd ../
 # bin/kafka-server-start.sh config/server-1.properties
 # bin/kafka-server-start.sh config/server-2.properties
 
@@ -111,3 +112,38 @@ Topic:my-replicated-topic	PartitionCount:1	ReplicationFactor:3	Configs:
 	Topic: my-replicated-topic	Partition: 0	Leader: 2	Replicas: 1,2,0	Isr: 2,0
 --broker2被选作为leader,broker1不再出现在 in-sync 副本列表中
 --此时，consumer依然可以接收producer发送的消息
+
+8.kafka connect输入/输出数据
+--kafka提供了一个连接外部系统的工具kafka connector。kafka connector可以将各种数据源作为消息输入（包括文件、程序输出、log），也可以将接受到的消息写入文件。
+# cd config
+# vim connect-file-source.properties
+name=local-file-source
+connector.class=FileStreamSource
+tasks.max=1
+file=test.txt
+topic=connect-test
+
+# vim connect-file-sink.properties
+name=local-file-sink
+connector.class=FileStreamSink
+tasks.max=1
+file=test.sink.txt
+topics=connect-test
+
+# cd ../
+# echo -e "int\nstring" > test.txt  --创建test.txt
+# bin/connect-standalone.sh config/connect-standalone.properties config/connect-file-source.properties config/connect-file-sink.properties
+--运行之后在kafka根目录下会生成test.sink.txt
+--查看文件内容
+# cat test.sink.txt
+int
+string
+--也可以从终端consumer读取connect-test，开启一个Terminal
+# bin/kafka-console-consumer.sh --bootstrap-server hostname:9092 --topic connect-test --from-beginning
+{"schema":{"type":"string","optional":false},"payload":"int"}
+{"schema":{"type":"string","optional":false},"payload":"string"}
+
+# echo "source to sink" >> test.txt
+
+--终端consumer会同步接收新添加到test.txt的数据
+{"schema":{"type":"string","optional":false},"payload":"source to sink"}
