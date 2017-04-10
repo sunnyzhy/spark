@@ -9,6 +9,8 @@ http://kafka.apache.org/downloads
 # netstat -tlnp|grep 2181
 tcp        0      0 :::2181                     :::*                        LISTEN      4448/java           
 --说明zookeeper服务已启动，2181是zookeeper的服务端口
+# jps
+27724 QuorumPeerMain  --zookeeper进程
 
 3.启动kafka
 --开启一个Terminal
@@ -20,6 +22,8 @@ tcp        0      0 :::2181                     :::*                        LIST
 # netstat -tlnp|grep 9092
 tcp        0      0 :::9092                     :::*                        LISTEN      5695/java   
 --说明kafka服务已启动，9092是kafka的服务端口
+# jps
+27970 Kafka  --kafka进程
 
 4.创建 topic
 --开启一个Terminal
@@ -34,6 +38,9 @@ test
 hello
 world
 --按ctrl+c退出消息发送
+# jps
+28972 ConsoleProducer  --producer进程
+
 
 6.consumer接收消息
 --开启一个Terminal
@@ -42,3 +49,41 @@ hello
 world
 --按ctrl+c退出消息接收
 --这样就可以在一个终端输入消息，另一个终端读取消息
+# jps
+29977 ConsoleConsumer  --consumer进程
+
+7.设置broker的集群
+7.1.拷贝两个server.properties副本
+# cp config/server.properties config/server-1.properties
+# cp config/server.properties config/server-2.properties
+
+7.2.编辑副本
+# cd config
+# vim server-1.properties
+broker.id=1  --broker.id属性对于每个节点必须是唯一的
+#listeners=PLAINTEXT://:9092  --找到listeners配置，在该注释的下一行添加以下配置
+listeners=PLAINTEXT://:9093
+log.dirs=/tmp/kafka-logs-1  --使用不同的log目录是为了每个节点存储自己的日志文件，不会互相覆盖。
+
+# vim server-2.properties
+broker.id=2
+listeners=PLAINTEXT://:9094
+log.dirs=/tmp/kafka-logs-2
+
+7.3.启动集群节点
+# bin/kafka-server-start.sh config/server-1.properties
+# bin/kafka-server-start.sh config/server-2.properties
+
+7.4.创建一个新的topic，有1个分区和3个副本
+# bin/kafka-topics.sh --create --zookeeper hostname:2181 --replication-factor 3 --partitions 1 --topic my-replicated-topic
+Created topic "my-replicated-topic".
+--执行describe来观察哪一个集群服务在处理该topic
+# bin/kafka-topics.sh --describe --zookeeper hostname:2181 --topic my-replicated-topic
+Topic:my-replicated-topic	PartitionCount:1	ReplicationFactor:3	Configs:
+	Topic: my-replicated-topic	Partition: 0	Leader: 1	Replicas: 1,2,0	Isr: 1,2,0
+--第一行是对所有分区的一个描述，然后每个分区都会对应一行
+--leader：负责处理消息的读和写，leader是从所有节点中随机选择的.
+--replicas：列出了所有的副本节点，不管节点是否在服务中.
+--isr：是正在服务中的节点.
+
+7.5.向topic发送消息
