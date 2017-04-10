@@ -29,13 +29,13 @@ Created topic "test".
 # bin/kafka-topics.sh --list --zookeeper hostname:2181
 test
 
-5.发送消息
+5.producer发送消息
 # bin/kafka-console-producer.sh --broker-list hostname:9092 --topic test
 hello
 world
 --按ctrl+c退出消息发送
 
-6.启动consumer
+6.consumer接收消息
 --开启一个Terminal
 # bin/kafka-console-consumer.sh --bootstrap-server hostname:9092 --topic test --from-beginning
 hello
