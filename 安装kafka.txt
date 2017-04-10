@@ -46,11 +46,10 @@ world
 6.consumer接收消息
 --开启一个Terminal
 # bin/kafka-console-consumer.sh --bootstrap-server hostname:9092 --topic test --from-beginning
---在producer的Terminal中发送消息
+--在producer的Terminal中发送消息，这样就可以在一个终端输入消息，另一个终端读取消息
 hello
 world
 --按ctrl+c退出消息接收
---这样就可以在一个终端输入消息，另一个终端读取消息
 # jps
 29977 ConsoleConsumer  --consumer进程
 
