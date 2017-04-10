@@ -1,6 +1,7 @@
 1.下载kafka
 http://kafka.apache.org/downloads
 
+2.启动zookeeper
 # tar -zxvf kafka_2.11-0.10.1.1.tgz
 # cd kafka_2.11-0.10.1.1
 # bin/zookeeper-server-start.sh config/zookeeper.properties
@@ -8,12 +9,26 @@ http://kafka.apache.org/downloads
 tcp        0      0 :::2181                     :::*                        LISTEN      4448/java           
 --说明zookeeper服务已启动，2181是zookeeper的服务端口
 
+3.启动kafka
 --另外打开一个Terminal
 # bin/kafka-server-start.sh config/server.properties
 --如果链接zookeeper超时
---org.I0Itec.zkclient.exception.ZkTimeoutException: Unable to connect to zookeeper server within timeout: 60000
+--org.I0Itec.zkclient.exception.ZkTimeoutException: Unable to connect to zookeeper server within timeout: 6000
 --就尝试修改server.properties里的zookeeper连接串
 --把zookeeper.connect=localhsot:2181修改为zookeeper.connect=具体的ip地址:2181
 # netstat -tlnp|grep 9092
 tcp        0      0 :::9092                     :::*                        LISTEN      5695/java   
 --说明kafka服务已启动，9092是kafka的服务端口
+
+4.创建 topic
+--另外打开一个Terminal
+# bin/kafka-topics.sh --create --zookeeper 具体的ip地址:2181 --replication-factor 1 --partitions 1 --topic test
+Created topic "test".
+--查看创建的topic
+# bin/kafka-topics.sh --list --zookeeper 192.168.8.128:2181
+test
+
+5.发送消息
+# bin/kafka-console-producer.sh --broker-list 192.168.8.128:9092 --topic test
+hello world!
+--
