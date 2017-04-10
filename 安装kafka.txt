@@ -35,6 +35,7 @@ test
 
 5.producer发送消息
 # bin/kafka-console-producer.sh --broker-list hostname:9092 --topic test
+--先在另一个Terminal中开启consumer
 hello
 world
 --按ctrl+c退出消息发送
@@ -45,6 +46,7 @@ world
 6.consumer接收消息
 --开启一个Terminal
 # bin/kafka-console-consumer.sh --bootstrap-server hostname:9092 --topic test --from-beginning
+--在producer的Terminal中发送消息
 hello
 world
 --按ctrl+c退出消息接收
@@ -87,3 +89,13 @@ Topic:my-replicated-topic	PartitionCount:1	ReplicationFactor:3	Configs:
 --isr：是正在服务中的节点.
 
 7.5.向topic发送消息
+--发送消息
+# bin/kafka-console-producer.sh --broker-list hostname:9092 --topic my-replicated-topic
+hello world
+my topic
+
+--接收消息
+# bin/kafka-console-consumer.sh --bootstrap-server hostname:9092 --topic my-replicated-topic --from-beginning
+hello world
+my topic
+
