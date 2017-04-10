@@ -2,6 +2,7 @@
 http://kafka.apache.org/downloads
 
 2.启动zookeeper
+--开启一个Terminal
 # tar -zxvf kafka_2.11-0.10.1.1.tgz
 # cd kafka_2.11-0.10.1.1
 # bin/zookeeper-server-start.sh config/zookeeper.properties
@@ -10,7 +11,7 @@ tcp        0      0 :::2181                     :::*                        LIST
 --说明zookeeper服务已启动，2181是zookeeper的服务端口
 
 3.启动kafka
---另外打开一个Terminal
+--开启一个Terminal
 # bin/kafka-server-start.sh config/server.properties
 --如果链接zookeeper超时
 --org.I0Itec.zkclient.exception.ZkTimeoutException: Unable to connect to zookeeper server within timeout: 6000
@@ -21,7 +22,7 @@ tcp        0      0 :::9092                     :::*                        LIST
 --说明kafka服务已启动，9092是kafka的服务端口
 
 4.创建 topic
---另外打开一个Terminal
+--开启一个Terminal
 # bin/kafka-topics.sh --create --zookeeper hostname:2181 --replication-factor 1 --partitions 1 --topic test
 Created topic "test".
 --查看创建的topic
@@ -30,5 +31,14 @@ test
 
 5.发送消息
 # bin/kafka-console-producer.sh --broker-list hostname:9092 --topic test
-hello world!
---
+hello
+world
+--按ctrl+c退出消息发送
+
+6.启动consumer
+--开启一个Terminal
+# bin/kafka-console-consumer.sh --bootstrap-server hostname:9092 --topic test --from-beginning
+hello
+world
+--按ctrl+c退出消息接收
+--这样就可以在一个终端输入消息，另一个终端读取消息
