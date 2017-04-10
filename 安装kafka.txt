@@ -84,7 +84,7 @@ Created topic "my-replicated-topic".
 Topic:my-replicated-topic	PartitionCount:1	ReplicationFactor:3	Configs:
 	Topic: my-replicated-topic	Partition: 0	Leader: 1	Replicas: 1,2,0	Isr: 1,2,0
 --第一行是对所有分区的一个描述，然后每个分区都会对应一行
---leader：负责处理消息的读和写，leader是从所有节点中随机选择的.
+--leader：负责处理消息的读和写，leader是从所有节点中随机选择的.此时，broker1作为leader
 --replicas：列出了所有的副本节点，不管节点是否在服务中.
 --isr：是正在服务中的节点.
 
@@ -99,3 +99,15 @@ my topic
 hello world
 my topic
 
+7.6.容错测试
+--kill作为leader的broker1
+# ps aux | grep server-1.properties
+root     30323  0.0  0.1  41984  4608 pts/4    T    14:45   0:00 vim server-1.properties
+root     30390  2.2  7.4 2015268 293528 pts/4  Sl   15:00   1:02 /usr/local/java/jdk1.7.0_80/bin/java ... kafka.Kafka config/server-1.properties
+root     32589  0.0  0.0   6448   788 pts/6    S+   15:47   0:00 grep server-1.properties
+# kill -9 30390
+# bin/kafka-topics.sh --describe --zookeeper hostname:2181 --topic my-replicated-topic
+Topic:my-replicated-topic	PartitionCount:1	ReplicationFactor:3	Configs:
+	Topic: my-replicated-topic	Partition: 0	Leader: 2	Replicas: 1,2,0	Isr: 2,0
+--broker2被选作为leader,broker1不再出现在 in-sync 副本列表中
+--此时，consumer依然可以接收producer发送的消息
