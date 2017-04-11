@@ -320,7 +320,7 @@ export PATH=.:$HADOOP_HOME/bin:$JAVA_HOME/bin:$PATH
 ./libhadoop.so.1.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, not stripped
  ELF 64-bit LSB，说明是64位
  
- 17.验证
+17.验证
  1).在浏览器的地址栏中输入http://hadoop1:50070
  2).Live Nodes 	:	2 (Decommissioned: 0)，节点数为2就说明hadoop集群启动成功
  3).点开Live Nodes就可以看到集群hadoop1、hadoop2的监控信息
@@ -341,3 +341,120 @@ openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object
 2.openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object file: No such file or directory)!
 # cd /usr/lib64/
 # ln -s libcrypto.so.1.0.1e libcrypto.so
+
+18.上传数据到HDFS中
+# hadoop fs -mkdir -p /user/hadoop/testdata --http://hadoop1:50070/dfshealth.jsp，打开Browse the filesystem，就可以看到新建的目录，其中user就HDFS的系统目录
+# hadoop fs -put /usr/local/hadoop/hadoop-2.6.0/etc/hadoop/core-site.xml /user/hadoop/testdata  --把hadoop配置文件core-site.xml上传到HDFS中，打开Browse the filesystem，就会在testdata看到core-site.xml
+或者
+# ./bin/hdfs dfs -mkdir -p /user/hadoop/testdata
+# ./bin/hdfs dfs -put /usr/local/hadoop/hadoop-2.6.0/etc/hadoop/core-site.xml /user/hadoop/testdata
+
+# ./bin/hdfs dfs -ls /user/hadoop/testdata --查看文件系统
+Found 1 items
+-rw-r--r--   2 root supergroup       1363 2016-11-12 12:07 /user/hadoop/testdata/core-site.xml
+
+19.测试mapred
+# cd /usr/local/hadoop/hadoop-2.6.0
+# hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar wordcount /user/hadoop/testdata /user/hadoop/result
+
+# hadoop fs -cat /user/hadoop/result/part-r-00000
+或者
+# ./bin/hdfs dfs -cat /user/hadoop/result/part-r-00000 
+
+"AS	1
+"License");	1
+(the	1
+-->	2
+2.0	1
+<!--	2
+</configuration>	1
+</property>	6
+<?xml	1
+<?xml-stylesheet	1
+<configuration>	1
+<description>A	1
+<name>fs.default.name</name>	1
+<name>fs.defaultFS</name>	1
+<name>hadoop.proxyuser.hduser.groups</name>	1
+<name>hadoop.proxyuser.hduser.hosts</name>	1
+<name>hadoop.tmp.dir</name>	1
+<name>io.file.buffer.size</name>	1
+<property>	6
+<value>*</value>	2
+<value>131072</value>	1
+<value>file:/usr/local/hadoop/hadoop-2.6.0/tmp</value>	1
+<value>hdfs://hadoop1:9000</value>	2
+ANY	1
+Apache	1
+BASIS,	1
+CONDITIONS	1
+IS"	1
+KIND,	1
+LICENSE	1
+License	3
+License,	1
+License.	2
+Licensed	1
+OF	1
+OR	1
+Put	1
+See	2
+Unless	1
+Version	1
+WARRANTIES	1
+WITHOUT	1
+You	1
+a	1
+accompanying	1
+agreed	1
+an	1
+and	1
+applicable	1
+at	1
+base	1
+by	1
+compliance	1
+copy	1
+directories.</description>	1
+distributed	2
+either	1
+encoding="UTF-8"?>	1
+except	1
+express	1
+file	1
+file.	2
+for	2
+governing	1
+href="configuration.xsl"?>	1
+http://www.apache.org/licenses/LICENSE-2.0	1
+implied.	1
+in	3
+is	1
+language	1
+law	1
+limitations	1
+may	2
+not	1
+obtain	1
+of	1
+on	1
+or	2
+other	1
+overrides	1
+permissions	1
+property	1
+required	1
+site-specific	1
+software	1
+specific	1
+temporary	1
+the	7
+this	2
+to	1
+type="text/xsl"	1
+under	3
+use	1
+version="1.0"	1
+with	1
+writing,	1
+you	1
