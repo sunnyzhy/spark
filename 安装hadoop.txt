@@ -343,6 +343,7 @@ openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object
 # ln -s libcrypto.so.1.0.1e libcrypto.so
 
 18.上传数据到HDFS中
+# cd /usr/local/hadoop/hadoop-2.6.0
 # hadoop fs -mkdir -p /user/hadoop/testdata --http://hadoop1:50070/dfshealth.jsp，打开Browse the filesystem，就可以看到新建的目录，其中user就HDFS的系统目录
 # hadoop fs -put /usr/local/hadoop/hadoop-2.6.0/etc/hadoop/core-site.xml /user/hadoop/testdata  --把hadoop配置文件core-site.xml上传到HDFS中，打开Browse the filesystem，就会在testdata看到core-site.xml
 或者
@@ -357,7 +358,7 @@ Found 1 items
 # cd /usr/local/hadoop/hadoop-2.6.0
 # hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar wordcount /user/hadoop/testdata /user/hadoop/result
 
-# hadoop fs -cat /user/hadoop/result/part-r-00000
+# hadoop fs -cat /user/hadoop/result/part-r-00000  --结果在result下面的part-r-00000中
 或者
 # ./bin/hdfs dfs -cat /user/hadoop/result/part-r-00000 
 
