@@ -302,7 +302,7 @@ export SPARK_YARN_USER_ENV="JAVA_LIBRARY_PATH=$JAVA_LIBRARY_PATH,LD_LIBRARY_PATH
 # cd /usr/local/hadoop/hadoop-2.6.0/sbin
 # ./yarn-daemon.sh start nodemanager
 
-# jps //此时在hadoop1上运行的进程有：DataNode和NodeManager
+# jps //此时在hadoop2上运行的进程有：DataNode和NodeManager
 25245 Jps
 25163 NodeManager
 24910 DataNode
