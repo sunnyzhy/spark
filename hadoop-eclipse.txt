@@ -1,0 +1,21 @@
+1.下载eclipse-jee-juno
+https://www.eclipse.org/downloads/
+
+2.下载hadoop-eclipse-plugin
+https://github.com/winghc/hadoop2x-eclipse-plugin
+
+3.把hadoop-eclipse-plugin-2.6.0.jar拷贝到eclipse/plugins目录中
+
+4.重启eclipse，打开Window -> Preferences -> Hadoop Map/Reduce -> Browse -> 选择hadoop的安装目录 -> Apply -> OK
+
+5.打开Map/Reduce透视图，Window -> Open Perspective -> Other -> Map/Reduce -> OK
+
+6.打开Map/Reduce Locations，Window -> Show Viwe -> Other -> Map/Reduce Locations -> OK
+
+7.新建一个Map/Reduce Locations
+Location name：suse
+Map/Reduce Master：参数Host和Port就是 hdfs-site.xml 中 dfs.namenode.secondary.http-address 的ip和端口
+DFS Master：参数Host和Port就是 core-site.xml 中 fs.default.name 的ip和端口
+User Name：搭建Hadoop集群时所用的用户名
+
+5.新建一个Map/Reduce Project，打开File -> New -> Other -> Map/Reduce -> Map/Reduce Project
