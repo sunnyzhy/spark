@@ -24,4 +24,89 @@ https://github.com/winghc/hadoop2x-eclipse-plugin
 Upload fiels to DFS... / Download frmo DFS...
 Refresh或者在浏览器里面 Browse the file system 都可以查看上传的文件
 
-5.新建一个Map/Reduce Project，打开File -> New -> Other -> Map/Reduce -> Map/Reduce Project
+9.运行WordCount
+9.1.新建工程
+新建一个Map/Reduce Project，打开File -> New -> Other -> Map/Reduce -> Map/Reduce Project，然后新建WordCount.java
+9.2.配置参数
+选中WordCount，选择菜单Run –> Run Configuration -> Java Application，输入Name -> Arguments -> 在Program arguments栏里输入 hdfs://hadoop1:9000/user/hadoop/testdata/eclipse.ini hdfs://hadoop1:9000/user/hadoop/result
+说明：
+    hadoop1:9000是Map/Reduce Locations里的DFS Master配置参数；
+    第一个参数是HDFS里输入文件的路径，第二个参数是HDFS的输出路径；
+    如果HDFS里已经存在result，就删除 # hadoop fs -rmr /user/hadoop/result；
+9.3.运行
+选择WordCount，选择 Run As-> Run on Hadoop
+9.4.查看结果
+Refresh或者在浏览器里面 Browse the file system 查看 result/part-r-00000
+9.5.附WordCount.Java
+package www.zhy.mapreduce;
+
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.util.GenericOptionsParser;
+
+public class WordCount {
+
+  public static class TokenizerMapper 
+       extends Mapper<Object, Text, Text, IntWritable>{
+    
+    private final static IntWritable one = new IntWritable(1);
+    private Text word = new Text();
+      
+    public void map(Object key, Text value, Context context
+                    ) throws IOException, InterruptedException {
+      StringTokenizer itr = new StringTokenizer(value.toString());
+      while (itr.hasMoreTokens()) {
+        word.set(itr.nextToken());
+        context.write(word, one);
+        //System.out.println("qiyadeng map message:"+word+"/"+one);
+        
+      }
+    }
+  }
+  
+  public static class IntSumReducer 
+       extends Reducer<Text,IntWritable,Text,IntWritable> {
+    private IntWritable result = new IntWritable();
+
+    public void reduce(Text key, Iterable<IntWritable> values, 
+                       Context context
+                       ) throws IOException, InterruptedException {
+      int sum = 0;
+      for (IntWritable val : values) {
+        sum += val.get();
+      }
+      result.set(sum);
+      context.write(key, result);
+      //System.out.println("qiyadeng reduce message:"+key+"/"+result);
+    }
+  }
+
+  public static void main(String[] args) throws Exception {
+    Configuration conf = new Configuration();
+    String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
+    if (otherArgs.length != 2) {
+      System.err.println("Usage: wordcount <in> <out>");
+      System.exit(2);
+    }
+    Job job = new Job(conf, "word count");
+    job.setJarByClass(WordCount.class);
+    job.setMapperClass(TokenizerMapper.class);
+    job.setCombinerClass(IntSumReducer.class);
+    job.setReducerClass(IntSumReducer.class);
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(IntWritable.class);
+    FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
+    FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
+    System.exit(job.waitForCompletion(true) ? 0 : 1);
+  }
+}
