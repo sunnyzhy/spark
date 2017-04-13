@@ -28,16 +28,32 @@ Refresh或者在浏览器里面 Browse the file system 都可以查看上传的�
 9.运行WordCount
 9.1.新建工程
 新建一个Map/Reduce Project，打开File -> New -> Other -> Map/Reduce -> Map/Reduce Project，然后新建WordCount.java
+
 9.2.配置参数
 选中WordCount，选择菜单Run –> Run Configuration -> Java Application，输入Name -> Arguments -> 在Program arguments栏里输入 hdfs://hadoop1:9000/user/hadoop/testdata/eclipse.ini hdfs://hadoop1:9000/user/hadoop/result
 说明：
     hadoop1:9000是Map/Reduce Locations里的DFS Master配置参数；
     第一个参数是HDFS里输入文件的路径，第二个参数是HDFS的输出路径；
     如果HDFS里已经存在result，就先删除 # hadoop fs -rmr /user/hadoop/result；
+
 9.3.运行
 选择WordCount，选择 Run As-> Run on Hadoop
+可能出现的问题：
+9.3.1.权限问题，无法访问HDFS
+# cd /usr/local/hadoop/hadoop-2.6.0/etc/hadoop
+# vim hdfs-site.xml
+--添加以下配置，关闭hadoop集群的权限验证
+<property>
+
+<name>dfs.permissions</name>
+
+<value>false</value>
+
+</property>
+
 9.4.查看结果
 Refresh或者在浏览器里面 Browse the file system 查看 result/part-r-00000
+
 9.5.附WordCount.Java
 package www.zhy.mapreduce;
 
