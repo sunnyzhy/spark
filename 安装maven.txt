@@ -34,6 +34,8 @@ maven常用命令
     mvn eclipse:eclipse     生成eclipse工程  
 
 eclipse安装maven插件
-maven插件的url是 http://www.eclipse.org/m2e/m2e-downloads.html
-打开eclipse，菜单 Help -> Install New Software -> 在Work with 地址栏中输入http://download.eclipse.org/technology/m2e/releases/1.7/1.7.0.20160603-1933 -> 选择m2e - Maven Integration for Eclipse -> 安装 -> 重启eclipse
+1.下载m2eclipse插件
+http://m2eclipse.sonatype.org/sites/m2e/
+2.把features中的jar包拷贝到eclipse/features目录中；把plugins中的jar包拷贝到eclipse/plugins目录中；
+3.重启eclipse
 
