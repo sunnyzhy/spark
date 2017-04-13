@@ -1,4 +1,4 @@
-1.下载eclipse-jee-juno
+1.下载eclipse-jee-mars
 https://www.eclipse.org/downloads/
 
 2.下载hadoop-eclipse-plugin
@@ -8,7 +8,7 @@ https://github.com/winghc/hadoop2x-eclipse-plugin
 
 4.重启eclipse，打开Window -> Preferences -> Hadoop Map/Reduce -> Browse -> 选择hadoop的安装目录 -> Apply -> OK
 
-5.打开Map/Reduce透视图，Window -> Open Perspective -> Other -> Map/Reduce -> OK
+5.打开Map/Reduce透视图，Window -> -> Perspective -> Open Perspective -> Other -> Map/Reduce -> OK
 
 6.打开Map/Reduce Locations，Window -> Show Viwe -> Other -> Map/Reduce Locations -> OK
 
@@ -19,5 +19,9 @@ https://github.com/winghc/hadoop2x-eclipse-plugin
   DFS Master：参数Host和Port就是 core-site.xml 中 fs.defaultFS 的Hostname和端口
   User Name：搭建Hadoop集群时所用的用户名
 新建成功之后会在左侧 Project Explorer 下面出现 DFS Locations ，展开 suse 就可以查看HDFS里的文件
+
+8.从HDFS上传/下载文件
+Upload fiels to DFS... / Download frmo DFS...
+Refresh或者在浏览器里面 Browse the file system 都可以查看上传的文件
 
 5.新建一个Map/Reduce Project，打开File -> New -> Other -> Map/Reduce -> Map/Reduce Project
