@@ -18,7 +18,7 @@ https://github.com/winghc/hadoop2x-eclipse-plugin
   Map/Reduce Master：参数Host是Hostname，Port用默认端口50020
   DFS Master：参数Host和Port就是 core-site.xml 中 fs.defaultFS 的Hostname和端口
   User Name：搭建Hadoop集群时所用的用户名
-新建成功之后会在左侧 Project Explorer 下面出现 DFS Locations ，展开 suse 就可以查看HDFS里的文件
+新建成功之后，点击 Map/Reduce 透视图，会在左侧 Project Explorer 下面出现 DFS Locations ，展开 suse 就可以查看HDFS里的文件
 
 8.从HDFS上传/下载文件
 Upload fiels to DFS... / Download frmo DFS...
