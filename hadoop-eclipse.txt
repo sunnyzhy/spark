@@ -14,10 +14,11 @@ https://github.com/winghc/hadoop2x-eclipse-plugin
 
 7.新建一个Map/Reduce Locations
 在Map/Reduce Locations的视图中右键空白区域或点击 New Hadoop loaction... 打开配置窗口
-  Location name：suse，可以任意命名
-  Map/Reduce Master：参数Host是Hostname，Port用默认端口50020
-  DFS Master：参数Host和Port就是 core-site.xml 中 fs.defaultFS 的Hostname和端口
-  User Name：搭建Hadoop集群时所用的用户名
+说明：
+    Location name：suse，可以任意命名
+    Map/Reduce Master：参数Host是Hostname，Port用默认端口50020
+    DFS Master：参数Host和Port就是 core-site.xml 中 fs.defaultFS 的Hostname和端口
+    User Name：搭建Hadoop集群时所用的用户名
 新建成功之后，点击 Map/Reduce 透视图，会在左侧 Project Explorer 下面出现 DFS Locations ，展开 suse 就可以查看HDFS里的文件
 
 8.从HDFS上传/下载文件
@@ -32,7 +33,7 @@ Refresh或者在浏览器里面 Browse the file system 都可以查看上传的�
 说明：
     hadoop1:9000是Map/Reduce Locations里的DFS Master配置参数；
     第一个参数是HDFS里输入文件的路径，第二个参数是HDFS的输出路径；
-    如果HDFS里已经存在result，就删除 # hadoop fs -rmr /user/hadoop/result；
+    如果HDFS里已经存在result，就先删除 # hadoop fs -rmr /user/hadoop/result；
 9.3.运行
 选择WordCount，选择 Run As-> Run on Hadoop
 9.4.查看结果
