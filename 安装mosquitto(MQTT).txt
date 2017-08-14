@@ -16,10 +16,15 @@ enabled=1
 # mosquitto -c /etc/mosquitto/mosquitto.conf -d
 或
 # sudo /etc/init.d/mosquitto start
+或
+# sudo service mosquitto start
 
-3.订阅消息（打开另外一个终端）
+3.停止mosquitto
+# sudo service mosquitto stop
+
+4.订阅消息（打开另外一个终端）
 # mosquitto_sub -h 192.168.x.x -p 1883 -t Topic
 
-4.发布消息
+5.发布消息
 # mosquitto_pub -h 192.168.x.x -p 1883 -t Topic -m "hello world"
 此时会在消息订阅的终端显示hello world
