@@ -1,0 +1,27 @@
+1.下载redis
+https://redis.io/download
+
+2.安装
+# mkdir redis
+# cd redis
+# tar -xzvf redis-4.0.1.tar.gz
+# cd redis-4.0.1
+# make
+# cd src && make install
+# make test
+You need tcl 8.5 or newer in order to run the Redis test
+make: *** [test] Error 1
+如果报错，就说明需要安装tcl
+# yum -y install tcl
+
+3.配置redis
+# cp redis.conf /etc/
+# vi /etc/redis.conf
+修改 daemonize yes
+
+4.启动redis
+# cd /usr/local/bin
+# ./redis-server /etc/redis.conf
+# ps -ef | grep redis
+root     14561     1  0 17:25 ?        00:00:00 ./redis-server 127.0.0.1:6379 
+root     14568  3106  0 17:26 pts/1    00:00:00 grep redis
