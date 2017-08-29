@@ -1,19 +1,37 @@
-1.安装Mysql
-# yum list mysql-server
-# yum -y install mysql-server
+1.检测系统是否自带安装MySQL
+#yum list installed | grep mysql
 
-2.启动Mysql服务
+2.删除系统自带的mysql及其依赖：
+# yum -y remove mysql-libs.x86_64
+
+3.给CentOS添加rpm源，并且选择较新的源：
+# wget dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+# yum -y localinstall mysql-community-release-el6-5.noarch.rpm
+# yum repolist all | grep mysql
+# yum-config-manager --disable mysql55-community
+# yum-config-manager --disable mysql56-community
+# yum-config-manager --enable mysql57-community-dmr
+# yum repolist enabled | grep mysql
+
+4.安装mysql服务：
+# yum -y install mysql-community-server
+
+5.启动mysql:
 # service mysqld start
 
-3.链接
+6.查看mysql是否自启动,并且设置开启自启动:
+# chkconfig --list | grep mysqld
+# chkconfig mysqld on
+
+7.mysql安全设置 命令：
+# mysql_secure_installation
+
+8.链接
 # mysql
 mysql> 
 ctr + c，退出
 
-4.设置Mysql开机启动
-# chkconfig mysqld on
-
-5.修改密码并设置远程访问
+9.修改密码并设置远程访问
 # mysql
 mysql> use mysql;
 mysql> update user set password=password('root') where user='root'; --修改root登录msql的密码
@@ -22,20 +40,20 @@ mysql> grant all privileges on *.* to 'root'@'%' identified by 'root' with grant
 mysql> -- 'root'@'%' identified by 'root'，允许任何IP地址（%）的电脑用帐户（root）和密码（root）来访问MySQL Server
 mysql> -- 'root'@'192.168.0.1'，%号可以用IP地址替换，意思是仅允许指定的IP地址访问MySQL Server
 
-6.MySql登录
+10.MySql登录
 # mysql -u root -p
 Enter password: 
 mysql> 
 
-7.解决Mysql乱码
+11.解决Mysql乱码
 # vim /etc/my.cnf
 在[mysqld]下面添加
 default-character-set=utf8
 
-8.重启mysql服务
+12.重启mysql服务
 # service mysqld restart
 
-9.安装phpMyAdmin
+13.安装phpMyAdmin
 1).安装php5
 yum -y update
 yum -y install epel-release
