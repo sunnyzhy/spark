@@ -1,59 +1,66 @@
-1.检测系统是否自带安装MySQL
-#yum list installed | grep mysql
+1.下载mysql
+https://dev.mysql.com/downloads/mysql/
+Select Operating System:
+Linux - Generic
 
-2.删除系统自带的mysql及其依赖：
-# yum -y remove mysql-libs.x86_64
+Select OS Version:
+Linux - Generic(glibc 2.12)(x86,64-bit)
 
-3.给CentOS添加rpm源，并且选择较新的源：
-# wget dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
-# yum -y localinstall mysql-community-release-el6-5.noarch.rpm
-# yum repolist all | grep mysql
-# yum-config-manager --disable mysql55-community
-# yum-config-manager --disable mysql56-community
-# yum-config-manager --enable mysql57-community-dmr
-# yum repolist enabled | grep mysql
+下载 Compressed TAR Archive
 
-4.安装mysql服务：
-# yum -y install mysql-community-server
+2.解压
+# tar -zxvf mysql-5.7.19-linux-glibc2.12-x86_64.tar.gz -C /usr/local
 
-5.启动mysql:
-# service mysqld start
+3.重命名
+# mv mysql-5.7.19-linux-glibc2.12-x86_64 mysql
 
-6.查看mysql是否自启动,并且设置开启自启动:
-# chkconfig --list | grep mysqld
-# chkconfig mysqld on
+4.安装
+# cd mysql
+# ./bin/mysqld --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data --initialize
+2017-08-29T07:13:30.353666Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2017-08-29T07:13:30.353763Z 0 [ERROR] Can't find error-message file '/usr/local/mysql/share/errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
+2017-08-29T07:13:30.560072Z 0 [Warning] InnoDB: New log files created, LSN=45790
+2017-08-29T07:13:30.674065Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.
+2017-08-29T07:13:30.738373Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: 8fb33268-8c89-11e7-8abc-000c29942c33.
+2017-08-29T07:13:30.741119Z 0 [Warning] Gtid table is not ready to be used. Table 'mysql.gtid_executed' cannot be opened.
+2017-08-29T07:13:30.743215Z 1 [Note] A temporary password is generated for root@localhost: 3+MMsYZ+,VYw
+安装完成，出现如上信息，将随机生成的登录密码记录下来，密码在最后一行的末尾(3+MMsYZ+,VYw)
 
-7.mysql安全设置 命令：
-# mysql_secure_installation
+5.开启mysql服务
+# ./support-files/mysql.server start
 
-8.链接
-# mysql
+6.将mysql进程放入系统进程中
+# cp support-files/mysql.server /etc/init.d/mysqld
+
+7.为mysql创建软链接
+# ln -s /usr/local/mysql/bin/mysql /usr/bin
+
+8.重新启动mysql服务
+# service mysqld restart
+
+9.使用随机密码登录mysql数据库，修改密码并设置远程访问
+# mysql -u root -p
+Enter password: 3+MMsYZ+,VYw
 mysql> 
-ctr + c，退出
 
-9.修改密码并设置远程访问
-# mysql
-mysql> use mysql;
-mysql> update user set password=password('root') where user='root'; --修改root登录msql的密码
+10.为root用户设置新密码
+mysql> alter user 'root'@'localhost' identified by 'root';
+
+11.设置允许远程连接数据库
+mysql> update user set user.Host='%' where user.User='root';
 mysql> flush privileges;
+
+13.题外
 mysql> grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;
 mysql> -- 'root'@'%' identified by 'root'，允许任何IP地址（%）的电脑用帐户（root）和密码（root）来访问MySQL Server
 mysql> -- 'root'@'192.168.0.1'，%号可以用IP地址替换，意思是仅允许指定的IP地址访问MySQL Server
 
-10.MySql登录
-# mysql -u root -p
-Enter password: 
-mysql> 
-
-11.解决Mysql乱码
-# vim /etc/my.cnf
-在[mysqld]下面添加
-default-character-set=utf8
-
-12.重启mysql服务
+14.启动、停止、重启mysql服务
+# service mysqld start
+# service mysqld stop
 # service mysqld restart
 
-13.安装phpMyAdmin
+15.安装phpMyAdmin
 1).安装php5
 yum -y update
 yum -y install epel-release
