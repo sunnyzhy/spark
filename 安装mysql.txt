@@ -93,7 +93,9 @@ https://www.phpmyadmin.net/downloads/
 # mv phpMyAdmin-4.0.10.18-all-languages phpMyAdmin  --重命名文件夹
 # cd phpMyAdmin
 # cp config.sample.inc.php config.inc.php
+把 $cfg['Servers'][$i]['host'] = 'localhost';
+修改为 $cfg['Servers'][$i]['host'] = '127.0.0.1';
 # service httpd restart --重启apache
 
 4).验证是否安装成功
-输入http://127.0.0.1/phpMyAdmin/
+输入http://127.0.0.1/phpMyAdmin/，然后登录
