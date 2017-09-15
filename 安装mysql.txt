@@ -27,6 +27,11 @@ Linux - Generic(glibc 2.12)(x86,64-bit)
 2017-08-29T07:13:30.743215Z 1 [Note] A temporary password is generated for root@localhost: 3+MMsYZ+,VYw
 安装完成，出现如上信息，将随机生成的登录密码记录下来，密码在最后一行的末尾(3+MMsYZ+,VYw)
 
+# vim /etc/my.cnf
+[mysqld]
+datadir=/usr/local/mysql/data
+socket=/usr/local/mysql/mysql.sock
+
 5.开启mysql服务
 # ./support-files/mysql.server start
 
