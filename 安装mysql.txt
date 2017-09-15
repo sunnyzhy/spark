@@ -52,6 +52,7 @@ Enter password: 3+MMsYZ+,VYw
 mysql> 
 
 10.为root用户设置新密码
+mysql> use mysql;
 mysql> alter user 'root'@'localhost' identified by 'root';
 
 11.设置允许远程连接数据库
