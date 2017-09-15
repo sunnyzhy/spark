@@ -16,9 +16,10 @@ Linux - Generic(glibc 2.12)(x86,64-bit)
 
 4.安装
 # cd mysql
+# adduser mysql
+# chown mysql:mysql -R /usr/local/mysql
 # ./bin/mysqld --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data --initialize
 2017-08-29T07:13:30.353666Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
-2017-08-29T07:13:30.353763Z 0 [ERROR] Can't find error-message file '/usr/local/mysql/share/errmsg.sys'. Check error-message file location and 'lc-messages-dir' configuration directive.
 2017-08-29T07:13:30.560072Z 0 [Warning] InnoDB: New log files created, LSN=45790
 2017-08-29T07:13:30.674065Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.
 2017-08-29T07:13:30.738373Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: 8fb33268-8c89-11e7-8abc-000c29942c33.
