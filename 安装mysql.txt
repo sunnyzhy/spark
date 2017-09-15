@@ -16,8 +16,11 @@ Linux - Generic(glibc 2.12)(x86,64-bit)
 
 4.安装
 # cd mysql
+
+添加mysql用户
 # adduser mysql
 # chown mysql:mysql -R /usr/local/mysql
+
 # ./bin/mysqld --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data --initialize
 2017-08-29T07:13:30.353666Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
 2017-08-29T07:13:30.560072Z 0 [Warning] InnoDB: New log files created, LSN=45790
@@ -33,6 +36,7 @@ datadir=/usr/local/mysql/data
 socket=/usr/local/mysql/mysql.sock
 [client]
 socket=/usr/local/mysql/mysql.sock
+修改mysqld节点，如果不存在client节点就添加client节点
 
 5.开启mysql服务
 # ./support-files/mysql.server start
