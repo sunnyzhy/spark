@@ -82,7 +82,7 @@ wget https://centos6.iuscommunity.org/ius-release.rpm
 rpm -Uvh ius-release*.rpm
 yum -y update
 yum -y install php55u php55u-opcache php55u-xml php55u-mcrypt php55u-gd php55u-devel php55u-mysql php55u-intl php55u-mbstring php55u-bcmath
-如果失败，就用一下方法：
+如果失败，就用以下方法：
 # rpm -Uvh http://ftp.iij.ad.jp/pub/linux/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
 # rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
 # yum list --enablerepo=remi --enablerepo=remi-php56 | grep php
@@ -123,7 +123,7 @@ http://php.net/
 # cd php-7.1.9
 # ./configure --prefix=/usr/local/php --with-curl --with-freetype-dir --with-gd --with-gettext --with-iconv-dir --with-kerberos --with-libdir=lib64 --with-libxml-dir --with-MySQL --with-mysqli --with-openssl --with-pcre-regex --with-pdo-mysql --with-pdo-sqlite --with-pear --with-png-dir --with-xmlrpc --with-xsl --with-zlib --enable-fpm --enable-bcmath --enable-libxml --enable-inline-optimization --enable-gd-native-ttf --enable-mbregex --enable-mbstring --enable-opcache --enable-pcntl --enable-shmop --enable-soap --enable-sockets --enable-sysvsem --enable-xml --enable-zip
 
-如果显示以下内容，就说明php配置完成
+如果显示以下内容，就说明配置完成
 Generating files
 configure: creating ./config.status
 creating main/internal_functions.c
@@ -141,7 +141,7 @@ Thank you for using PHP.
 
 # make && make install
 
-如果显示以下内容，就说明php安装完成
+如果显示以下内容，就说明安装完成
 Generating phar.php
 Generating phar.phar
 PEAR package PHP_Archive not installed: generated phar will require PHP's phar extension be enabled.
@@ -154,7 +154,28 @@ phar.inc
 
 Build complete.
 Don't forget to run 'make test'.
-    
+
+php配置
+# cp php.ini-development /usr/local/php/lib/php.ini
+# cp -R ./sapi/fpm/php-fpm.conf /usr/local/php/etc/php-fpm.conf
+# cp ./sapi/fpm/init.d.php-fpm  /etc/init.d/php-fpm
+# chmod a+x /etc/init.d/php-fpm
+
+php启动
+# /etc/init.d/php-fpm start
+[15-Sep-2017 23:55:31] WARNING: Nothing matches the include pattern '/usr/local/php/etc/php-fpm.d/*.conf' from /usr/local/php/etc/php-fpm.conf at line 125.
+[15-Sep-2017 23:55:31] ERROR: No pool defined. at least one pool section must be specified in config file
+[15-Sep-2017 23:55:31] ERROR: failed to post process the configuration
+[15-Sep-2017 23:55:31] ERROR: FPM initialization failed
+
+如果出现以上错误提示，就用以下方法
+# cd /usr/local/php/etc/php-fpm.d
+# cp www.conf.default www.conf
+
+启动成功
+# /etc/init.d/php-fpm start
+Starting php-fpm  done
+
 2).更新apache
 # rpm -qa httpd  --查看是否安装了apache
 httpd-2.2.15-55.el6.centos.2.x86_64
