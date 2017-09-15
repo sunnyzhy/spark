@@ -31,6 +31,8 @@ Linux - Generic(glibc 2.12)(x86,64-bit)
 [mysqld]
 datadir=/usr/local/mysql/data
 socket=/usr/local/mysql/mysql.sock
+[client]
+socket=/usr/local/mysql/mysql.sock
 
 5.开启mysql服务
 # ./support-files/mysql.server start
