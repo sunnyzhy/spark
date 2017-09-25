@@ -29,4 +29,7 @@ D:\vue\demo>cnpm install
 7.运行项目
 D:\vue\demo>npm run dev
 run对应的是package.json文件中scripts字段中的dev，也就是 node build/dev-server.js命令的一个快捷方式。
-项目运行成功后，浏览器会自动打开http://localhost:8080/#/（如果浏览器没有自动打开，可以手动输入）。
+
+运行成功后，cmd开始监听本地的8080端口
+> Listening at http://localhost:8080
+同时，浏览器会自动打开http://localhost:8080/#/（如果浏览器没有自动打开，可以手动输入）。
