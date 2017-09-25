@@ -1,0 +1,32 @@
+1.下载nodejs
+https://nodejs.org/en/
+
+2.安装nodejs
+D:\>node -v
+v8.5.0
+
+D:\>npm -v
+5.3.0
+
+3.安装cnpm
+D:\>npm install -g cnpm --registry=http://registry.npm.taobao.org
+
+4.安装vue-cli
+D:\>cnpm install -g vue-cli
+
+5.用vue-cli构建项目
+D:\>mkdir vue
+D:\>cd vue
+D:\vue>vue init webpack demo
+运行初始化命令的时候回让用户输入几个基本的选项，如项目名称，描述，作者等信息，如果不想填就直接回车默认。
+该命令用来初始化一个项目，webpack是构建工具，也就是整个项目是基于webpack的；demo是整个项目文件夹的名称，这个文件夹会自动生成在指定的目录vue中。
+
+6.安装项目所需的依赖
+D:\vue>cd demo
+D:\vue\demo>cnpm install
+安装完成之后，会在我们的项目目录firstVue文件夹中多出一个node_modules文件夹，这里边就是我们项目需要的依赖包资源。
+
+7.运行项目
+D:\vue\demo>npm run dev
+run对应的是package.json文件中scripts字段中的dev，也就是 node build/dev-server.js命令的一个快捷方式。
+项目运行成功后，浏览器会自动打开http://localhost:8080/#/（如果浏览器没有自动打开，可以手动输入）。
