@@ -1,6 +1,6 @@
 #### 下载mysql
 https://dev.mysql.com/downloads/mysql/
-~~~javascript
+~~~
 Select Operating System:
 Linux - Generic
 
@@ -34,7 +34,9 @@ Linux - Generic(glibc 2.12)(x86,64-bit)
 2017-08-29T07:13:30.743215Z 1 [Note] A temporary password is generated for root@localhost: 3+MMsYZ+,VYw
 ~~~
 
-		安装完成，出现如上信息，将随机生成的登录密码记录下来，密码在最后一行的末尾(3+MMsYZ+,VYw)
+~~~
+安装完成，出现如上信息，将随机生成的登录密码记录下来，密码在最后一行的末尾(3+MMsYZ+,VYw)
+~~~
 
 修改mysqld节点，如果不存在client节点就添加client节点
 ~~~javascript
@@ -91,8 +93,11 @@ mysql> flush privileges;
 ~~~javascript
 mysql> grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;
 ~~~
-		'root'@'%' identified by 'root'，允许任何IP地址（%）的电脑用帐户（root）和密码（root）来访问MySQL Server
-		'root'@'192.168.0.1'，%号可以用IP地址替换，意思是仅允许指定的IP地址访问MySQL Server
+
+~~~
+'root'@'%' identified by 'root'，允许任何IP地址（%）的电脑用帐户（root）和密码（root）来访问MySQL Server
+'root'@'192.168.0.1'，%号可以用IP地址替换，意思是仅允许指定的IP地址访问MySQL Server
+~~~
 
 #### 启动、停止、重启mysql服务
 ~~~javascript
