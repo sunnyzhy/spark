@@ -1,5 +1,5 @@
 #### 下载JDK1.7
-下载地址http://www.oracle.com/
+http://www.oracle.com/
 ~~~
 Downloads -> Java for Developers -> Java Archive -> Download ->  Java SE 7
 ~~~

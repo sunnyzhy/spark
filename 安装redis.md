@@ -1,10 +1,10 @@
-#### yum安装
+#### 一、yum安装
 
 ~~~javascript
 # yum -y install redis
 ~~~
 
-#### 下载安装
+#### 二、下载安装
 
 ##### 下载redis
 https://redis.io/download
