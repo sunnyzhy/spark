@@ -1,7 +1,7 @@
-#####下载nodejs
+##### 下载nodejs
 https://nodejs.org/en/
 
-#####安装nodejs
+##### 安装nodejs
 
 ~~~javascript
 D:\>node -v
@@ -11,19 +11,19 @@ D:\>npm -v
 5.3.0
 ~~~
 
-#####安装cnpm
+##### 安装cnpm
 
 ~~~javascript
 D:\>npm install -g cnpm --registry=http://registry.npm.taobao.org
 ~~~
 
-#####安装vue-cli
+##### 安装vue-cli
 
 ~~~javascript
 D:\>cnpm install -g vue-cli
 ~~~
 
-#####用vue-cli构建项目
+##### 用vue-cli构建项目
 
 ~~~javascript
 D:\>mkdir vue
@@ -34,7 +34,7 @@ D:\vue>vue init webpack demo
 		运行初始化命令的时候回让用户输入几个基本的选项，如项目名称，描述，作者等信息，如果不想填就直接回车默认。
 		该命令用来初始化一个项目，webpack是构建工具，也就是整个项目是基于webpack的；demo是整个项目文件夹的名称，这个文件夹会自动生成在指定的目录vue中。
 
-#####安装项目所需的依赖
+##### 安装项目所需的依赖
 
 ~~~javascript
 D:\vue>cd demo
@@ -43,7 +43,7 @@ D:\vue\demo>cnpm install
 
 		安装完成之后，会在我们的项目目录firstVue文件夹中多出一个node_modules文件夹，这里边就是我们项目需要的依赖包资源。
 
-#####运行项目
+##### 运行项目
 
 ~~~javascript
 D:\vue\demo>npm run dev
@@ -53,19 +53,19 @@ D:\vue\demo>npm run dev
 
 		运行成功后，cmd开始监听本地的8080端口,同时，浏览器会自动打开http://localhost:8080/#/（如果浏览器没有自动打开，可以手动输入）。
 
-#####安装jquery
+##### 安装jquery
 
 ~~~javascript
 D:\vue\demo>cnpm install jquery --save-dev
 ~~~
 
-#####安装bootstrap
+##### 安装bootstrap
 
 ~~~javascript
 D:\vue\demo>cnpm install bootstrap --save-dev
 ~~~
 
-#####引入bootstrap
+##### 引入bootstrap
 
 * 在index.html文件中加入<meta>标签实现响应式
 ~~~javascript
