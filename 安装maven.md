@@ -50,14 +50,3 @@ mvn install     将项目安装到本地仓库，发布生成对应的package包
 mvn clean       清空项目，删除target文件夹，即删除生成的package包以及class等文件。  
 mvn eclipse:eclipse     生成eclipse工程  
 ~~~
-
-eclipse安装maven插件
-~~~
-1.下载m2eclipse插件
-http://m2eclipse.sonatype.org/sites/m2e/
-
-2.把features中的jar包拷贝到eclipse/features目录中；把plugins中的jar包拷贝到eclipse/plugins目录中；
-
-3.重启eclipse
-~~~
-
