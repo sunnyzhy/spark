@@ -33,3 +33,12 @@ run对应的是package.json文件中scripts字段中的dev，也就是 node buil
 运行成功后，cmd开始监听本地的8080端口
 > Listening at http://localhost:8080
 同时，浏览器会自动打开http://localhost:8080/#/（如果浏览器没有自动打开，可以手动输入）。
+
+8.引入bootstrap
+D:\vue\demo>cnpm install jquery --save-dev
+1).在index.html文件中加入<meta>标签实现响应式
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+2).先在static目录下放入需要加载的bootstrap文件
+
