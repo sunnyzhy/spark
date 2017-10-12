@@ -180,9 +180,7 @@ http {
 }
 ```
 
-启动nginx服务，
-当访问www.web.com的时候，实际上是通过nginx将请求转发到了http://localhost:81/
-当访问app.web.com的时候，实际上是通过nginx将请求转发到了http://localhost:82/
+启动nginx服务，当访问www.web.com的时候，实际上是通过nginx将请求转发到了http://localhost:81/ ;当访问app.web.com的时候，实际上是通过nginx将请求转发到了http://localhost:82/
 
 主要配置server中的以下参数：
 - listen：监听的端口
