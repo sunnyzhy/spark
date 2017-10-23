@@ -42,3 +42,6 @@ Welcome to nginx!
 
 重启nginx服务
 # ./nginx -s reload
+
+停止nginx服务
+# ./nginx -s stop
