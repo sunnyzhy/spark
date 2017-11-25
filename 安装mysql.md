@@ -1,3 +1,15 @@
+# 官网
+https://dev.mysql.com/downloads/repo/yum/
+
+# 安装
+~~~
+# mkdir -p /usr/local/mysql
+# yum -y localinstall mysql57-community-release-el7-11.noarch.rpm
+# yum search mysql
+# yum -y install mysql-community-server.x86_64 mysql-community-client.x86_64
+
+~~~
+
 #### 下载mysql
 https://dev.mysql.com/downloads/mysql/
 ~~~
