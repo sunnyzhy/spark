@@ -4,10 +4,49 @@ https://dev.mysql.com/downloads/repo/yum/
 # 安装
 ~~~
 # mkdir -p /usr/local/mysql
+
 # yum -y localinstall mysql57-community-release-el7-11.noarch.rpm
+
 # yum search mysql
+
 # yum -y install mysql-community-server.x86_64 mysql-community-client.x86_64
 
+# vim /etc/my.cnf
+skip-grant-tables
+
+# systemctl start mysqld
+
+# mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.7.20 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use mysql;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> update user set authentication_string=password('root') where user='root';
+Query OK, 1 row affected, 1 warning (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+mysql> exit;
+Bye
+
+# vim /etc/my.cnf
+# skip-grant-tables
+
+# systemctl restart mysqld
+
+# mysql -u root -proot
 ~~~
 
 #### 下载mysql
