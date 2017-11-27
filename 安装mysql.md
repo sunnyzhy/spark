@@ -84,7 +84,10 @@ Bye
 
 # 设置允许远程连接数据库
 ~~~
+mysql> use mysql;
+
 mysql> update user set user.Host='%' where user.User='root';
+
 mysql> flush privileges;
 ~~~
 
