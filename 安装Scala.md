@@ -23,4 +23,4 @@ Scala code runner version 2.12.4 -- Copyright 2002-2017, LAMP/EPFL and Lightbend
 ```
 
 # 退出scala命令行
-  ctr + c
+    ctr + c
