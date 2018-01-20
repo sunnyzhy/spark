@@ -104,6 +104,7 @@ tcp6       0      0 127.0.0.1:7077          :::*                    LISTEN
     Status: ALIVE
 ```
 显示以下内容就说明spark集群启动成功：
+
 1).Alive Workers: 2  
 2).Workers列表包含spark1、spark2的地址
 
