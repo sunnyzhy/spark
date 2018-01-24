@@ -65,6 +65,17 @@ spark2: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/sp
 spark1: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/spark-2.2.1-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-spark1.out
 ```
 
+# 停止Spark
+```
+# ./stop-all.sh
+spark1: stopping org.apache.spark.deploy.worker.Worker
+spark2: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+
+# jps
+6273 Jps
+```
+
 # 验证
 此时在spark1上面运行的进程有：Worker和Master
 ```
