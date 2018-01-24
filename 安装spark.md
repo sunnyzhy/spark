@@ -38,7 +38,7 @@ spark2
 # cp spark-env.sh.template spark-env.sh
 
 # vim spark-env.sh
-export JAVA_HOME=/usr/local/jdk
+export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
 export SPARK_MASTER_IP=spark1
 export SPARK_MASTER_PORT=7077
 export SPARK_WORKER_CORES=1
