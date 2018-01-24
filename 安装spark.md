@@ -1,6 +1,11 @@
 # 下载
 下载地址http://spark.apache.org/
 
+# 安装依赖
+- ssh
+- jdk
+- scala
+
 # 解压
 ```
 # cd /usr/local/spark
@@ -56,8 +61,8 @@ export SPARK_WORKER_MEMORY=512M
 
 # ./start-all.sh
 starting org.apache.spark.deploy.master.Master, logging to /usr/local/spark/spark-2.2.1-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.master.Master-1-spark1.out
-spark1: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/spark-2.2.1-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-spark1.out
 spark2: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/spark-2.2.1-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-spark2.out
+spark1: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/spark/spark-2.2.1-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-spark1.out
 ```
 
 # 验证
@@ -80,7 +85,7 @@ spark2: starting org.apache.spark.deploy.worker.Worker, logging to /usr/local/sp
 ```
 # netstat -nlt
 tcp6       0      0 :::8080                 :::*                    LISTEN
-tcp6       0      0 127.0.0.1:7077          :::*                    LISTEN
+tcp6       0      0 192.168.253.107:7077    :::*                    LISTEN
 ```
 
 在浏览器中输入 http://spark1:8080，可以进入Spark集群状态页面
