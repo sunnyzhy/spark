@@ -8,15 +8,6 @@
 # tar -zxvf spark-2.2.1-bin-hadoop2.7.tgz
 ```
 
-# 修改主机名
-```
-# vim /etc/hosts
-127.0.0.1   spark1 ocalhost localhost.localdomain localhost4 localhost4.localdomain4
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-
-# systemctl restart network
-```
-
 # 配置系统变量
 ```
 # vim /etc/profile
