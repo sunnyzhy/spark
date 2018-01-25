@@ -299,33 +299,6 @@ export PATH=.:$HADOOP_HOME/bin:$JAVA_HOME/bin:$PATH
 - 在浏览器的地址栏中输入http://spark1:50070
 - Live Nodes 	:	2 (Decommissioned: 0)，节点数为2就说明hadoop集群启动成功
 - 点开Live Nodes就可以看到集群spark1、spark2的监控信息
-```
-# hadoop checknative
-18/01/25 15:13:48 WARN bzip2.Bzip2Factory: Failed to load/initialize native-bzip2 library system-native, will use pure-Java version
-18/01/25 15:13:48 INFO zlib.ZlibFactory: Successfully loaded & initialized native-zlib library
-Native library checking:
-hadoop:  true /usr/local/hadoop/hadoop-2.7.5/lib/native/libhadoop.so.1.0.0
-zlib:    true /lib64/libz.so.1
-snappy:  false 
-lz4:     true revision:99
-bzip2:   false 
-openssl: false EVP_CIPHER_CTX_cleanup
-```
-解决方法：
-- snappy:  false
-```
-
-```
-- bzip2:   false
-```
-# yum -y install bzip2
-```
-- openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object file: No such file or directory)!
-```
-# cd /usr/lib64/
-
-# ln -s libcrypto.so.1.0.1e libcrypto.so
-```
 
 # 上传数据到HDFS中
 ```
