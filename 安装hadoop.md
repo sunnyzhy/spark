@@ -1,63 +1,68 @@
-1.下载hadoop-2.6.0
-下载地址http://hadoop.apache.org/
+# 官网
+http://hadoop.apache.org/
 
-2.解压
-# tar -zxvf /..目录/hadoop-2.6.0.tar.gz -C /usr/local/hadoop
+# 解压
+```
+# cd /usr/local/hadoop
+# tar -zxvf hadoop-2.7.5.tar.gz
+```
 
-3.在hadoop目录下创建子目录
-# cd /usr/local/hadoop/hadoop-2.6.0
+# 在hadoop目录下创建子目录
+```
+# cd hadoop-2.7.5
 # mkdir tmp
 # mkdir name
 # mkdir data
+```
 
-4.配置hadoop-env.sh
-# cd /usr/local/hadoop/hadoop-2.6.0/etc/hadoop
+# 配置hadoop-env.sh
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+
 # vim hadoop-env.sh
-设置JAVA_HOME和PATH路径
-export JAVA_HOME=/usr/local/java/jdk1.7.0_80
-export PATH=$PATH:/usr/local/hadoop/hadoop-2.6.0/bin
+export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
+export PATH=$PATH:/usr/local/hadoop/hadoop-2.7.5/bin
+
 # source hadoop-env.sh
+
 # hadoop version
-如果显示以下内容，就表示配置生效了
-Hadoop 2.6.0
-Subversion https://git-wip-us.apache.org/repos/asf/hadoop.git -r e3496499ecb8d220fba99dc5ed4c99c8f9e33bb1
-Compiled by jenkins on 2014-11-13T21:10Z
+Hadoop 2.7.5
+Subversion https://shv@git-wip-us.apache.org/repos/asf/hadoop.git -r 18065c2b6806ed4aa6a3187d77cbe21bb3dba075
+Compiled by kshvachk on 2017-12-16T01:06Z
 Compiled with protoc 2.5.0
-From source with checksum 18e43357c8f927c0695f1e9522859d6a
-This command was run using /usr/lib/hadoop/hadoop-2.6.0/share/hadoop/common/hadoop-common-2.6.0.jar
+From source with checksum 9f118f95f47043332d51891e37f736e9
+This command was run using /usr/local/hadoop/hadoop-2.7.5/share/hadoop/common/hadoop-common-2.7.5.jar
+```
+# 配置日志级别
+```
+# export HADOOP_ROOT_LOGGER=DEBUG,console
+# export HADOOP_ROOT_LOGGER=INFO,console
+```
 
-说明：
-# export HADOOP_ROOT_LOGGER=DEBUG,console //开启调试信息
-# export HADOOP_ROOT_LOGGER=INFO,console  //关闭调试信息
+# 配置yarn-env.sh
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
 
-5.配置yarn-env.sh
-# cd /usr/local/hadoop/hadoop-2.6.0/etc/hadoop
 # vim yarn-env.sh
-设置JAVA_HOME路径
-1).先找到以下内容
-# some Java parameters
-# export JAVA_HOME=/home/y/libexec/jdk1.6.0/
-if [ "$JAVA_HOME" != "" ]; then
-  #echo "run java in $JAVA_HOME"
-  JAVA_HOME=$JAVA_HOME
-fi
-2).修改第二行配置
-export JAVA_HOME=/usr/local/java/jdk1.7.0_80
-# source yarn-env.sh
+export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
 
-6.配置core-site.xml
-# cd /usr/local/hadoop/hadoop-2.6.0/etc/hadoop
+# source yarn-env.sh
+```
+
+# 配置core-site.xml
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+
 # vim core-site.xml
-按照如下内容进行配置，fs.default.name的值是hdfs://master:9000
 <configuration>
   <property>
     <name>fs.default.name</name>
-    <value>hdfs://hadoop1:9000</value>
+    <value>hdfs://spark1:9000</value>
   </property>
 
   <property>
     <name>fs.defaultFS</name>
-    <value>hdfs://hadoop1:9000</value>
+    <value>hdfs://spark1:9000</value>
   </property>
 
   <property>
@@ -67,7 +72,7 @@ export JAVA_HOME=/usr/local/java/jdk1.7.0_80
 
   <property>
     <name>hadoop.tmp.dir</name>
-    <value>file:/usr/local/hadoop/hadoop-2.6.0/tmp</value>
+    <value>file:/usr/local/hadoop/hadoop-2.7.5/tmp</value>
     <description>A base for other temporary directories.</description>
   </property>
 
@@ -81,25 +86,28 @@ export JAVA_HOME=/usr/local/java/jdk1.7.0_80
     <value>*</value>
   </property>
 </configuration>
+```
+    fs.default.name的值是hdfs://master:9000
 
-7.配置hdfs-site.xml
-# cd /usr/local/hadoop/hadoop-2.6.0/etc/hadoop
+# 配置hdfs-site.xml
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+
 # vim hdfs-site.xml
-按照如下内容进行配置
 <configuration>
   <property>
    <name>dfs.namenode.secondary.http-address</name>
-   <value>hadoop1:9001</value>
+   <value>spark1:9001</value>
   </property>
 
   <property>
    <name>dfs.namenode.name.dir</name>
-   <value>file:/usr/local/hadoop/hadoop-2.6.0/name</value>
+   <value>file:/usr/local/hadoop/hadoop-2.7.5/name</value>
   </property>
 
   <property>
    <name>dfs.datanode.data.dir</name>
-   <value>file:/usr/local/hadoop/hadoop-2.6.0/data</value>
+   <value>file:/usr/local/hadoop/hadoop-2.7.5/data</value>
   </property>
 
   <property>
@@ -112,12 +120,15 @@ export JAVA_HOME=/usr/local/java/jdk1.7.0_80
    <value>true</value>
   </property>
 </configuration>
+```
 
-8.配置mapred-site.xml
-# cd /usr/local/hadoop/hadoop-2.6.0/etc/hadoop
-# cp mapred-site.xml.template mapred-site.xml  //默认情况下不存在mapred-site.xml文件，可以从模板拷贝一份
+# 配置mapred-site.xml
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+
+# cp mapred-site.xml.template mapred-site.xml
+
 # vim mapred-site.xml
-按照如下内容进行配置
 <configuration>
   <property>
     <name>mapreduce.framework.name</name>
@@ -126,19 +137,21 @@ export JAVA_HOME=/usr/local/java/jdk1.7.0_80
 
   <property>
     <name>mapreduce.jobhistory.address</name>
-    <value>hadoop1:10020</value>
+    <value>spark1:10020</value>
   </property>
 
   <property>
     <name>mapreduce.jobhistory.webapp.address</name>
-    <value>hadoop1:19888</value>
+    <value>spark1:19888</value>
   </property>
 </configuration>
+```
 
-9.配置yarn-site.xml
-# cd /usr/local/hadoop/hadoop-2.6.0/etc/hadoop
+# 配置yarn-site.xml
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+
 # vim yarn-site.xml
-按照如下内容进行配置
 <configuration>
   <property>
     <name>yarn.nodemanager.aux-services</name>
@@ -152,59 +165,84 @@ export JAVA_HOME=/usr/local/java/jdk1.7.0_80
 
   <property>
     <name>yarn.resourcemanager.address</name>
-    <value>hadoop1:8032</value>
+    <value>spark1:8032</value>
   </property>
 
   <property>
     <name>yarn.resourcemanager.scheduler.address</name>
-    <value>hadoop1:8030</value>
+    <value>spark1:8030</value>
   </property>
 
   <property>
     <name>yarn.resourcemanager.resource-tracker.address</name>
-    <value>hadoop1:8031</value>
+    <value>spark1:8031</value>
   </property>
 
   <property>
     <name>yarn.resourcemanager.admin.address</name>
-    <value>hadoop1:8033</value>
+    <value>spark1:8033</value>
   </property>
 
   <property>
     <name>yarn.resourcemanager.webapp.address</name>
-    <value>hadoop1:8088</value>
+    <value>spark1:8088</value>
   </property>
 </configuration>
+```
 
-10.配置Slaves文件
-# cd /usr/local/hadoop/hadoop-2.6.0/etc/hadoop
+# 配置Slaves
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+
 # vim slaves
-删除原来的配置，在文件中添加以下配置
-hadoop2
+spark2
+```
 
-11.向各节点分发Hadoop程序
+# 向各节点分发Hadoop程序
+```
 # cd /usr/local/hadoop
-# scp -r hadoop-2.6.0 root@hadoop2:/usr/local/hadoop/hadoop-2.6.0
 
-12.格式化NameNode
-# cd /usr/local/hadoop/hadoop-2.6.0
+# scp -r hadoop-2.7.5 root@spark2:/usr/local/hadoop/hadoop-2.7.5
+```
+
+# 格式化NameNode
+```
+# cd /usr/local/hadoop/hadoop-2.7.5
+
 # ./bin/hdfs namenode -format
-16/10/13 11:12:51 INFO common.Storage: Storage directory /usr/lib/hadoop/hadoop-2.6.0/name has been successfully formatted.
-16/10/13 11:12:51 INFO namenode.NNStorageRetentionManager: Going to retain 1 images with txid >= 0
-16/10/13 11:12:51 INFO util.ExitUtil: Exiting with status 0
-16/10/13 11:12:51 INFO namenode.NameNode: SHUTDOWN_MSG: 
+2018-01-25 14:08:46,208 INFO  [main] namenode.NameNode (LogAdapter.java:info(47)) - STARTUP_MSG: 
 /************************************************************
-SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
+STARTUP_MSG: Starting NameNode
+STARTUP_MSG:   host = spark1/192.168.253.107
+STARTUP_MSG:   args = [-format]
+STARTUP_MSG:   version = 2.7.5
+...
+STARTUP_MSG:   java = 1.8.0_151
 ************************************************************/
+2018-01-25 14:08:46,328 INFO  [main] namenode.NameNode (LogAdapter.java:info(47)) - registered UNIX signal handlers for [TERM, HUP, INT]
+2018-01-25 14:08:46,355 INFO  [main] namenode.NameNode (NameNode.java:createNameNode(1441)) - createNameNode [-format]
+...
+2018-01-25 14:08:49,857 INFO  [main] common.Storage (NNStorage.java:format(568)) - Storage directory /tmp/hadoop-root/dfs/name has been successfully formatted.
+...
+2018-01-25 14:08:50,232 INFO  [Thread-1] namenode.NameNode (LogAdapter.java:info(47)) - SHUTDOWN_MSG: 
+/************************************************************
+SHUTDOWN_MSG: Shutting down NameNode at spark1/192.168.253.107
+************************************************************/
+```
 
-13.启动HDFS
-# cd /usr/local/hadoop/hadoop-2.6.0/sbin
+# 启动HDFS
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/sbin
+
 # ./start-dfs.sh
-# jps //验证HDFS启动，hadoop1上面运行的进程有：NameNode、SecondaryNameNode和DataNode
+
+# jps
 13315 Jps
 11878 DataNode
 11753 NameNode
 12079 SecondaryNameNode
+```
+    spark1上面运行的进程有：NameNode、SecondaryNameNode和DataNode
 
 注意：
 1).NameNode启动失败，解决方法：
