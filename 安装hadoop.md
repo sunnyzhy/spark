@@ -274,9 +274,10 @@ SHUTDOWN_MSG: Shutting down NameNode at spark1/192.168.253.107
 24910 DataNode
 ```
     此时在spark2上运行的进程有：DataNode和NodeManager
+```
 
 # 配置环境变量
-```
+``
 # vim /etc/profile
 export HADOOP_HOME=/usr/local/hadoop/hadoop-2.7.5
 export PATH=.:$HADOOP_HOME/bin:$JAVA_HOME/bin:$PATH
