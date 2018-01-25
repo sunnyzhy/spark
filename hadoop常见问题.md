@@ -50,6 +50,15 @@ clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 //复制name的clusterID
 # ./yarn-daemon.sh start nodemanager
 ```
 
+# WARN org.apache.hadoop.hdfs.server.datanode.DataNode: IOException in offerService
+java.net.ConnectException: Call From localhost/127.0.0.1 to spark1:9000 failed on connection exception: java.net.ConnectException: Connection refused;
+# WARN org.apache.hadoop.hdfs.server.datanode.DataNode: Problem connecting to server: spark1/192.168.253.107:9000
+```
+# systemctl stop firewalld
+
+# systemctl disable firewalld
+```
+
 # WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable
 - 第一种情况，libc.so.6: version `GLIBC_2.14' not found
 因为系统的gblci版本太低，需要安装2.14以上的版本：
