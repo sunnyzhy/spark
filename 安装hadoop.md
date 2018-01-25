@@ -301,17 +301,21 @@ export PATH=.:$HADOOP_HOME/bin:$JAVA_HOME/bin:$PATH
 - 点开Live Nodes就可以看到集群spark1、spark2的监控信息
 ```
 # hadoop checknative
-2016-11-14 10:07:38,227 WARN  [main] bzip2.Bzip2Factory (Bzip2Factory.java:isNativeBzip2Loaded(73)) - Failed to load/initialize native-bzip2 library system-native, will use pure-Java version
-2016-11-14 10:07:38,231 INFO  [main] zlib.ZlibFactory (ZlibFactory.java:<clinit>(49)) - Successfully loaded & initialized native-zlib library
+18/01/25 15:13:48 WARN bzip2.Bzip2Factory: Failed to load/initialize native-bzip2 library system-native, will use pure-Java version
+18/01/25 15:13:48 INFO zlib.ZlibFactory: Successfully loaded & initialized native-zlib library
 Native library checking:
-hadoop:  true /usr/local/hadoop/hadoop-2.6.0/lib/native/libhadoop.so.1.0.0
+hadoop:  true /usr/local/hadoop/hadoop-2.7.5/lib/native/libhadoop.so.1.0.0
 zlib:    true /lib64/libz.so.1
-snappy:  true /usr/lib64/libsnappy.so.1
+snappy:  false 
 lz4:     true revision:99
 bzip2:   false 
-openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object file: No such file or directory)!
+openssl: false EVP_CIPHER_CTX_cleanup
 ```
 解决方法：
+- snappy:  false
+```
+
+```
 - bzip2:   false
 ```
 # yum -y install bzip2
