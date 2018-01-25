@@ -276,7 +276,7 @@ SHUTDOWN_MSG: Shutting down NameNode at spark1/192.168.253.107
     此时在spark2上运行的进程有：DataNode和NodeManager
 
 # 配置环境变量
-``
+```
 # vim /etc/profile
 export HADOOP_HOME=/usr/local/hadoop/hadoop-2.7.5
 export PATH=.:$HADOOP_HOME/bin:$JAVA_HOME/bin:$PATH
@@ -310,12 +310,18 @@ snappy:  true /usr/lib64/libsnappy.so.1
 lz4:     true revision:99
 bzip2:   false 
 openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object file: No such file or directory)!
+```
 解决方法：
-1.bzip2:   false
-# yum install bzip2 //安装bzip2
-2.openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object file: No such file or directory)!
+- bzip2:   false
+```
+# yum -y install bzip2
+```
+- openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object file: No such file or directory)!
+```
 # cd /usr/lib64/
+
 # ln -s libcrypto.so.1.0.1e libcrypto.so
+```
 
 # 上传数据到HDFS中
 ```
