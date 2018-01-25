@@ -50,13 +50,41 @@ clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 //复制name的clusterID
 # ./yarn-daemon.sh start nodemanager
 ```
 
-# WARN org.apache.hadoop.hdfs.server.datanode.DataNode: IOException in offerService
-java.net.ConnectException: Call From localhost/127.0.0.1 to spark1:9000 failed on connection exception: java.net.ConnectException: Connection refused;
+# WARN org.apache.hadoop.hdfs.server.datanode.DataNode: IOException in offerService java.net.ConnectException: Call From localhost/127.0.0.1 to spark1:9000 failed on connection exception: java.net.ConnectException: Connection refused;
 # WARN org.apache.hadoop.hdfs.server.datanode.DataNode: Problem connecting to server: spark1/192.168.253.107:9000
 ```
 # systemctl stop firewalld
 
 # systemctl disable firewalld
+```
+
+# 检查hadoop依赖
+```
+# hadoop checknative
+18/01/25 15:13:48 WARN bzip2.Bzip2Factory: Failed to load/initialize native-bzip2 library system-native, will use pure-Java version
+18/01/25 15:13:48 INFO zlib.ZlibFactory: Successfully loaded & initialized native-zlib library
+Native library checking:
+hadoop:  true /usr/local/hadoop/hadoop-2.7.5/lib/native/libhadoop.so.1.0.0
+zlib:    true /lib64/libz.so.1
+snappy:  false 
+lz4:     true revision:99
+bzip2:   false 
+openssl: false EVP_CIPHER_CTX_cleanup
+```
+解决方法：
+- snappy:  false
+```
+
+```
+- bzip2:   false
+```
+# yum -y install bzip2
+```
+- openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object file: No such file or directory)!
+```
+# cd /usr/lib64/
+
+# ln -s libcrypto.so.1.0.1e libcrypto.so
 ```
 
 # WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable
