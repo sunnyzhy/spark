@@ -244,125 +244,62 @@ SHUTDOWN_MSG: Shutting down NameNode at spark1/192.168.253.107
 ```
     spark1上面运行的进程有：NameNode、SecondaryNameNode和DataNode
 
-注意：
-1).NameNode启动失败，解决方法：
-第一种情况，HDFS把namenode的格式化信息存在了系统的tmp目录下，该目录每次开机都会被清空，因此每次重新启动机器，都需要重新格式化HDFS。
-第二种情况，Failed to start namenode.java.io.IOException: There appears to be a gap in the edit log.  We expected txid 1, but got txid 197.
-# hadoop namenode -recover
-选 c 
+```
+# jps
+3976 Jps
+3759 DataNode
+```
+    spark2上面运行的进程有：DataNode
 
-2).DataNode启动失败，根据不同的情况选择不同的解决方法：
-第一种情况，name和data的clusterID不一致
-# cd /usr/lib/hadoop/hadoop-2.6.0/name/current
-# vim VERSION
-clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
-# cd /usr/lib/hadoop/hadoop-2.6.0/data/current
-# vim VERSION
-clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 //复制name的clusterID
-第二种情况，重启系统之后，DataNode不启动
-# cd /usr/local/hadoop/hadoop-2.6.0/sbin
-# ./hadoop-daemon.sh start datanode
+# 启动YARN
+``
+# cd /usr/local/hadoop/hadoop-2.7.5/sbin
 
-3). Cannot find configuration directory: /etc/hadoop
-WARN  [main] util.NativeCodeLoader (NativeCodeLoader.java:<clinit>(62)) - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable]
-Error: Cannot find configuration directory: /etc/hadoop
-Error: Cannot find configuration directory: /etc/hadoop
-解决方法：
-# vim /etc/hosts
-把127.0.0.1修改为本地IP地址
-#127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4
-192.168.29.131 localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
-
-192.168.29.131 hadoop1
-192.168.29.132 hadoop2
-# service network restart
-
-4).WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable
-查看日志，根据不同的情况选择不同的解决方法
-第一种情况，libc.so.6: version `GLIBC_2.14' not found
-因为系统的gblci版本太低，需要安装2.14以上的版本：
-下载glibc2.14，http://www.gnu.org/software/libc/
-# tar -zxvf /..目录/glibc-2.14.tar.gz -C /usr/local/glibc
-# cd /usr/local/glibc
-# ./glibc-2.14/configure --prefix=/usr/local/glibc  //glibc不允许在源码目录树下编译，必须在其他目录configure和build，这样一旦出错将整个目录移除即可
-# make
-# make install
-注意：
-安装过程中，如果出现Can't open configuration file /usr/local/glibc/etc/ld.so.conf: No such file or directory
-# cp /etc/ld.so.c* /usr/local/glibc/etc
-
-# ln -sf /usr/local/glibc/lib/libc-2.14.so /lib64/libc.so.6 //建立软链指向glibc-2.14
-误删libc.so.6解决方法：
-# LD_PRELOAD=/lib64/libc-2.12.so ln -s /lib64/libc-2.12.so libc.so.6
-
-# strings /lib64/libc.so.6 | grep GLIBC //显示GLIBC_2.14，说明安装成功
-GLIBC_2.2.5
-GLIBC_2.2.6
-GLIBC_2.3
-GLIBC_2.3.2
-GLIBC_2.3.3
-GLIBC_2.3.4
-GLIBC_2.4
-GLIBC_2.5
-GLIBC_2.6
-GLIBC_2.7
-GLIBC_2.8
-GLIBC_2.9
-GLIBC_2.10
-GLIBC_2.11
-GLIBC_2.12
-GLIBC_2.13
-GLIBC_2.14
-GLIBC_PRIVATE
-
-第二种情况，在调用spark-shell时，提示Failed to load native-hadoop with error: java.lang.UnsatisfiedLinkError: no hadoop in java.library.path
-# cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/conf
-# cp spark-env.sh.template spark-env.sh
-# vim spark-env.sh
-export JAVA_LIBRARY_PATH=$JAVA_LIBRARY_PATH:$HADOOP_HOME/lib/native
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_HOME/lib/native
-export SPARK_YARN_USER_ENV="JAVA_LIBRARY_PATH=$JAVA_LIBRARY_PATH,LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
-# source spark-env.sh
-
-14.启动YARN
-# cd /usr/local/hadoop/hadoop-2.6.0/sbin
 # ./start-yarn.sh
-# jps //验证YARN启动，此时在hadoop1上运行的进程有：NameNode、SecondaryNameNode、DataNode、NodeManager和ResourceManager
+
+# jps
 14449 Jps
 13970 NodeManager
 11878 DataNode
 11753 NameNode
 14121 ResourceManager
 12079 SecondaryNameNode
+```
+    此时在spark1上运行的进程有：NameNode、SecondaryNameNode、DataNode、NodeManager和ResourceManager
 
-重启系统之后，NodeManager不启动
-# cd /usr/local/hadoop/hadoop-2.6.0/sbin
-# ./yarn-daemon.sh start nodemanager
-
-# jps //此时在hadoop2上运行的进程有：DataNode和NodeManager
+```
+# jps
 25245 Jps
 25163 NodeManager
 24910 DataNode
+```
+    此时在spark2上运行的进程有：DataNode和NodeManager
 
-15.配置环境变量
+# 配置环境变量
+```
 # vim /etc/profile
-export HADOOP_HOME=/usr/local/hadoop/hadoop-2.6.0
+export HADOOP_HOME=/usr/local/hadoop/hadoop-2.7.5
 export PATH=.:$HADOOP_HOME/bin:$JAVA_HOME/bin:$PATH
+
 # source /etc/profile
+```
 
-16.查看
-# cd /usr/local/hadoop/hadoop-2.6.0
+# 查看
+```
+# cd /usr/local/hadoop/hadoop-2.7.5
+
 # cd lib/native
-# file ./libhadoop.so.1.0.0
-./libhadoop.so.1.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, not stripped
- ELF 64-bit LSB，说明是64位
- 
-17.验证
- 1).在浏览器的地址栏中输入http://hadoop1:50070
- 2).Live Nodes 	:	2 (Decommissioned: 0)，节点数为2就说明hadoop集群启动成功
- 3).点开Live Nodes就可以看到集群hadoop1、hadoop2的监控信息
 
+# file ./libhadoop.so.1.0.0
+./libhadoop.so.1.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=612c3e78dc66f30ab64ef032524d92022eebe34e, not stripped
+```
+    ELF 64-bit LSB，说明是64位
+ 
+# 验证
+- 在浏览器的地址栏中输入http://spark1:50070
+- Live Nodes 	:	2 (Decommissioned: 0)，节点数为2就说明hadoop集群启动成功
+- 点开Live Nodes就可以看到集群spark1、spark2的监控信息
+```
 # hadoop checknative
 2016-11-14 10:07:38,227 WARN  [main] bzip2.Bzip2Factory (Bzip2Factory.java:isNativeBzip2Loaded(73)) - Failed to load/initialize native-bzip2 library system-native, will use pure-Java version
 2016-11-14 10:07:38,231 INFO  [main] zlib.ZlibFactory (ZlibFactory.java:<clinit>(49)) - Successfully loaded & initialized native-zlib library
@@ -380,20 +317,27 @@ openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object
 # cd /usr/lib64/
 # ln -s libcrypto.so.1.0.1e libcrypto.so
 
-18.上传数据到HDFS中
-# cd /usr/local/hadoop/hadoop-2.6.0
-# hadoop fs -mkdir -p /user/hadoop/testdata --http://hadoop1:50070/dfshealth.jsp，打开Browse the filesystem，就可以看到新建的目录，其中user就HDFS的系统目录
-# hadoop fs -put /usr/local/hadoop/hadoop-2.6.0/etc/hadoop/core-site.xml /user/hadoop/testdata  --把hadoop配置文件core-site.xml上传到HDFS中，打开Browse the filesystem，就会在testdata看到core-site.xml
+# 上传数据到HDFS中
+```
+# cd /usr/local/hadoop/hadoop-2.7.5
+
+# hadoop fs -mkdir -p /user/hadoop/testdata --http://spark1:50070/dfshealth.jsp，打开Browse the filesystem，就可以看到新建的目录，其中user就HDFS的系统目录
+
+# hadoop fs -put /usr/local/hadoop/hadoop-2.7.5/etc/hadoop/core-site.xml /user/hadoop/testdata  --把hadoop配置文件core-site.xml上传到HDFS中，打开Browse the filesystem，就会在testdata看到core-site.xml
 或者
 # ./bin/hdfs dfs -mkdir -p /user/hadoop/testdata
-# ./bin/hdfs dfs -put /usr/local/hadoop/hadoop-2.6.0/etc/hadoop/core-site.xml /user/hadoop/testdata
+
+# ./bin/hdfs dfs -put /usr/local/hadoop/hadoop-2.7.5/etc/hadoop/core-site.xml /user/hadoop/testdata
 
 # ./bin/hdfs dfs -ls /user/hadoop/testdata --查看文件系统
 Found 1 items
 -rw-r--r--   2 root supergroup       1363 2016-11-12 12:07 /user/hadoop/testdata/core-site.xml
+```
 
-19.测试mapred
+# 测试mapred
+```
 # cd /usr/local/hadoop/hadoop-2.6.0
+
 # hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar wordcount /user/hadoop/testdata /user/hadoop/result
 
 # hadoop fs -cat /user/hadoop/result/part-r-00000  --结果在result下面的part-r-00000中
@@ -497,3 +441,4 @@ version="1.0"	1
 with	1
 writing,	1
 you	1
+```
