@@ -1,3 +1,20 @@
+# Cannot find configuration directory: /etc/hadoop
+WARN  [main] util.NativeCodeLoader (NativeCodeLoader.java:<clinit>(62)) - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable]
+Error: Cannot find configuration directory: /etc/hadoop
+Error: Cannot find configuration directory: /etc/hadoop
+解决方法，把127.0.0.1修改为本地IP地址：
+```
+# vim /etc/hosts
+#127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+192.168.253.107   localhost localhost.localdomain localhost4 localhost4.localdomain4
+192.168.253.107 spark1
+192.168.253.108 spark2
+
+# systemctl restart network
+```
+
 # NameNode启动失败
 - 第一种情况，HDFS把namenode的格式化信息存在了系统的tmp目录下，该目录每次开机都会被清空，因此每次重新启动机器，都需要重新格式化HDFS。
 - 第二种情况，Failed to start namenode.java.io.IOException: There appears to be a gap in the edit log.  We expected txid 1, but got txid 197.
@@ -31,23 +48,6 @@ clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 //复制name的clusterID
 # cd /usr/local/hadoop/hadoop-2.7.5/sbin
 
 # ./yarn-daemon.sh start nodemanager
-```
-
-# Cannot find configuration directory: /etc/hadoop
-WARN  [main] util.NativeCodeLoader (NativeCodeLoader.java:<clinit>(62)) - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable]
-Error: Cannot find configuration directory: /etc/hadoop
-Error: Cannot find configuration directory: /etc/hadoop
-解决方法，把127.0.0.1修改为本地IP地址：
-```
-# vim /etc/hosts
-#127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-
-192.168.253.107   localhost localhost.localdomain localhost4 localhost4.localdomain4
-192.168.253.107 spark1
-192.168.253.108 spark2
-
-# systemctl restart network
 ```
 
 # WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable
