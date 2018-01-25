@@ -252,7 +252,7 @@ SHUTDOWN_MSG: Shutting down NameNode at spark1/192.168.253.107
     spark2上面运行的进程有：DataNode
 
 # 启动YARN
-``
+```
 # cd /usr/local/hadoop/hadoop-2.7.5/sbin
 
 # ./start-yarn.sh
@@ -274,7 +274,6 @@ SHUTDOWN_MSG: Shutting down NameNode at spark1/192.168.253.107
 24910 DataNode
 ```
     此时在spark2上运行的进程有：DataNode和NodeManager
-```
 
 # 配置环境变量
 ``
