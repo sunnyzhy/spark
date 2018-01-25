@@ -26,6 +26,13 @@ clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 //复制name的clusterID
 # ./hadoop-daemon.sh start datanode
 ```
 
+# NodeManager启动失败
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/sbin
+
+# ./yarn-daemon.sh start nodemanager
+```
+
 # Cannot find configuration directory: /etc/hadoop
 WARN  [main] util.NativeCodeLoader (NativeCodeLoader.java:<clinit>(62)) - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable]
 Error: Cannot find configuration directory: /etc/hadoop
