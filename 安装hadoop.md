@@ -15,15 +15,13 @@ http://hadoop.apache.org/
 # mkdir data
 ```
 
-# 配置hadoop-env.sh
+# 配置环境变量
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+# vim /etc/profile
+export HADOOP_HOME=/usr/local/hadoop/hadoop-2.7.5
+export PATH=$PATH:$HADOOP_HOME/bin
 
-# vim hadoop-env.sh
-export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
-export PATH=$PATH:/usr/local/hadoop/hadoop-2.7.5/bin
-
-# source hadoop-env.sh
+# source /etc/profile
 
 # hadoop version
 Hadoop 2.7.5
@@ -33,20 +31,20 @@ Compiled with protoc 2.5.0
 From source with checksum 9f118f95f47043332d51891e37f736e9
 This command was run using /usr/local/hadoop/hadoop-2.7.5/share/hadoop/common/hadoop-common-2.7.5.jar
 ```
+
+# 配置hadoop-env.sh
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+
+# vim hadoop-env.sh
+export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
+
+# source hadoop-env.sh
+```
 # 配置日志级别
 ```
 # export HADOOP_ROOT_LOGGER=DEBUG,console
 # export HADOOP_ROOT_LOGGER=INFO,console
-```
-
-# 配置yarn-env.sh
-```
-# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
-
-# vim yarn-env.sh
-export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
-
-# source yarn-env.sh
 ```
 
 # 配置core-site.xml
@@ -97,7 +95,7 @@ export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
 <configuration>
   <property>
    <name>dfs.namenode.secondary.http-address</name>
-   <value>spark1:9001</value>
+   <value>spark1:50090</value>
   </property>
 
   <property>
@@ -145,6 +143,16 @@ export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
     <value>spark1:19888</value>
   </property>
 </configuration>
+```
+
+# 配置yarn-env.sh
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+
+# vim yarn-env.sh
+export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
+
+# source yarn-env.sh
 ```
 
 # 配置yarn-site.xml
@@ -274,15 +282,6 @@ SHUTDOWN_MSG: Shutting down NameNode at spark1/192.168.253.107
 24910 DataNode
 ```
     此时在spark2上运行的进程有：DataNode和NodeManager
-
-# 配置环境变量
-```
-# vim /etc/profile
-export HADOOP_HOME=/usr/local/hadoop/hadoop-2.7.5
-export PATH=.:$HADOOP_HOME/bin:$JAVA_HOME/bin:$PATH
-
-# source /etc/profile
-```
 
 # 查看
 ```
