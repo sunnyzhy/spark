@@ -10,10 +10,9 @@ http://hadoop.apache.org/
 # 在hadoop目录下创建子目录
 ```
 # cd hadoop-2.7.5
-# mkdir tmp
-# mkdir name
-# mkdir data
+# mkdir -p {tmp,data,name}
 ```
+    目录结构：{tmp,hdfs/{data,name}}
 
 # 配置环境变量
 ```
@@ -30,16 +29,6 @@ Compiled by kshvachk on 2017-12-16T01:06Z
 Compiled with protoc 2.5.0
 From source with checksum 9f118f95f47043332d51891e37f736e9
 This command was run using /usr/local/hadoop/hadoop-2.7.5/share/hadoop/common/hadoop-common-2.7.5.jar
-```
-
-# 配置hadoop-env.sh
-```
-# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
-
-# vim hadoop-env.sh
-export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
-
-# source hadoop-env.sh
 ```
 
 # 配置日志级别
@@ -143,17 +132,17 @@ export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
     <name>mapreduce.jobhistory.webapp.address</name>
     <value>spark1:19888</value>
   </property>
+  
+  <property>
+    <name>mapreduce.jobhistory.done-dir</name>
+    <value>file:/history/done</value>
+  </property>
+  
+  <property>
+    <name>mapreduce.jobhistory.intermediate-done-dir</name>
+    <value>file:/history/done_intermediate</value>
+  </property>
 </configuration>
-```
-
-# 配置yarn-env.sh
-```
-# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
-
-# vim yarn-env.sh
-export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
-
-# source yarn-env.sh
 ```
 
 # 配置yarn-site.xml
@@ -168,8 +157,8 @@ export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
   </property>
 
   <property>
-    <name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
-    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+    <name>yarn.resourcemanager.hostname</name>
+    <value>spark1</value>
   </property>
 
   <property>
@@ -197,6 +186,36 @@ export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
     <value>spark1:8088</value>
   </property>
 </configuration>
+```
+
+# 配置hadoop-env.sh
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+
+# vim hadoop-env.sh
+export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
+
+# source hadoop-env.sh
+```
+
+# 配置yarn-env.sh
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+
+# vim yarn-env.sh
+export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
+
+# source yarn-env.sh
+```
+
+# 配置mapred-env.sh
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+
+# vim mapred-env.sh
+export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
+
+# source mapred-env.sh
 ```
 
 # 配置Slaves
@@ -251,14 +270,14 @@ SHUTDOWN_MSG: Shutting down NameNode at spark1/192.168.253.107
 11753 NameNode
 12079 SecondaryNameNode
 ```
-    spark1上面运行的进程有：NameNode、SecondaryNameNode和DataNode
+    spark1上面运行的守护进程有：NameNode、SecondaryNameNode和DataNode
 
 ```
 # jps
-3976 Jps
-3759 DataNode
+23976 Jps
+23759 DataNode
 ```
-    spark2上面运行的进程有：DataNode
+    spark2上面运行的守护进程有：DataNode
 
 # 启动YARN
 ```
@@ -267,22 +286,47 @@ SHUTDOWN_MSG: Shutting down NameNode at spark1/192.168.253.107
 # ./start-yarn.sh
 
 # jps
-14449 Jps
+13315 Jps
 13970 NodeManager
 11878 DataNode
 11753 NameNode
 14121 ResourceManager
 12079 SecondaryNameNode
 ```
-    此时在spark1上运行的进程有：NameNode、SecondaryNameNode、DataNode、NodeManager和ResourceManager
+    此时在spark1上运行的守护进程有：NameNode、SecondaryNameNode、DataNode、NodeManager和ResourceManager
 
 ```
 # jps
-25245 Jps
+23976 Jps
 25163 NodeManager
-24910 DataNode
+23759 DataNode
 ```
-    此时在spark2上运行的进程有：DataNode和NodeManager
+    此时在spark2上运行的守护进程有：DataNode和NodeManager
+    
+# 启动historyserver
+```
+# cd /usr/local/hadoop/hadoop-2.7.5/sbin
+
+# ./mr-jobhistory-daemon.sh start historyserver
+
+# jps
+13315 Jps
+13970 NodeManager
+11878 DataNode
+11753 NameNode
+16821 JobHistoryServer
+14121 ResourceManager
+12079 SecondaryNameNode
+```
+    此时在spark1上运行的守护进程有：NameNode、SecondaryNameNode、DataNode、NodeManager和ResourceManager
+
+```
+# jps
+23976 Jps
+25163 NodeManager
+23759 DataNode
+```
+    此时在spark2上运行的守护进程有：DataNode和NodeManager
 
 # 查看
 ```
