@@ -41,6 +41,7 @@ export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
 
 # source hadoop-env.sh
 ```
+
 # 配置日志级别
 ```
 # export HADOOP_ROOT_LOGGER=DEBUG,console
