@@ -1,6 +1,10 @@
 # 官网
 http://hadoop.apache.org/
 
+# 安装依赖
+- ssh
+- jdk
+
 # 解压
 ```
 # cd /usr/local/hadoop
@@ -12,7 +16,7 @@ http://hadoop.apache.org/
 # cd hadoop-2.7.5
 # mkdir -p {tmp,data,name}
 ```
-    目录结构：{tmp,hdfs/{data,name}}
+    创建目录结构的语法：{tmp,hdfs/{data,name}}
 
 # 配置环境变量
 ```
