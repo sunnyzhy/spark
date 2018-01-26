@@ -304,7 +304,7 @@ export PATH=.:$HADOOP_HOME/bin:$JAVA_HOME/bin:$PATH
 ```
 # cd /usr/local/hadoop/hadoop-2.7.5
 
-# hadoop fs -mkdir -p /user/hadoop/testdata --http://spark1:50070/dfshealth.jsp  --打开Browse the filesystem，就可以看到新建的目录，其中user就是HDFS的系统目录
+# hadoop fs -mkdir -p /user/hadoop/testdata --http://spark1:50070/dfshealth.jsp  --打开Utilites->Browse the filesystem，就可以看到新建的目录，其中user就是HDFS的系统目录
 
 # hadoop fs -put /usr/local/hadoop/hadoop-2.7.5/etc/hadoop/core-site.xml /user/hadoop/testdata  --把hadoop配置文件core-site.xml上传到HDFS中，打开Browse the filesystem，就会在testdata看到core-site.xml
 或者
