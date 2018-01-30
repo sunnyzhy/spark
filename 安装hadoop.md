@@ -8,74 +8,47 @@ http://hadoop.apache.org/
 # 解压
 ```
 # cd /usr/local/hadoop
-# tar -zxvf hadoop-2.7.5.tar.gz
+# tar -zxvf hadoop-2.9.0.tar.gz
 ```
-
-# 在hadoop目录下创建子目录
-```
-# cd hadoop-2.7.5
-# mkdir -p {tmp,data,name}
-```
-    创建目录结构的语法：{tmp,hdfs/{data,name}}
 
 # 配置环境变量
 ```
 # vim /etc/profile
-export HADOOP_HOME=/usr/local/hadoop/hadoop-2.7.5
+export HADOOP_HOME=/usr/local/hadoop/hadoop-2.9.0
 export PATH=$PATH:$HADOOP_HOME/bin
 
 # source /etc/profile
 
 # hadoop version
-Hadoop 2.7.5
-Subversion https://shv@git-wip-us.apache.org/repos/asf/hadoop.git -r 18065c2b6806ed4aa6a3187d77cbe21bb3dba075
-Compiled by kshvachk on 2017-12-16T01:06Z
+Hadoop 2.9.0
+Subversion https://git-wip-us.apache.org/repos/asf/hadoop.git -r 756ebc8394e473ac25feac05fa493f6d612e6c50
+Compiled by arsuresh on 2017-11-13T23:15Z
 Compiled with protoc 2.5.0
-From source with checksum 9f118f95f47043332d51891e37f736e9
-This command was run using /usr/local/hadoop/hadoop-2.7.5/share/hadoop/common/hadoop-common-2.7.5.jar
+From source with checksum 0a76a9a32a5257331741f8d5932f183
+This command was run using /usr/local/hadoop/hadoop-2.9.0/share/hadoop/common/hadoop-common-2.9.0.jar
 ```
 
-# 配置日志级别
+# 在hadoop目录下创建子目录
 ```
-# export HADOOP_ROOT_LOGGER=DEBUG,console
-# export HADOOP_ROOT_LOGGER=INFO,console
+# cd hadoop-2.9.0
+# mkdir -p tmp/dfs/{data,name}
 ```
+    创建目录结构的语法：{tmp,hdfs/{data,name}}
 
 # 配置core-site.xml
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+# cd /usr/local/hadoop/hadoop-2.9.0/etc/hadoop
 
 # vim core-site.xml
 <configuration>
-  <property>
-    <name>fs.default.name</name>
-    <value>hdfs://spark1:9000</value>
-  </property>
-
   <property>
     <name>fs.defaultFS</name>
     <value>hdfs://spark1:9000</value>
   </property>
 
   <property>
-    <name>io.file.buffer.size</name>
-    <value>131072</value>
-  </property>
-
-  <property>
     <name>hadoop.tmp.dir</name>
-    <value>file:/usr/local/hadoop/hadoop-2.7.5/tmp</value>
-    <description>A base for other temporary directories.</description>
-  </property>
-
-  <property>
-    <name>hadoop.proxyuser.hduser.hosts</name>
-    <value>*</value>
-  </property>
-
-  <property>
-    <name>hadoop.proxyuser.hduser.groups</name>
-    <value>*</value>
+    <value>file:/usr/local/hadoop/hadoop-2.9.0/tmp</value>
   </property>
 </configuration>
 ```
@@ -83,40 +56,30 @@ This command was run using /usr/local/hadoop/hadoop-2.7.5/share/hadoop/common/ha
 
 # 配置hdfs-site.xml
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+# cd /usr/local/hadoop/hadoop-2.9.0/etc/hadoop
 
 # vim hdfs-site.xml
 <configuration>
   <property>
-   <name>dfs.namenode.secondary.http-address</name>
-   <value>spark1:50090</value>
-  </property>
-
-  <property>
    <name>dfs.namenode.name.dir</name>
-   <value>file:/usr/local/hadoop/hadoop-2.7.5/name</value>
+   <value>file:/usr/local/hadoop/hadoop-2.9.0/tmp/dfs/name</value>
   </property>
 
   <property>
    <name>dfs.datanode.data.dir</name>
-   <value>file:/usr/local/hadoop/hadoop-2.7.5/data</value>
+   <value>file:/usr/local/hadoop/hadoop-2.9.0/tmp/dfs/data</value>
   </property>
 
   <property>
    <name>dfs.replication</name>
-   <value>2</value>
-  </property>
-
-  <property>
-   <name>dfs.webhdfs.enabled</name>
-   <value>true</value>
+   <value>1</value>
   </property>
 </configuration>
 ```
 
 # 配置mapred-site.xml
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+# cd /usr/local/hadoop/hadoop-2.9.0/etc/hadoop
 
 # cp mapred-site.xml.template mapred-site.xml
 
@@ -126,75 +89,29 @@ This command was run using /usr/local/hadoop/hadoop-2.7.5/share/hadoop/common/ha
     <name>mapreduce.framework.name</name>
     <value>yarn</value>
   </property>
-
-  <property>
-    <name>mapreduce.jobhistory.address</name>
-    <value>spark1:10020</value>
-  </property>
-
-  <property>
-    <name>mapreduce.jobhistory.webapp.address</name>
-    <value>spark1:19888</value>
-  </property>
-  
-  <property>
-    <name>mapreduce.jobhistory.done-dir</name>
-    <value>file:/history/done</value>
-  </property>
-  
-  <property>
-    <name>mapreduce.jobhistory.intermediate-done-dir</name>
-    <value>file:/history/done_intermediate</value>
-  </property>
 </configuration>
 ```
 
 # 配置yarn-site.xml
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+# cd /usr/local/hadoop/hadoop-2.9.0/etc/hadoop
 
 # vim yarn-site.xml
 <configuration>
   <property>
-    <name>yarn.nodemanager.aux-services</name>
-    <value>mapreduce_shuffle</value>
+      <name>yarn.nodemanager.aux-services</name>
+      <value>mapreduce_shuffle</value>
   </property>
-
   <property>
-    <name>yarn.resourcemanager.hostname</name>
-    <value>spark1</value>
-  </property>
-
-  <property>
-    <name>yarn.resourcemanager.address</name>
-    <value>spark1:8032</value>
-  </property>
-
-  <property>
-    <name>yarn.resourcemanager.scheduler.address</name>
-    <value>spark1:8030</value>
-  </property>
-
-  <property>
-    <name>yarn.resourcemanager.resource-tracker.address</name>
-    <value>spark1:8031</value>
-  </property>
-
-  <property>
-    <name>yarn.resourcemanager.admin.address</name>
-    <value>spark1:8033</value>
-  </property>
-
-  <property>
-    <name>yarn.resourcemanager.webapp.address</name>
-    <value>spark1:8088</value>
+      <name>yarn.resourcemanager.hostname</name>
+      <value>spark1</value>
   </property>
 </configuration>
 ```
 
 # 配置hadoop-env.sh
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+# cd /usr/local/hadoop/hadoop-2.9.0/etc/hadoop
 
 # vim hadoop-env.sh
 export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
@@ -204,7 +121,7 @@ export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
 
 # 配置yarn-env.sh
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+# cd /usr/local/hadoop/hadoop-2.9.0/etc/hadoop
 
 # vim yarn-env.sh
 export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
@@ -214,7 +131,7 @@ export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
 
 # 配置mapred-env.sh
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+# cd /usr/local/hadoop/hadoop-2.9.0/etc/hadoop
 
 # vim mapred-env.sh
 export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
@@ -224,7 +141,7 @@ export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
 
 # 配置Slaves
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/etc/hadoop
+# cd /usr/local/hadoop/hadoop-2.9.0/etc/hadoop
 
 # vim slaves
 spark2
@@ -234,37 +151,41 @@ spark2
 ```
 # cd /usr/local/hadoop
 
-# scp -r hadoop-2.7.5 root@spark2:/usr/local/hadoop/hadoop-2.7.5
+# scp -r hadoop-2.9.0 root@spark2:/usr/local/hadoop/hadoop-2.9.0
+```
+
+# 重启
+```
+# shutdown -r 0
 ```
 
 # 格式化NameNode
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5
+# cd /usr/local/hadoop/hadoop-2.9.0/bin
 
-# ./bin/hdfs namenode -format
-2018-01-25 14:08:46,208 INFO  [main] namenode.NameNode (LogAdapter.java:info(47)) - STARTUP_MSG: 
+# ./hdfs namenode -format
+18/01/30 14:41:20 INFO namenode.NameNode: STARTUP_MSG: 
 /************************************************************
 STARTUP_MSG: Starting NameNode
-STARTUP_MSG:   host = spark1/192.168.253.107
+STARTUP_MSG:   host = localhost/127.0.0.1
 STARTUP_MSG:   args = [-format]
-STARTUP_MSG:   version = 2.7.5
+STARTUP_MSG:   version = 2.9.0
 ...
 STARTUP_MSG:   java = 1.8.0_151
 ************************************************************/
-2018-01-25 14:08:46,328 INFO  [main] namenode.NameNode (LogAdapter.java:info(47)) - registered UNIX signal handlers for [TERM, HUP, INT]
-2018-01-25 14:08:46,355 INFO  [main] namenode.NameNode (NameNode.java:createNameNode(1441)) - createNameNode [-format]
 ...
-2018-01-25 14:08:49,857 INFO  [main] common.Storage (NNStorage.java:format(568)) - Storage directory /tmp/hadoop-root/dfs/name has been successfully formatted.
+18/01/30 14:41:24 INFO common.Storage: Storage directory /usr/local/hadoop/hadoop-2.9.0/tmp/dfs/name has been 
+successfully formatted.
 ...
-2018-01-25 14:08:50,232 INFO  [Thread-1] namenode.NameNode (LogAdapter.java:info(47)) - SHUTDOWN_MSG: 
+18/01/30 14:41:25 INFO namenode.NameNode: SHUTDOWN_MSG: 
 /************************************************************
-SHUTDOWN_MSG: Shutting down NameNode at spark1/192.168.253.107
+SHUTDOWN_MSG: Shutting down NameNode at localhost/127.0.0.1
 ************************************************************/
 ```
 
 # 启动HDFS
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/sbin
+# cd /usr/local/hadoop/hadoop-2.9.0/sbin
 
 # ./start-dfs.sh
 
@@ -285,7 +206,7 @@ SHUTDOWN_MSG: Shutting down NameNode at spark1/192.168.253.107
 
 # 启动YARN
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/sbin
+# cd /usr/local/hadoop/hadoop-2.9.0/sbin
 
 # ./start-yarn.sh
 
@@ -307,73 +228,66 @@ SHUTDOWN_MSG: Shutting down NameNode at spark1/192.168.253.107
 ```
     此时在spark2上运行的守护进程有：DataNode和NodeManager
     
-# 启动historyserver
-```
-# cd /usr/local/hadoop/hadoop-2.7.5/sbin
-
-# ./mr-jobhistory-daemon.sh start historyserver
-
-# jps
-13315 Jps
-13970 NodeManager
-11878 DataNode
-11753 NameNode
-16821 JobHistoryServer
-14121 ResourceManager
-12079 SecondaryNameNode
-```
-    此时在spark1上运行的守护进程有：NameNode、SecondaryNameNode、DataNode、NodeManager和ResourceManager
-
-```
-# jps
-23976 Jps
-25163 NodeManager
-23759 DataNode
-```
-    此时在spark2上运行的守护进程有：DataNode和NodeManager
-
-# 查看
-```
-# cd /usr/local/hadoop/hadoop-2.7.5
-
-# cd lib/native
-
-# file ./libhadoop.so.1.0.0
-./libhadoop.so.1.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=612c3e78dc66f30ab64ef032524d92022eebe34e, not stripped
-```
-    ELF 64-bit LSB，说明是64位
- 
 # 验证
 - 在浏览器的地址栏中输入http://spark1:50070
+
 - Live Nodes 	:	2 (Decommissioned: 0)，节点数为2就说明hadoop集群启动成功
+
 - 点开Live Nodes就可以看到集群spark1、spark2的监控信息
 
-# 上传数据到HDFS中
+# 测试HDFS
+- 创建目录
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5
+# hadoop fs -mkdir -p /user/hadoop/test
 
-# hadoop fs -mkdir -p /user/hadoop/testdata --http://spark1:50070/dfshealth.jsp  --打开Utilites->Browse the filesystem，就可以看到新建的目录，其中user就是HDFS的系统目录
-
-# hadoop fs -put /usr/local/hadoop/hadoop-2.7.5/etc/hadoop/core-site.xml /user/hadoop/testdata  --把hadoop配置文件core-site.xml上传到HDFS中，打开Browse the filesystem，就会在testdata看到core-site.xml
-或者
-# ./bin/hdfs dfs -mkdir -p /user/hadoop/testdata
-
-# ./bin/hdfs dfs -put /usr/local/hadoop/hadoop-2.7.5/etc/hadoop/core-site.xml /user/hadoop/testdata
-
-# ./bin/hdfs dfs -ls /user/hadoop/testdata --查看文件系统
+# hadoop fs -ls /
 Found 1 items
--rw-r--r--   2 root supergroup       1363 2016-11-12 12:07 /user/hadoop/testdata/core-site.xml
+drwxr-xr-x   - root supergroup          0 2018-01-30 16:04 /user
+
+# hadoop fs -ls /user
+Found 1 items
+drwxr-xr-x   - root supergroup          0 2018-01-30 16:41 /user/hadoop
+
+# hadoop fs -ls /user/hadoop
+Found 1 items
+drwxr-xr-x   - root supergroup          0 2018-01-30 16:41 /user/hadoop/test
 ```
+
+- 上传文件
+```
+# hadoop fs -put /usr/local/hadoop/hadoop-2.9.0/etc/hadoop/core-site.xml /user/hadoop/test
+
+# hadoop fs -ls /user/hadoop/test
+Found 1 items
+-rw-r--r--   1 root supergroup        988 2018-01-30 16:09 /user/hadoop/test/core-site.xml
+```
+
+- 查看文件
+```
+# hadoop fs -cat /user/hadoop/test/core-site.xml
+```
+
+- 删除目录下的所有文件
+```
+# hadoop fs -rm -r /user/hadoop/test
+Deleted /user/hadoop/test
+```
+
+- 删除目录
+```
+# hadoop fs -rm -r /user/hadoop/test
+Deleted /user/hadoop/test
+```
+    -r：如果指定的目录下面有文件，就删除该目录下的所有文件，但是不删除该目录；如果指定的目录下面没有文件，就删除该目录。
+    可以在hadoop的web界面查看HDFS，http://spark1:50070 -> Utilites -> Browse the filesystem
 
 # 测试mapred
 ```
-# cd /usr/local/hadoop/hadoop-2.6.0
+# hadoop fs -mkdir -p /user/hadoop/test
 
-# hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar wordcount /user/hadoop/testdata /user/hadoop/result
+# hadoop jar /usr/local/hadoop/hadoop-2.9.0/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.9.0.jar wordcount /user/hadoop/test /user/hadoop/result
 
-# hadoop fs -cat /user/hadoop/result/part-r-00000  --结果在result下面的part-r-00000中
-或者
-# ./bin/hdfs dfs -cat /user/hadoop/result/part-r-00000 
+# hadoop fs -cat /user/hadoop/result/part-r-00000
 
 "AS	1
 "License");	1
