@@ -8,5 +8,7 @@ https://github.com/srccodes/hadoop-common-2.2.0-bin
 
 变量名：HADOOP_HOME
 变量值：D:\spark\hadoop-common-2.2.0
+
 2. 在系统变量Path里添加%HADOOP_HOME%\bin;
+
 3. 重启系统
