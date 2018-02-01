@@ -1,25 +1,25 @@
 # pom.xml
 ```
 <dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-core_2.11</artifactId>
-			<version>2.2.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-sql_2.11</artifactId>
-			<version>2.2.1</version>
-		</dependency>
+	<groupId>org.apache.spark</groupId>
+	<artifactId>spark-core_2.11</artifactId>
+	<version>2.2.1</version>
+	<exclusions>
+		<exclusion>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</exclusion>
+		<exclusion>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</exclusion>
+	</exclusions>
+</dependency>
+<dependency>
+	<groupId>org.apache.spark</groupId>
+	<artifactId>spark-sql_2.11</artifactId>
+	<version>2.2.1</version>
+</dependency>
 ```
 
 # java
