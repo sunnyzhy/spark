@@ -31,4 +31,4 @@
       .getOrCreate();
       System.out.println("Spark Version: " + sparkSession.version());
 ```
-  Spark Version: 2.2.1
+	Spark Version: 2.2.1
