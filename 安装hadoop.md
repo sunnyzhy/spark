@@ -72,7 +72,7 @@ This command was run using /usr/local/hadoop/hadoop-2.9.0/share/hadoop/common/ha
 
   <property>
    <name>dfs.replication</name>
-   <value>1</value>
+   <value>2</value>
   </property>
 </configuration>
 ```
