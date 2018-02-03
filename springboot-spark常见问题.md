@@ -14,3 +14,14 @@ https://github.com/srccodes/hadoop-common-2.2.0-bin
 2. 在系统变量Path里添加%HADOOP_HOME%\bin;
 
 3. 重启系统
+
+# WARN TaskSchedulerImpl: Initial job has not accepted any resources; check your cluster uito ensure that workers are registered and have sufficient memory
+配置spark.executor.memory属性
+```
+      val spark = SparkSession
+      .builder()
+      .appName("SparkWithSpring")
+      .master("spark://192.168.253.107:7077")
+      .config("spark.executor.memory", "512m")
+      .getOrCreate();
+```
