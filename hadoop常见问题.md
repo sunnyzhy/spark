@@ -26,26 +26,26 @@ Error: Cannot find configuration directory: /etc/hadoop
 # DataNode启动失败
 - 第一种情况，name和data的clusterID不一致
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/name/current
+# cd /usr/local/hadoop/hadoop-2.9.0/name/current
 
 # vim VERSION
 clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476
 
-# cd /usr/local/hadoop/hadoop-2.7.5/data/current
+# cd /usr/local/hadoop/hadoop-2.9.0/data/current
 
 # vim VERSION
 clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 //复制name的clusterID
 ```
 - 第二种情况，重启系统之后，DataNode不启动
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/sbin
+# cd /usr/local/hadoop/hadoop-2.9.0/sbin
 
 # ./hadoop-daemon.sh start datanode
 ```
 
 # NodeManager启动失败
 ```
-# cd /usr/local/hadoop/hadoop-2.7.5/sbin
+# cd /usr/local/hadoop/hadoop-2.9.0/sbin
 
 # ./yarn-daemon.sh start nodemanager
 ```
@@ -64,7 +64,7 @@ clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 //复制name的clusterID
 18/01/25 15:13:48 WARN bzip2.Bzip2Factory: Failed to load/initialize native-bzip2 library system-native, will use pure-Java version
 18/01/25 15:13:48 INFO zlib.ZlibFactory: Successfully loaded & initialized native-zlib library
 Native library checking:
-hadoop:  true /usr/local/hadoop/hadoop-2.7.5/lib/native/libhadoop.so.1.0.0
+hadoop:  true /usr/local/hadoop/hadoop-2.9.0/lib/native/libhadoop.so.1.0.0
 zlib:    true /lib64/libz.so.1
 snappy:  false 
 lz4:     true revision:99
