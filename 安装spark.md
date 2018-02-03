@@ -35,6 +35,8 @@ spark2
 
 # 配置spark-env.sh
 ```
+# cd /usr/local/spark/spark-2.2.1-bin-hadoop2.7/conf
+
 # cp spark-env.sh.template spark-env.sh
 
 # vim spark-env.sh
