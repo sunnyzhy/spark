@@ -15,7 +15,7 @@ https://github.com/srccodes/hadoop-common-2.2.0-bin
 
 3. 重启系统
 
-# WARN TaskSchedulerImpl: Initial job has not accepted any resources; check your cluster uito ensure that workers are registered and have sufficient memory
+# WARN TaskSchedulerImpl: Initial job has not accepted any resources; check your cluster UI to ensure that workers are registered and have sufficient resources
 配置spark.executor.memory属性
 ```
       val spark = SparkSession
