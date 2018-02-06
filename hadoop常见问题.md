@@ -58,94 +58,21 @@ clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 //复制name的clusterID
 # systemctl disable firewalld
 ```
 
-# 检查hadoop依赖
+# Yarn application has already ended! It might have been killed or unable to launch application master
+2个配置二选一即可
 ```
-# hadoop checknative
-18/01/25 15:13:48 WARN bzip2.Bzip2Factory: Failed to load/initialize native-bzip2 library system-native, will use pure-Java version
-18/01/25 15:13:48 INFO zlib.ZlibFactory: Successfully loaded & initialized native-zlib library
-Native library checking:
-hadoop:  true /usr/local/hadoop/hadoop-2.9.0/lib/native/libhadoop.so.1.0.0
-zlib:    true /lib64/libz.so.1
-snappy:  false 
-lz4:     true revision:99
-bzip2:   false 
-openssl: false EVP_CIPHER_CTX_cleanup
-```
-解决方法：
-- snappy:  false
-```
+# cd /usr/local/hadoop/hadoop-2.9.0/etc/hadoop
 
-```
-- bzip2:   false
-```
-# yum -y install bzip2
-```
-- openssl: false Cannot load libcrypto.so (libcrypto.so: cannot open shared object file: No such file or directory)!
-```
-# cd /usr/lib64/
+# vim yarn-site.xml
+<!--虚拟内存设置是否生效,若实际虚拟内存大于设置值 ,spark 以client模式运行可能会报错,"Yarn application has already ended! It might have been killed or unable to l"-->
+<property>
+    <name>yarn.nodemanager.vmem-check-enabled</name>
+    <value>false</value>
+</property>
 
-# ln -s libcrypto.so.1.0.1e libcrypto.so
-```
-
-# WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable
-- 第一种情况，libc.so.6: version `GLIBC_2.14' not found
-因为系统的gblci版本太低，需要安装2.14以上的版本：
-下载glibc2.14，http://www.gnu.org/software/libc/
-```
-# tar -zxvf /..目录/glibc-2.14.tar.gz -C /usr/local/glibc
-
-# cd /usr/local/glibc
-
-# ./glibc-2.14/configure --prefix=/usr/local/glibc  //glibc不允许在源码目录树下编译，必须在其他目录configure和build，这样一旦出错将整个目录移除即可
-
-# make
-
-# make install
-```
-
-注意：
-安装过程中，如果出现Can't open configuration file /usr/local/glibc/etc/ld.so.conf: No such file or directory
-```
-# cp /etc/ld.so.c* /usr/local/glibc/etc
-
-# ln -sf /usr/local/glibc/lib/libc-2.14.so /lib64/libc.so.6 //建立软链指向glibc-2.14
-```
-
-误删libc.so.6解决方法：
-```
-# LD_PRELOAD=/lib64/libc-2.12.so ln -s /lib64/libc-2.12.so libc.so.6
-
-# strings /lib64/libc.so.6 | grep GLIBC //显示GLIBC_2.14，说明安装成功
-GLIBC_2.2.5
-GLIBC_2.2.6
-GLIBC_2.3
-GLIBC_2.3.2
-GLIBC_2.3.3
-GLIBC_2.3.4
-GLIBC_2.4
-GLIBC_2.5
-GLIBC_2.6
-GLIBC_2.7
-GLIBC_2.8
-GLIBC_2.9
-GLIBC_2.10
-GLIBC_2.11
-GLIBC_2.12
-GLIBC_2.13
-GLIBC_2.14
-GLIBC_PRIVATE
-```
-
-- 第二种情况，在调用spark-shell时，提示Failed to load native-hadoop with error: java.lang.UnsatisfiedLinkError: no hadoop in java.library.path
-```
-# cd /usr/local/spark/spark-2.0.1-bin-hadoop2.6/conf
-
-# cp spark-env.sh.template spark-env.sh
-
-# vim spark-env.sh
-export JAVA_LIBRARY_PATH=$JAVA_LIBRARY_PATH:$HADOOP_HOME/lib/native
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_HOME/lib/native
-export SPARK_YARN_USER_ENV="JAVA_LIBRARY_PATH=$JAVA_LIBRARY_PATH,LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
-
-# source spark-env.sh
+<!--配置虚拟内存/物理内存的值，默认为2.1,物理内存默认应该是1g，所以虚拟内存是2.1g-->
+<property>
+    <name>yarn.nodemanager.vmem-pmem-ratio</name>
+    <value>4</value>
+</property>
 ```
