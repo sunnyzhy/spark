@@ -107,6 +107,10 @@ This command was run using /usr/local/hadoop/hadoop-2.9.0/share/hadoop/common/ha
       <name>yarn.resourcemanager.hostname</name>
       <value>spark1</value>
   </property>
+  <property>
+    <name>yarn.nodemanager.vmem-pmem-ratio</name>
+    <value>4</value>
+  </property>
 </configuration>
 ```
 
