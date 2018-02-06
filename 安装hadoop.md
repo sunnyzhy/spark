@@ -15,6 +15,7 @@ http://hadoop.apache.org/
 ```
 # vim /etc/profile
 export HADOOP_HOME=/usr/local/hadoop/hadoop-2.9.0
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 export PATH=$PATH:$HADOOP_HOME/bin
 
 # source /etc/profile
