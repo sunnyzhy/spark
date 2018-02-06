@@ -16,6 +16,8 @@ https://github.com/srccodes/hadoop-common-2.2.0-bin
 3. 重启系统
 
 # WARN TaskSchedulerImpl: Initial job has not accepted any resources; check your cluster UI to ensure that workers are registered and have sufficient resources
+- 解决方法1
+
 配置spark.executor.memory属性
 ```
       val spark = SparkSession
@@ -24,4 +26,24 @@ https://github.com/srccodes/hadoop-common-2.2.0-bin
       .master("spark://192.168.253.107:7077")
       .config("spark.executor.memory", "512m")
       .getOrCreate();
+```
+
+- 解决方法2
+
+```
+# cd /usr/local/hadoop/hadoop-2.9.0/etc/hadoop
+
+# vim yarn-site.xml
+    <property>
+        <name>yarn.nodemanager.resource.memory-mb</name>
+        <value>4096</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.resource.cpu-vcore</name>
+        <value>2</value>
+    </property>
+    <property>
+        <name>yarn.scheduler.maximum-allocation-vcores</name>
+        <value>2</value>
+    </property>
 ```
