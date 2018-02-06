@@ -47,3 +47,8 @@ https://github.com/srccodes/hadoop-common-2.2.0-bin
         <value>2</value>
     </property>
 ```
+
+# Unable to find encoder for type stored in a Dataset.
+```
+dataset.map -> dataset.rdd.map
+```
