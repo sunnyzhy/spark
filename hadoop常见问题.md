@@ -59,7 +59,7 @@ clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 //复制name的clusterID
 ```
 
 # Yarn application has already ended! It might have been killed or unable to launch application master
-2个配置二选一即可
+配置yarn-site.xml，以下2个配置二选一即可
 ```
 # cd /usr/local/hadoop/hadoop-2.9.0/etc/hadoop
 
