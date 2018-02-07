@@ -18,3 +18,10 @@
 # vim spark-defaults.conf
 spark.yarn.jars=hdfs://spark1:9000/usr/local/spark/spark-2.2.1-bin-hadoop2.7/jars/* /home/hadoop/spark_jars/
 ```
+
+# java.lang.ClassCastException: cannot assign instance of scala.collection.immutable.List$SerializationProxy to field
+1. 添加本地项目的jar文件
+```
+sc.addJar("../xxx.jar")
+```
+2. 把xxx.jar文件上传到 /usr/local/spark/spark-2.2.1-bin-hadoop2.7/jars 目录
