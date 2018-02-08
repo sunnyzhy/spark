@@ -76,3 +76,15 @@ clusterID=CID-eb45aa78-5e50-45cb-b6c0-06aa9cd4c476 //复制name的clusterID
     <value>4</value>
 </property>
 ```
+
+# DEBUG util.NativeCodeLoader: Failed to load native-hadoop with error: java.lang.UnsatisfiedLinkError: no hadoop in java.library.path
+# WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+添加配置HADOOP_OPTS
+```
+# cd /usr/local/hadoop/hadoop-2.9.0/etc/hadoop
+
+# vim hadoop-env.sh
+export HADOOP_OPTS="-Djava.library.path=${HADOOP_HOME}/lib/native"
+
+# source hadoop-env.sh
+```
