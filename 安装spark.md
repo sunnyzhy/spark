@@ -104,7 +104,7 @@ tcp6       0      0 :::8080                 :::*                    LISTEN
 tcp6       0      0 192.168.253.107:7077    :::*                    LISTEN
 ```
 
-在浏览器中输入 http://spark1:8080，可以进入Spark集群状态页面
+在浏览器中输入 http://spark1:8080 ，可以进入Spark集群状态页面
 ```
     URL: spark://spark1:7077
     REST URL: spark://spark1:6066 (cluster mode)
