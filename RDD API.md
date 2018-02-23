@@ -51,7 +51,7 @@ res16: Array[(String, Int)] = Array((aaa,3), (b,1), (b,1), (c,1))
 
 - mapValues
 
-  对KV对中的value作转换
+  KV对中的value作转换
 ```
 scala> val r3 = r2.mapValues(x => (x,10))
 r3: org.apache.spark.rdd.RDD[(String, (Int, Int))] = MapPartitionsRDD[20] at mapValues at <console>:30
