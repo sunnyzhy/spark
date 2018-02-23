@@ -91,3 +91,47 @@ r2: org.apache.spark.rdd.RDD[(Int, Int)] = ShuffledRDD[23] at reduceByKey at <co
 scala> r2.collect
 res22: Array[(Int, Int)] = Array((1,5), (3,10))
 ```
+
+- reduceByKey示例
+
+1. 按key求和
+```
+scala> val r1 = sc.parallelize(List(("a",2),("b",3),("a",3)))
+r1: org.apache.spark.rdd.RDD[(String, Int)] = ParallelCollectionRDD[25] at parallelize at <console>:24
+
+scala> r1.collect
+res23: Array[(String, Int)] = Array((a,2), (b,3), (a,3))
+
+scala> val r2 = r1.reduceByKey((x,y) => x + y)
+r2: org.apache.spark.rdd.RDD[(String, Int)] = ShuffledRDD[26] at reduceByKey at <console>:28
+
+scala> r2.collect
+res24: Array[(String, Int)] = Array((b,3), (a,5))
+```
+
+2. 按key求平均值
+```
+scala> val r1 = sc.parallelize(List(("spark",10),("hadoop",4),("hadoop",10),("spark",20)))
+r1: org.apache.spark.rdd.RDD[(String, Int)] = ParallelCollectionRDD[27] at parallelize at <console>:24
+
+scala> r1.collect
+res25: Array[(String, Int)] = Array((spark,10), (hadoop,4), (hadoop,10), (spark,20))
+
+scala> val r2 = r1.mapValues(x => (x,1))
+r2: org.apache.spark.rdd.RDD[(String, (Int, Int))] = MapPartitionsRDD[28] at mapValues at <console>:28
+
+scala> r2.collect
+res26: Array[(String, (Int, Int))] = Array((spark,(10,1)), (hadoop,(4,1)), (hadoop,(10,1)), (spark,(20,1)))
+
+scala> val r3 = r2.reduceByKey((x,y) => (x._1 + y._1, x._2 + y._2))
+r3: org.apache.spark.rdd.RDD[(String, (Int, Int))] = ShuffledRDD[29] at reduceByKey at <console>:30
+
+scala> r3.collect
+res27: Array[(String, (Int, Int))] = Array((spark,(30,2)), (hadoop,(14,2)))     
+
+scala> val r4 = r3.mapValues(x => x._1 / x._2)
+r4: org.apache.spark.rdd.RDD[(String, Int)] = MapPartitionsRDD[30] at mapValues at <console>:32
+
+scala> r4.collect
+res28: Array[(String, Int)] = Array((spark,15), (hadoop,7))
+```
