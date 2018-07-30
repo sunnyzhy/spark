@@ -89,7 +89,7 @@ export HADOOP_OPTS="-Djava.library.path=${HADOOP_HOME}/lib/native"
 # source hadoop-env.sh
 ```
 
-# org.apache.hadoop.security.AccessControlException: org.apache.hadoop.security .AccessControlException: Permission denied: user=Administrator, access=WRITE, inode="hadoop": hadoop:supergroup:rwxr-xr-x
+# Exception in thread "main" org.apache.hadoop.security.AccessControlException: Permission denied: user=Administrator, access=WRITE, inode="/spark/global":root:supergroup:drwxr-xr-x
 ```
 # hadoop fs -chmod 777 /user/hadoop/test
 ```
