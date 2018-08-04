@@ -1,10 +1,10 @@
-# hive概念
+# hive介绍
 ```
 基于 Hadoop 的一个数据仓库工具：
 
 hive本身不提供数据存储功能，使用HDFS做数据存储;
 
-hive也不分布式计算框架，hive的核心工作就是把sql语句翻译成MR程序;
+hive也不分布式计算框架，hive的核心工作就是把sql语句翻译成Map-Reduce任务;
 
 hive也不提供资源调度系统，也是默认由Hadoop当中YARN集群来调度;
 
