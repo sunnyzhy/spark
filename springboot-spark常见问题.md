@@ -16,6 +16,13 @@ https://github.com/srccodes/hadoop-common-2.2.0-bin
 3. 重启系统
 
 # WARN TaskSchedulerImpl: Initial job has not accepted any resources; check your cluster UI to ensure that workers are registered and have sufficient resources
+```
+打开http://spark1:8080/，看到Status是Wait，分配的核是0，内存是参数 –executor-memory是1024m。
+
+这是因为当前的集群的可用资源不能满足应用程序所请求的资源。
+
+首先检查 /usr/local/spark/spark-2.2.1-bin-hadoop2.7/conf/spark-env.sh 文件里面分给每个worker的executor的memory是多少。当应用程序中设置的参数超过这个数值的时候，应用程序就不会找这个worker进行工作，而是去找满足数值的worker。所以遇到这种情况基本是因为应用程序设置的参数超过了分配给worker的executor的memory的数值。此时，只要修改应用程序的executor.memory就可以了。
+```
 - 解决方法1
 
 配置spark.executor.memory属性
