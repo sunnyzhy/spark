@@ -124,7 +124,7 @@ export PATH=$PATH:${HIVE_HOME}/bin
 ```
 
 # 上传MySQL驱动包
-把 mysql-connector-java-6.0.6.jar 上传到 /usr/local/hive/apache-hive-2.3.4-bin/lib
+把 mysql-connector-java-6.0.6.jar 上传到 /usr/local/hive/apache-hive-2.3.4-bin/lib 目录
 
 # 配置hive-env.sh
 ```
@@ -228,4 +228,18 @@ MariaDB [hive]> show tables;
 | WRITE_SET                 |
 +---------------------------+
 57 rows in set (0.01 sec)
+```
+
+# 启动hive
+```
+# cd /usr/local/hive/apache-hive-2.3.4-bin/bin
+
+# ./hive
+```
+
+# 测试hive
+```
+hive> show  functions;
+
+hive> desc function  sum;
 ```
