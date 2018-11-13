@@ -1,3 +1,10 @@
+# 基本操作
+1. 查看数据库列表：show databases;
+2. 查看数据表列表：show tables;
+3. 查询表数据：select
+4. 查看表结构：desc [tableName];
+5. 创建数据库：create database [databaseName];
+
 # 新建数据库
 ```
 hive> create database hive_test;
