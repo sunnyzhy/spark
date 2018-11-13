@@ -43,3 +43,5 @@ OK
 ```
 SELECT * FROM hive.TBLS;
 ```
+# 在hdfs中查看hive数据库
+http://127.0.0.1:50070/explorer.html#/user/hive/warehouse
