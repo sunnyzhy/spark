@@ -35,6 +35,8 @@ export PATH=$PATH:${HIVE_HOME}/bin
 # cd /usr/local/hive/apache-hive-2.3.4-bin/conf
 
 # cp hive-default.xml.template hive-site.xml
+
+# vim hive-site.xml
 ```
 1. 把${system:java.io.tmpdir}替换为hive的临时目录/usr/local/hive/apache-hive-2.3.4-bin/tmp
 
@@ -119,4 +121,111 @@ export PATH=$PATH:${HIVE_HOME}/bin
       False: Warn if the version information stored in metastore doesn't match with one from in Hive jars.
     </description>
   </property>
+```
+
+# 上传MySQL驱动包
+把 mysql-connector-java-6.0.6.jar 上传到 /usr/local/hive/apache-hive-2.3.4-bin/lib
+
+# 配置hive-env.sh
+```
+# cd /usr/local/hive/apache-hive-2.3.4-bin/conf
+
+# cp hive-env.sh.template hive-env.sh
+
+# vim hive-env.sh
+export HADOOP_HOME=/usr/local/hadoop/hadoop-2.9.0
+export HIVE_CONF_DIR=/usr/local/hive/apache-hive-2.3.4-bin/conf
+export HIVE_AUX_JARS_PATH=/usr/local/hive/apache-hive-2.3.4-bin/lib
+```
+
+# 初始化MySQL数据库
+```
+# mysql -u root -proot
+
+MariaDB [(none)]> CREATE USER 'hive'@'localhost' IDENTIFIED BY 'hive';
+
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON *.* TO hive@localhost IDENTIFIED BY 'hive';
+
+MariaDB [(none)]> exit;
+
+# mysql -uhive -phive
+
+MariaDB [(none)]> CREATE DATABASE hive;
+
+MariaDB [hive]> exit;
+
+# cd /usr/local/hive/apache-hive-2.3.4-bin/bin
+
+# schematool -initSchema -dbType mysql
+```
+
+# 查看hive数据表
+```
+# mysql -uhive -phive
+
+MariaDB [(none)]> use hive;
+
+MariaDB [hive]> show tables;
++---------------------------+
+| Tables_in_hive            |
++---------------------------+
+| AUX_TABLE                 |
+| BUCKETING_COLS            |
+| CDS                       |
+| COLUMNS_V2                |
+| COMPACTION_QUEUE          |
+| COMPLETED_COMPACTIONS     |
+| COMPLETED_TXN_COMPONENTS  |
+| DATABASE_PARAMS           |
+| DBS                       |
+| DB_PRIVS                  |
+| DELEGATION_TOKENS         |
+| FUNCS                     |
+| FUNC_RU                   |
+| GLOBAL_PRIVS              |
+| HIVE_LOCKS                |
+| IDXS                      |
+| INDEX_PARAMS              |
+| KEY_CONSTRAINTS           |
+| MASTER_KEYS               |
+| NEXT_COMPACTION_QUEUE_ID  |
+| NEXT_LOCK_ID              |
+| NEXT_TXN_ID               |
+| NOTIFICATION_LOG          |
+| NOTIFICATION_SEQUENCE     |
+| NUCLEUS_TABLES            |
+| PARTITIONS                |
+| PARTITION_EVENTS          |
+| PARTITION_KEYS            |
+| PARTITION_KEY_VALS        |
+| PARTITION_PARAMS          |
+| PART_COL_PRIVS            |
+| PART_COL_STATS            |
+| PART_PRIVS                |
+| ROLES                     |
+| ROLE_MAP                  |
+| SDS                       |
+| SD_PARAMS                 |
+| SEQUENCE_TABLE            |
+| SERDES                    |
+| SERDE_PARAMS              |
+| SKEWED_COL_NAMES          |
+| SKEWED_COL_VALUE_LOC_MAP  |
+| SKEWED_STRING_LIST        |
+| SKEWED_STRING_LIST_VALUES |
+| SKEWED_VALUES             |
+| SORT_COLS                 |
+| TABLE_PARAMS              |
+| TAB_COL_STATS             |
+| TBLS                      |
+| TBL_COL_PRIVS             |
+| TBL_PRIVS                 |
+| TXNS                      |
+| TXN_COMPONENTS            |
+| TYPES                     |
+| TYPE_FIELDS               |
+| VERSION                   |
+| WRITE_SET                 |
++---------------------------+
+57 rows in set (0.01 sec)
 ```
