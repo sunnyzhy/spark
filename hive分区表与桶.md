@@ -130,6 +130,9 @@ table_sample: TABLESAMPLE (BUCKET x OUT OF y [ON colname])
 
 其中x是要抽样的桶编号，桶编号从1开始，colname表示抽样的列，y表示桶的数量。
 
-下面的例子中，返回4个桶中的第2个桶中的行：
- select * from t4 tablesample(bucket 2 out of 4 on id);
+下面的例子中，抽样4个桶中的第1个桶的数据：
+ select * from t4 tablesample(bucket 1 out of 4 on id);
+ 
+下面的例子中，将表t4随机分成4个桶，抽样第1个桶的数据：
+ select * from t4 tablesample(bucket 1 out of 4 on rand());
 ```
