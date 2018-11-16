@@ -128,7 +128,7 @@ OK
 ```
 table_sample: TABLESAMPLE (BUCKET x OUT OF y [ON colname])
 
-ABLESAMPLE子句允许用户编写用于数据抽样而不是整个表的查询，该子句出现FROM子句中，可用于任何表中。桶编号从1开始，colname表明抽取样本的列，可以是非分区列中的任意一列，或者使用rand()表明在整个行中抽取样本而不是单个列。在colname上分桶的行随机进入1到y个桶中，返回属于桶x的行。
+其中x是要抽样的桶编号，桶编号从1开始，colname表示抽样的列，y表示桶的数量。
 
 下面的例子中，返回4个桶中的第2个桶中的行：
  select * from t4 tablesample(bucket 2 out of 4 on id);
