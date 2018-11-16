@@ -176,3 +176,31 @@ Time taken: 0.112 seconds, Fetched: 34 row(s)
 Found 1 items
 -rwxr-xr-x   2 root supergroup        147 2018-11-16 13:58 /user/db/t2/data.log
 ```
+
+# 删除内部表和外部表
+```
+hive> drop table t1;
+OK
+Time taken: 1.814 seconds
+
+hive> drop table t2;
+OK
+Time taken: 0.192 seconds
+
+hive> desc t1;
+FAILED: SemanticException [Error 10001]: Table not found t1
+
+hive> desc t2;
+FAILED: SemanticException [Error 10001]: Table not found t2
+
+# hadoop fs -ls /user/hive/warehouse/t1
+ls: `/user/hive/warehouse/t1': No such file or directory
+
+# hadoop fs -ls /user/db/t2
+Found 1 items
+-rwxr-xr-x   2 root supergroup        147 2018-11-16 13:58 /user/db/t2/data.log
+```
+
+```
+t1已经不存在了，t2仍然存在，所以外部表仅仅删除元数据。
+```
