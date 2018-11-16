@@ -204,3 +204,28 @@ Found 1 items
 ```
 t1已经不存在了，t2仍然存在，所以外部表仅仅删除元数据。
 ```
+
+# 重新创建外部表
+```
+hive> create external table t2(
+    > id int,
+    > name string,
+    > hobby array<string>,
+    > ad map<string,string>)
+    > row format delimited
+    > fields terminated by ','
+    > collection items terminated by '-'
+    > map keys terminated by ':'
+    > location '/user/db/t2';
+    
+hive> select * from t2;
+OK
+1	xiaoming	["book","TV","code"]	{"beijing":"chaoyang","shagnhai":"pudong"}
+2	lilei	["book","code"]	{"nanjing":"jiangning","taiwan":"taibei"}
+3	lihua	["music","book"]	{"heilongjiang":"haerbin"}
+Time taken: 0.206 seconds, Fetched: 3 row(s)
+```
+
+```
+重新创建外部表t2，不往里面添加数据，查询结果仍然存在。
+```
