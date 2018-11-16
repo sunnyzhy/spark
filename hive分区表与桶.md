@@ -84,13 +84,14 @@ OK
 id                  	int                 	                    
 name                	string              	   
 
-hive> load data local inpath '/usr/local/txt/partition.log' overwrite into table t5;
+hive> load data local inpath '/usr/local/txt/bucket.log' overwrite into table t5;
 
 hive> select * from t5;
 OK
 1	jim
 2	kate
 3	king
+4	tom
 ```
 
 # 往桶表中添加数据
@@ -99,8 +100,36 @@ hive> insert overwrite table t4 select * from t5;
 
 # hadoop fs -ls /user/hive/warehouse/t4
 Found 4 items
--rwxrwxrwx   2 root supergroup          0 2018-11-16 16:18 /user/hive/warehouse/t4/000000_0
--rwxrwxrwx   2 root supergroup          6 2018-11-16 16:18 /user/hive/warehouse/t4/000001_0
+-rwxrwxrwx   2 root supergroup          6 2018-11-16 16:18 /user/hive/warehouse/t4/000000_0
+-rwxrwxrwx   2 root supergroup          7 2018-11-16 16:18 /user/hive/warehouse/t4/000001_0
 -rwxrwxrwx   2 root supergroup          7 2018-11-16 16:19 /user/hive/warehouse/t4/000002_0
--rwxrwxrwx   2 root supergroup          7 2018-11-16 16:19 /user/hive/warehouse/t4/000003_0
+-rwxrwxrwx   2 root supergroup          6 2018-11-16 16:19 /user/hive/warehouse/t4/000003_0
+
+hive> select * from t4 tablesample(bucket 1 out of 4 on id);
+OK
+1	jim
+
+hive> select * from t4 tablesample(bucket 3 out of 4 on id);
+OK
+3	king
+
+hive> select * from t4 tablesample(bucket 3 out of 4 on rand());
+OK
+1	jim
+
+hive> select * from t4 tablesample(3 rows);
+OK
+1	jim
+2	kate
+3	king
+```
+
+# 抽样语法
+```
+table_sample: TABLESAMPLE (BUCKET x OUT OF y [ON colname])
+
+ABLESAMPLE子句允许用户编写用于数据抽样而不是整个表的查询，该子句出现FROM子句中，可用于任何表中。桶编号从1开始，colname表明抽取样本的列，可以是非分区列中的任意一列，或者使用rand()表明在整个行中抽取样本而不是单个列。在colname上分桶的行随机进入1到y个桶中，返回属于桶x的行。
+
+下面的例子中，返回4个桶中的第2个桶中的行：
+ select * from t4 tablesample(bucket 2 out of 4 on id);
 ```
