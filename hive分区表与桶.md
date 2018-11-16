@@ -122,6 +122,17 @@ OK
 1	jim
 2	kate
 3	king
+
+hive> select * from t4 tablesample(50 percent);
+OK
+1	jim
+2	kate
+
+hive> select * from t4 tablesample(1K);
+OK
+1	jim
+2	kate
+3	king
 ```
 
 # 抽样语法
@@ -130,9 +141,18 @@ table_sample: TABLESAMPLE (BUCKET x OUT OF y [ON colname])
 
 其中x是要抽样的桶编号，桶编号从1开始，colname表示抽样的列，y表示桶的数量。
 
-下面的例子中，抽样4个桶中的第1个桶的数据：
+从表t4中抽样4个桶中的第1个桶的数据：
  select * from t4 tablesample(bucket 1 out of 4 on id);
  
-下面的例子中，将表t4随机分成4个桶，抽样第1个桶的数据：
+将表t4随机分成4个桶，抽样第1个桶的数据：
  select * from t4 tablesample(bucket 1 out of 4 on rand());
+ 
+从表t4中抽样3行数据：
+ select * from t4 tablesample(3 rows);
+ 
+从表t4中抽样50%的数据：
+ select * from t4 tablesample(50 percent);
+ 
+从表t4中抽样1K的数据：
+ select * from t4 tablesample(1K);
 ```
