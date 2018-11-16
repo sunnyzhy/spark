@@ -19,5 +19,30 @@ hive> create table t1(
     > fields terminated by ','
     > collection items terminated by '-'
     > map keys terminated by ':';
-    
+
+hive> desc t1;
+OK
+id                  	int                 	                    
+name                	string              	                    
+hobby               	array<string>       	                    
+add                 	map<string,string>  	
+```
+
+# 装载数据
+```
+# touch /usr/local/txt/data.log
+
+# vim /usr/local/txt/data.log
+1,xiaoming,book-TV-code,beijing:chaoyang-shagnhai:pudong 
+2,lilei,book-code,nanjing:jiangning-taiwan:taibei
+3,lihua,music-book,heilongjiang:haerbin
+
+hive> load data local inpath '/usr/local/txt/data.log' overwrite into table t1;
+
+hive> select * from t1;
+OK
+1	xiaoming	["book","TV","code"]	{"beijing":"chaoyang","shagnhai":"pudong"}
+2	lilei	["book","code"]	{"nanjing":"jiangning","taiwan":"taibei"}
+3	lihua	["music","book"]	{"heilongjiang":"haerbin"}
+Time taken: 2.666 seconds, Fetched: 3 row(s)
 ```
