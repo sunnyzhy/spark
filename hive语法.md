@@ -1,3 +1,6 @@
+# 官网
+https://cwiki.apache.org/confluence/display/Hive/Home#Home-UserDocumentation
+
 # 基本操作
 1. 查看数据库列表：show databases;
 2. 查看数据表列表：show tables;
