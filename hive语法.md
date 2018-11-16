@@ -11,9 +11,11 @@ LOAD DATA [LOCAL] INPATH 'filepath' [OVERWRITE] INTO TABLE tablename [PARTITION 
 ```
 # 描述
 -    filepath 可以是：
---        相对路径，如project/data1
---        绝对路径，如/user/hive/project/data1
---        完整的URL，如hdfs://namenode:9000/user/hive/project/data1
+1).        相对路径，如project/data1
+
+2).        绝对路径，如/user/hive/project/data1
+
+3).        完整的URL，如hdfs://namenode:9000/user/hive/project/data1
 -    目标可以是一个表或是一个分区。如果目标表是分区表，必须指定是要加载到哪个分区。
 -    filepath 可以是一个文件，也可以是一个目录(会将目录下的所有文件都加载)。
 -    如果命令中带LOCAL，表示：
