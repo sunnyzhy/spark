@@ -46,3 +46,18 @@ OK
 3	lihua	["music","book"]	{"heilongjiang":"haerbin"}
 Time taken: 2.666 seconds, Fetched: 3 row(s)
 ```
+
+# 创建外部表
+```
+hive> create external table t2(
+    > id int,
+    > name string,
+    > hobby array<string>,
+    > ad map<string,string>)
+    > row format delimited
+    > fields terminated by ','
+    > collection items terminated by '-'
+    > map keys terminated by ':'
+    > location '/user/db/t2';
+
+```
