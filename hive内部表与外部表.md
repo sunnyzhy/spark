@@ -26,9 +26,13 @@ id                  	int
 name                	string              	                    
 hobby               	array<string>       	                    
 add                 	map<string,string>  	
+
+# hadoop fs -ls /user/hive/warehouse
+Found 1 items
+drwxrwxrwx   - root supergroup          0 2018-11-16 11:57 /user/hive/warehouse/t1
 ```
 
-# 装载数据
+# 创建数据文件
 ```
 # touch /usr/local/txt/data.log
 
@@ -36,7 +40,10 @@ add                 	map<string,string>
 1,xiaoming,book-TV-code,beijing:chaoyang-shagnhai:pudong 
 2,lilei,book-code,nanjing:jiangning-taiwan:taibei
 3,lihua,music-book,heilongjiang:haerbin
+```
 
+# 装载数据
+```
 hive> load data local inpath '/usr/local/txt/data.log' overwrite into table t1;
 
 hive> select * from t1;
@@ -45,6 +52,49 @@ OK
 2	lilei	["book","code"]	{"nanjing":"jiangning","taiwan":"taibei"}
 3	lihua	["music","book"]	{"heilongjiang":"haerbin"}
 Time taken: 2.666 seconds, Fetched: 3 row(s)
+
+hive> desc formatted t1;
+OK
+# col_name            	data_type           	comment             
+	 	 
+id                  	int                 	                    
+name                	string              	                    
+hobby               	array<string>       	                    
+add                 	map<string,string>  	                    
+	 	 
+# Detailed Table Information	 	 
+Database:           	default             	 
+Owner:              	root                	 
+CreateTime:         	Fri Nov 16 11:07:51 CST 2018	 
+LastAccessTime:     	UNKNOWN             	 
+Retention:          	0                   	 
+Location:           	hdfs://spark1:9000/user/hive/warehouse/t1	 
+Table Type:         	MANAGED_TABLE       	 
+Table Parameters:	 	 
+	numFiles            	1                   
+	numRows             	0                   
+	rawDataSize         	0                   
+	totalSize           	147                 
+	transient_lastDdlTime	1542340647          
+	 	 
+# Storage Information	 	 
+SerDe Library:      	org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe	 
+InputFormat:        	org.apache.hadoop.mapred.TextInputFormat	 
+OutputFormat:       	org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat	 
+Compressed:         	No                  	 
+Num Buckets:        	-1                  	 
+Bucket Columns:     	[]                  	 
+Sort Columns:       	[]                  	 
+Storage Desc Params:	 	 
+	colelction.delim    	-                   
+	field.delim         	,                   
+	mapkey.delim        	:                   
+	serialization.format	,                   
+Time taken: 0.2 seconds, Fetched: 35 row(s)
+
+# hadoop fs -ls /user/hive/warehouse/t1
+Found 1 items
+-rwxrwxrwx   2 root supergroup        147 2018-11-16 11:57 /user/hive/warehouse/t1/data.log
 ```
 
 # 创建外部表
@@ -60,4 +110,69 @@ hive> create external table t2(
     > map keys terminated by ':'
     > location '/user/db/t2';
 
+hive> desc t2;
+OK
+id                  	int                 	                    
+name                	string              	                    
+hobby               	array<string>       	                    
+ad                  	map<string,string>  	                    
+Time taken: 0.093 seconds, Fetched: 4 row(s)
+
+# hadoop fs -ls /user/db
+Found 1 items
+drwxr-xr-x   - root supergroup          0 2018-11-16 12:02 /user/db/t2
+```
+
+# 装载数据
+```
+hive> load data local inpath '/usr/local/txt/data.log' overwrite into table t2;
+
+hive> select * from t2;
+OK
+1	xiaoming	["book","TV","code"]	{"beijing":"chaoyang","shagnhai":"pudong"}
+2	lilei	["book","code"]	{"nanjing":"jiangning","taiwan":"taibei"}
+3	lihua	["music","book"]	{"heilongjiang":"haerbin"}
+Time taken: 0.206 seconds, Fetched: 3 row(s)
+
+hive> desc formatted t2;
+OK
+# col_name            	data_type           	comment             
+	 	 
+id                  	int                 	                    
+name                	string              	                    
+hobby               	array<string>       	                    
+ad                  	map<string,string>  	                    
+	 	 
+# Detailed Table Information	 	 
+Database:           	default             	 
+Owner:              	root                	 
+CreateTime:         	Fri Nov 16 12:02:01 CST 2018	 
+LastAccessTime:     	UNKNOWN             	 
+Retention:          	0                   	 
+Location:           	hdfs://spark1:9000/user/db/t2	 
+Table Type:         	EXTERNAL_TABLE      	 
+Table Parameters:	 	 
+	EXTERNAL            	TRUE                
+	numFiles            	1                   
+	totalSize           	147                 
+	transient_lastDdlTime	1542347892          
+	 	 
+# Storage Information	 	 
+SerDe Library:      	org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe	 
+InputFormat:        	org.apache.hadoop.mapred.TextInputFormat	 
+OutputFormat:       	org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat	 
+Compressed:         	No                  	 
+Num Buckets:        	-1                  	 
+Bucket Columns:     	[]                  	 
+Sort Columns:       	[]                  	 
+Storage Desc Params:	 	 
+	colelction.delim    	-                   
+	field.delim         	,                   
+	mapkey.delim        	:                   
+	serialization.format	,                   
+Time taken: 0.112 seconds, Fetched: 34 row(s)
+
+# hadoop fs -ls /user/db/t2
+Found 1 items
+-rwxr-xr-x   2 root supergroup        147 2018-11-16 13:58 /user/db/t2/data.log
 ```
