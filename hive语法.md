@@ -163,6 +163,15 @@ hive> insert overwrite local directory '/usr/local/txt/' select * from student;
 ```
 overwrite后可接local关键字，如果有该关键字，那么后面的路径则表示本地路径，否则表示HDFS文件系统上的路径。
 ```
+# 删除分区
+```
+hive> alter table t1 drop if exists partition (partition_field='value');
+```
+
+# 删除表
+```
+hive> drop table if exists t1;
+```
 
 # 在MySQL中查看hive数据表
 ```
