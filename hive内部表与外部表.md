@@ -229,3 +229,35 @@ Time taken: 0.206 seconds, Fetched: 3 row(s)
 ```
 重新创建外部表t2，不往里面添加数据，查询结果仍然存在，所以删除外部表仅仅删除元数据。
 ```
+
+# 查看hive 表在hdfs上的存储路径
+```
+hive> show databases;
+OK
+default
+hive_test
+
+hive> use default;
+OK
+
+hive> show create table t3;
+OK
+CREATE TABLE `t3`(
+  `id` int, 
+  `name` string)
+PARTITIONED BY ( 
+  `ptn` string)
+ROW FORMAT SERDE 
+  'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
+WITH SERDEPROPERTIES ( 
+  'field.delim'=',', 
+  'serialization.format'=',') 
+STORED AS INPUTFORMAT 
+  'org.apache.hadoop.mapred.TextInputFormat' 
+OUTPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+  'hdfs://spark1:9000/user/hive/warehouse/t3'
+TBLPROPERTIES (
+  'transient_lastDdlTime'='1542353564')
+```
