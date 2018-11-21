@@ -53,6 +53,14 @@ OK
 hello	3
 hive	2
 hadoop	2
+
+hive> with t1 as (select explode(split(word,' ')) word from wordcount),
+    > t2 as (select word,count(*) c from t1 group by word)
+    > select * from t2 order by c desc limit 3;
+OK
+hello	3
+hive	2
+hadoop	2
 ```
 
 # split函数
