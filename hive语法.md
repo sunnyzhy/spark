@@ -196,6 +196,62 @@ count(expr) - Returns the number of rows for which the supplied expression is no
 count(DISTINCT expr[, expr...]) - Returns the number of rows for which the supplied expression(s) are unique and non-NULL.
 ```
 
+# with as
+- **介绍**
+
+with as 也叫做子查询部分，首先定义一个sql片段，该sql片段会被整个sql语句所用到，为了让sql语句的可读性更高些，作为提供数据的部分，也常常用在union等集合操作中。
+
+with as就类似于一个视图或临时表，可以用来存储一部分的sql语句作为别名，不同的是**with as 属于一次性的，而且必须要和其他sql一起使用才可以！**
+
+其最大的好处就是适当的提高代码可读性，而且如果with子句在后面要多次使用到，这可以大大的简化SQL；更重要的是：一次分析，多次使用。
+
+- **使用**
+
+```
+hive> WITH t1 AS ( SELECT * FROM carinfo ), 
+    > t2 AS ( SELECT * FROM car_blacklist ) 
+    > SELECT * FROM t1, t2;
+```
+**注意：这里必须要整体作为一条sql查询，即with as语句后不能加分号，不然会报错。**
+
+- **注意事项**
+   
+1. **with子句必须在引用的select语句之前定义,同级with关键字只能使用一次,多个只能用逗号分割；最后一个with 子句与下面的查询之间不能有逗号，只通过右括号分割,with 子句的查询必须用括号括起来.**
+
+以下写法会报错：
+```
+with t1 as (select * from carinfo)
+with t2 as (select * from car_blacklist)
+select * from t1,t2;
+```
+
+```
+with t1 as (select * from carinfo);
+select * from t1;
+```
+
+2. **如果定义了with子句，但其后没有跟select查询，则会报错！**
+
+以下写法会报错：
+```
+with t1 as (select * from carinfo);
+```
+
+正确写法（没有使用 t1没关系，其后有select就行）：
+```
+with t1 as (select * from carinfo)
+select * from carinfo;
+```
+
+3. **前面的with子句定义的查询在后面的with子句中可以使用。但是一个with子句内部不能嵌套with子句！**
+
+正确写法：
+```
+with t1 as (select * from carinfo),
+t2 as (select t1.id from t1)
+select * from t2;
+```
+
 # 在MySQL中查看hive数据表
 ```
 SELECT * FROM hive.TBLS;
