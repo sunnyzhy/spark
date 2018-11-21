@@ -41,7 +41,7 @@ OK
 # 统计跳出用户数
 只浏览了一个页面便离开了网站的访问次数，即只浏览了一个页面便不再访问的访问次数。这里，我们可以通过用户的IP进行分组，如果分组后的记录数只有一条，那么即为跳出用户。将这些用户的数量相加，就得出了跳出用户数。
 ```
-hive> select count(1) from(select count(ip) as times from bbs where logdate='2013_05_30' group by ip having times=1)e;
+hive> select count(1) from(select count(ip) as times from bbs where logdate='2013_05_30' group by ip having times=1) e;
 OK
 3749
 ```
