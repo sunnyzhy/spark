@@ -2,13 +2,13 @@
 ```
 # touch /usr/local/txt/wordcount.log
 # vim /usr/local/txt/wordcount.log
-hello   hadoop
-hello   spark
-hello   hive
-yellow  banana
-red     apple
+hello hadoop
+hello spark
+hello hive
+yellow hive
+red hadoop
 ```
-**单词之间用 \t 分割**
+**单词之间用空格分割**
 
 # 创建表
 ```
@@ -33,3 +33,53 @@ yellow	banana
 red	apple
 ```
 
+# 统计单词个数
+```
+hive> select w, count(*) from (select explode(split(word,'\t')) w from wordcount) wc group by w;
+OK
+hadoop	2
+hello	3
+hive	2
+red	1
+spark	1
+yellow	1
+```
+
+# split函数
+字符串分割函数
+
+语法：
+split(str, regex)
+
+返回值: 
+array
+
+示例：
+```
+hive> select split(word,' ') from wordcount;
+OK
+["hello","hadoop"]
+["hello","spark"]
+["hello","hive"]
+["yellow","hive"]
+["red","hadoop"]
+```
+
+# explode函数
+hive explode函数可以将一个array或者map展开，其中explode(array)使得结果中将array列表里的每个元素生成一行；explode(map)使得结果中将map里的每一对元素作为一行，key为一列，value为一列。
+
+示例：
+```
+hive> select explode(split(word,' ')) from wordcount;
+OK
+hello
+hadoop
+hello
+spark
+hello
+hive
+yellow
+hive
+red
+hadoop
+```
