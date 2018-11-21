@@ -49,7 +49,7 @@ yellow	1
 字符串分割函数
 
 语法：
-split(str, regex)
+split(str, regex) - Splits str around occurances that match regex
 
 返回值: 
 array
@@ -67,6 +67,9 @@ OK
 
 # explode函数
 hive explode函数可以将一个array或者map展开，其中explode(array)使得结果中将array列表里的每个元素生成一行；explode(map)使得结果中将map里的每一对元素作为一行，key为一列，value为一列。
+
+语法：
+explode(a) - separates the elements of array a into multiple rows, or the elements of a map into multiple rows and columns
 
 示例：
 ```
