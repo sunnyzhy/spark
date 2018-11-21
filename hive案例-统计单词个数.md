@@ -35,7 +35,7 @@ red	apple
 
 # 统计单词个数
 ```
-hive> select w, count(*) from (select explode(split(word,'\t')) w from wordcount) wc group by w;
+hive> select w, count(*) from (select explode(split(word,' ')) w from wordcount) wc group by w;
 OK
 hadoop	2
 hello	3
@@ -43,6 +43,16 @@ hive	2
 red	1
 spark	1
 yellow	1
+```
+
+# 统计出现频率最高的前3个单词
+```
+hive> with t1 as (select w, count(*) c from (select explode(split(word,' ')) w from wordcount) wc group by w)
+    > select * from t1 order by c desc limit 3;
+OK
+hello	3
+hive	2
+hadoop	2
 ```
 
 # split函数
