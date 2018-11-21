@@ -173,6 +173,29 @@ hive> alter table t1 drop if exists partition (partition_field='value');
 hive> drop table if exists t1;
 ```
 
+# 查看表结构
+```
+hive> desc t3;
+OK
+id                  	int                 	                    
+name                	string              	                    
+ptn                 	string              	                    
+	 	 
+# Partition Information	 	 
+# col_name            	data_type           	comment             
+	 	 
+ptn                 	string              	   
+```
+
+# 查看函数
+```
+hive> desc function count;
+OK
+count(*) - Returns the total number of retrieved rows, including rows containing NULL values.
+count(expr) - Returns the number of rows for which the supplied expression is non-NULL.
+count(DISTINCT expr[, expr...]) - Returns the number of rows for which the supplied expression(s) are unique and non-NULL.
+```
+
 # 在MySQL中查看hive数据表
 ```
 SELECT * FROM hive.TBLS;
