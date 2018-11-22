@@ -243,3 +243,17 @@ hive> show  functions;
 
 hive> desc function  sum;
 ```
+
+# 配置与启动HiveServer2，允许远程连接
+## 启动步骤
+1. **启动元数据库**
+
+```
+# hive --service metastore
+```
+
+2. **启动hiveserver2服务**
+
+```
+# hive --service hiveserver2
+```
