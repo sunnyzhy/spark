@@ -31,7 +31,7 @@ hadoop.proxyuser.root.hosts配置项名称中root部分为报错User:* 中的用
 把$HADOOP_HOME/share/hadoop/tools/lib/hadoop-distcp-x.x.x.jar复制到hive的lib目录
 ```
 # cp /usr/local/hadoop/hadoop-2.9.0/share/hadoop/tools/lib/hadoop-distcp-2.9.0.jar /usr/local/hive/apache-hive-2.3.4-bin/lib/hadoop-distcp-2.9.0.jar
-``
+```
 
 # Permission denied: user=anonymous, access=WRITE, inode="...":root:supergroup:drwxr-xr-x
 **解决方法**
