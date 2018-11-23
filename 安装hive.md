@@ -259,3 +259,12 @@ hive> desc function  sum;
 # cd /usr/local/hive/apache-hive-2.3.4-bin/bin
 # ./hive --service hiveserver2 &
 ```
+
+2. **查看进程**
+
+```
+# jps
+4736 RunJar
+4692 RunJar
+4925 Jps
+```
