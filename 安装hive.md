@@ -249,11 +249,13 @@ hive> desc function  sum;
 1. **启动元数据库**
 
 ```
-# hive --service metastore
+# cd /usr/local/hive/apache-hive-2.3.4-bin/bin
+# ./hive --service metastore &
 ```
 
 2. **启动hiveserver2服务**
 
 ```
-# hive --service hiveserver2
+# cd /usr/local/hive/apache-hive-2.3.4-bin/bin
+# ./hive --service hiveserver2 &
 ```
