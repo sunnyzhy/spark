@@ -260,7 +260,7 @@ hive> desc function  sum;
 # ./hive --service hiveserver2 &
 ```
 
-2. **查看进程**
+3. **查看进程**
 
 ```
 # jps
