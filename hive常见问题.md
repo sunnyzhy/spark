@@ -41,4 +41,6 @@ hadoop.proxyuser.root.hosts配置项名称中root部分为报错User:* 中的用
 # hadoop fs -chmod 777 /user/hadoop/access
 
 # hadoop fs -chmod 777 /user/hive/warehouse
+
+# hadoop fs -chmod 777 /tmp/hadoop-yarn
 ``
