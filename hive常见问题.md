@@ -37,17 +37,11 @@ hadoop.proxyuser.root.hosts配置项名称中root部分为报错User:* 中的用
 
 - **问题原因**
 
-HDFS里的文件夹的所有者不是 **root** ，而是 **hdfs**（权限为755，可以把hdfs理解为一个属于supergroup的用户）。所以，只有 **hdfs** 用户才可以对HDFS里的文件夹进行写操作。
+权限的问题，连接Hive时，如果没有使用认证用户操作，就默认使用hive-default.xml文件中的anonymous用户提交任务，所以在HDFS上创建文件目录时的用户就变成了anonymous；
 
 - **解决方法**
 
-更改HDFS文件夹的权限，如：
 ```
-# hadoop fs -chmod 777 /user/hadoop/access
-
-# hadoop fs -chmod 777 /user/hive/warehouse
-
-# hadoop fs -chmod 777 /tmp/hadoop-yarn
-
-# sudo -u hdfs -dfs  -chmod 777 /user
+# hadoop fs -chown -R anonymous:supergroup /user
+# hadoop fs -chown -R anonymous:supergroup /tmp
 ``
