@@ -34,13 +34,20 @@ hadoop.proxyuser.root.hosts配置项名称中root部分为报错User:* 中的用
 ```
 
 # Permission denied: user=anonymous, access=WRITE, inode="/user/***":root:supergroup:drwxr-xr-x
-**解决方法**
 
-更改hadoop目录权限，如：
+- **问题原因**
+
+HDFS里的文件夹的所有者不是 **root** ，而是 **hdfs**（权限为755，可以把hdfs理解为一个属于supergroup的用户）。所以，只有 **hdfs** 用户才可以对HDFS里的文件夹进行写操作。
+
+- **解决方法**
+
+更改HDFS文件夹的权限，如：
 ```
 # hadoop fs -chmod 777 /user/hadoop/access
 
 # hadoop fs -chmod 777 /user/hive/warehouse
 
 # hadoop fs -chmod 777 /tmp/hadoop-yarn
+
+# sudo -u hdfs -dfs  -chmod 777 /user
 ``
