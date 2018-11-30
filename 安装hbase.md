@@ -48,7 +48,7 @@ export PATH=$PATH:${HBASE_HOME}/bin
 
   <property>
    <name>hbase.zookeeper.quorum</name>
-   <value>spark1,spark2</value>
+   <value>spark1</value>
   </property>
 
   <property>
@@ -68,8 +68,7 @@ export PATH=$PATH:${HBASE_HOME}/bin
 # cd /usr/local/hbase/hbase-2.1.1/conf
 
 # vim regionservers
-spark1
-spark2
+localhost
 ```
 
 # 配置hbase-env.sh
