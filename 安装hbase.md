@@ -83,9 +83,10 @@ export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
 # export HBASE_PID_DIR=/usr/local/hbase/hbase-2.1.1/pids
 # export HBASE_MANAGES_ZK=false
 ```
+**如果HBASE_MANAGES_ZK=true，说明hbase使用自带的zookeeper。**
 
 # 启动
-启动Hbase之前，先启动hadoop和zookkeeper
+启动Hbase之前，先启动hadoop和zookkeeper（如果HBASE_MANAGES_ZK=false）
 ```
 # cd /usr/local/hbase/hbase-2.1.1/bin
 
