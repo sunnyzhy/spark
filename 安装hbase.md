@@ -68,7 +68,7 @@ export PATH=$PATH:${HBASE_HOME}/bin
 # cd /usr/local/hbase/hbase-2.1.1/conf
 
 # vim regionservers
-localhost
+spark1
 ```
 
 # 配置hbase-env.sh
