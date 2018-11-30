@@ -77,11 +77,11 @@ localhost
 
 # vim hbase-env.sh
 export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
+export HBASE_MANAGES_ZK=false
 # export HADOOP_HOME=/usr/local/hadoop/hadoop-2.9.0
 # export HBASE_HOME=/usr/local/hbase/hbase-2.1.1
 # export HBASE_CLASSPATH=/usr/local/hadoop/hadoop-2.9.0/etc/hadoop
 # export HBASE_PID_DIR=/usr/local/hbase/hbase-2.1.1/pids
-# export HBASE_MANAGES_ZK=false
 ```
 **如果HBASE_MANAGES_ZK=true，说明hbase使用自带的zookeeper。**
 
