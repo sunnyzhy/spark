@@ -108,4 +108,7 @@ export HBASE_MANAGES_ZK=false
 ```
 
 # 验证
-http://spark1:16030/
+访问WEB UI
+| master | regionServer |
+| - | - |
+| http://spark1:16010 | http://spark1:16030 |
