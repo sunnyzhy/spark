@@ -1,7 +1,6 @@
 # 运行命令行工具
 ```
 # hbase shell
-
 hbase(main):001:0>
 ```
 
@@ -54,15 +53,6 @@ MPRESSION => 'NONE', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65
 4 row(s) in 0.0640 seconds
 ```
 
-# 删除列族
-```
-> disable 'student'
-
-> alter 'student',{NAME=>'address',METHOD=>'delete'}
-
-> enable 'student'
-```
-
 # 查看表是否存在
 ```
 > exists 'student'
@@ -79,13 +69,6 @@ true
 ```
 > is_disabled 'student'
 false
-```
-
-# 删除表
-```
-> disable 'student'
-
-> drop 'student'
 ```
 
 # 添加记录
@@ -162,9 +145,24 @@ COLUMN                CELL
 > put 'student','stu','birth:day',2
 ```
 
+# 查询表中有多少行
+ ```
+ > count 'student'
+1 row(s) in 0.1010 seconds
+ ``` 
+ 
 # 删除指定行，指定列族，指定列的数据
 ```
 > delete 'student','stu','address:city'
+```
+
+ # 删除列族
+```
+> disable 'student'
+
+> alter 'student',{NAME=>'address',METHOD=>'delete'}
+
+> enable 'student'
 ```
 
 # 删除整行
@@ -172,12 +170,6 @@ COLUMN                CELL
 > deleteall 'student','stu'
 ```
 
- # 查询表中有多少行
- ```
- > count 'student'
-1 row(s) in 0.1010 seconds
- ```
- 
  # 清空表
  ```
  > truncate 'student'
@@ -186,3 +178,10 @@ Truncating 'student' table (it may take a while):
  - Truncating table...
 0 row(s) in 6.4110 seconds
  ```
+
+# 删除表
+```
+> disable 'student'
+
+> drop 'student'
+```
