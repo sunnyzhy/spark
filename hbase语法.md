@@ -1,3 +1,5 @@
+[TOC]
+
 # 运行命令行工具
 ```
 # hbase shell
@@ -79,13 +81,6 @@ true
 ```
 > is_disabled 'student'
 false
-```
-
-# 删除表
-```
-> disable 'student'
-
-> drop 'student'
 ```
 
 # 删除表
