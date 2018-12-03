@@ -1,17 +1,19 @@
 # 官网
 http://hbase.apache.org/
 
+**我的hadoop版本是2.9.0，所以需要下载hbase-1.2.6。**
+
 # 解压
 ```
 # cd /usr/local/hbase
 
-# tar -zxvf hbase-2.1.1-bin.tar.gz
+# tar -zxvf hbase-1.2.6-bin.tar.gz
 ```
 
 # 配置环境变量
 ```
 # vim /etc/profile
-export HBASE_HOME=/usr/local/hbase/hbase-2.1.1
+export HBASE_HOME=/usr/local/hbase/hbase-1.2.6
 export PATH=$PATH:${HBASE_HOME}/bin
 
 # source /etc/profile
@@ -19,13 +21,13 @@ export PATH=$PATH:${HBASE_HOME}/bin
 
 # 配置hbase-site.xml
 ```
-# cd /usr/local/hbase/hbase-2.1.1
+# cd /usr/local/hbase/hbase-1.2.6
 
 # mkdir temp
 
 # mkdir pids
 
-# cd /usr/local/hbase/hbase-2.1.1/conf
+# cd /usr/local/hbase/hbase-1.2.6/conf
 
 # vim hbase-site.xml
 <configuration>
@@ -53,7 +55,7 @@ export PATH=$PATH:${HBASE_HOME}/bin
 
   <property>
    <name>hbase.tmp.dir</name>
-   <value>/usr/local/hbase/hbase-2.1.1/tmp</value>
+   <value>/usr/local/hbase/hbase-1.2.6/tmp</value>
   </property>
 
   <property>
@@ -65,7 +67,7 @@ export PATH=$PATH:${HBASE_HOME}/bin
 
 # 修改regionservers文件
 ```
-# cd /usr/local/hbase/hbase-2.1.1/conf
+# cd /usr/local/hbase/hbase-1.2.6/conf
 
 # vim regionservers
 spark1
@@ -73,25 +75,37 @@ spark1
 
 # 配置hbase-env.sh
 ```
-# cd /usr/local/hbase/hbase-2.1.1/conf
+# cd /usr/local/hbase/hbase-1.2.6/conf
 
 # vim hbase-env.sh
 export JAVA_HOME=/usr/local/jdk/jdk1.8.0_151
 export HBASE_MANAGES_ZK=false
 # export HADOOP_HOME=/usr/local/hadoop/hadoop-2.9.0
-# export HBASE_HOME=/usr/local/hbase/hbase-2.1.1
+# export HBASE_HOME=/usr/local/hbase/hbase-1.2.6
 # export HBASE_CLASSPATH=/usr/local/hadoop/hadoop-2.9.0/etc/hadoop
-# export HBASE_PID_DIR=/usr/local/hbase/hbase-2.1.1/pids
+# export HBASE_PID_DIR=/usr/local/hbase/hbase-1.2.6/pids
 ```
 **如果HBASE_MANAGES_ZK=true，说明hbase使用自带的zookeeper。**
 
 # 启动
 启动Hbase之前，先启动hadoop和zookkeeper（如果HBASE_MANAGES_ZK=false）
 ```
-# cd /usr/local/hbase/hbase-2.1.1/bin
+# cd /usr/local/hbase/hbase-1.2.6/bin
 
 # ./start-hbase.sh
+
+# jps
+6032 NodeManager
+71920 HMaster
+5203 NameNode
+6229 ResourceManager
+6503 DataNode
+18844 QuorumPeerMain
+72573 Jps
+5709 SecondaryNameNode
+70287 ZooKeeperMain
+72046 HRegionServer
 ```
 
 # 验证
-http://192.168.197.107:16030/
+http://spark1:16030/
