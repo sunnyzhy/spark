@@ -21,11 +21,18 @@ HDFS为Hbase提供可靠的底层数据存储服务，MapReduce为Hbase提供高
 - 单元格（Cell）：表存储数据的单元。由{行健，列（列族:标签），时间戳}唯一确定，其中的数据是没有类型的，以二进制的形式存储。
 
 # HBase物理存储
-Table 在行的方向上分割为多个HRegion，每个HRegion分散在不同的RegionServer中。
+
+1. Table中所有行都按照row key的字典序排列；
+
+2. Table在行的方向上分割为多个Region；
+
+3. Region按大小分割的，每个表开始只有一个region，随着数据增多，region不断增大，当增大到一个阀值的时候，region就会等分会两个新的region，之后会有越来越多的region；
+
+4. Region是Hbase中分布式存储和负载均衡的最小单元，不同Region分布到不同RegionServer上。 
 
 ![](images/hbase-2.png)
 
-每个HRegion由多个Store构成，每个Store由一个memStore和0或多个StoreFile组成，每个Store保存一个Columns Family。
+5. Region虽然是分布式存储的最小单元，但并不是存储的最小单元。Region由一个或者多个Store组成，每个store保存一个columns family；每个Strore又由一个memStore和0至多个StoreFile组成，StoreFile包含HFile；memStore存储在内存中，StoreFile存储在HDFS上。 
 
 ![](images/hbase-3.png)
 
