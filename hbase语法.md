@@ -1,5 +1,3 @@
-[TOC]
-
 # 运行命令行工具
 ```
 # hbase shell
