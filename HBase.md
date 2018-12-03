@@ -5,7 +5,7 @@ HDFS为Hbase提供可靠的底层数据存储服务，MapReduce为Hbase提供高
 ```
 
 # HBase架构
-![](images/hbase.png)
+![](images/HBase.png)
 
 # HBase数据模型
 
