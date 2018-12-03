@@ -132,7 +132,7 @@ COLUMN                CELL
 3 row(s) in 0.0340 seconds
 ```
 
-# 查询指定行，指定列族，指定列的所有数据
+# 查询指定行，指定列族，指定列的数据
 ```
 > get 'student','stu','address:city'
 COLUMN                CELL                                                      
