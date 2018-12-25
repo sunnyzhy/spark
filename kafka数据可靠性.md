@@ -84,3 +84,32 @@ acks=-1的情况下，数据发送到leader后 ，部分ISR的副本同步，lea
 ![](images/kafka-9.png)
 
 当然上图中如果在leader crash的时候，follower2还没有同步到任何数据，而且follower2被选举为新的leader的话，这样消息就不会重复。
+
+# 消息传输保障
+消息在producer和consumer之间传输，有以下三种可能的传输保障（delivery guarantee）:
+
+- At most once: 消息可能会丢，但绝不会重复传输
+
+- At least once：消息绝不会丢，但可能会重复传输
+
+- Exactly once：每条消息肯定会被传输一次且仅传输一次
+
+当producer向broker发送消息时，一旦这条消息被commit，由于副本机制（replication）的存在，它就不会丢失。但是如果producer发送数据给broker后，遇到的网络问题而造成通信中断，那producer就无法判断该条消息是否已经提交（commit）。虽然Kafka无法确定网络故障期间发生了什么，但是producer可以retry多次，确保消息已经正确传输到broker中，所以目前Kafka实现的是at least once。
+
+# 消息去重
+Kafka文档中提及GUID(Globally Unique Identifier)的概念，通过客户端生成算法得到每个消息的unique id，同时可映射至broker上存储的地址，即通过GUID便可查询提取消息内容，也便于发送方的幂等性保证，需要在broker上提供此去重处理模块，目前版本尚不支持。
+
+针对GUID, 如果从客户端的角度去重，那么需要引入集中式缓存，必然会增加依赖复杂度，另外缓存的大小难以界定。
+
+**不只是Kafka, 类似RabbitMQ以及RocketMQ这类商业级中间件也只保障at least once, 且也无法从自身去进行消息去重。所以建议业务方根据自身的业务特点进行去重，比如业务消息本身具备幂等性，或者借助Redis等其他产品进行去重处理。**
+
+# 高可靠性配置
+Kafka提供了很高的数据冗余弹性，对于需要数据高可靠性的场景，我们可以增加数据冗余备份数（replication.factor），调高最小写入副本数的个数（min.insync.replicas）等等，但是这样会影响性能。反之，性能提高而可靠性则降低，用户需要自身业务特性在彼此之间做一些权衡性选择。
+
+要保证数据写入到Kafka是安全的，高可靠的，需要如下的配置：
+
+- topic的配置：replication.factor>=3,即副本数至少是3个；2<=min.insync.replicas<=replication.factor
+
+- broker的配置：leader的选举条件unclean.leader.election.enable=false
+
+- producer的配置：request.required.acks=-1(all)，producer.type=sync
