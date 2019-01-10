@@ -51,6 +51,8 @@ guest	[administrator]
 
 # rabbitmqctl change_password guest admin
 Changing password for user "guest" ...
+
+# service rabbitmq-server restart
 ```
 
 ## 登录管理界面
