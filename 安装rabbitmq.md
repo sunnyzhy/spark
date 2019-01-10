@@ -40,27 +40,104 @@ http://www.rabbitmq.com/download.html
 # rabbitmqctl status
 ```
 
-## 启用插件
+## 开启网页管理界面
 ```
 # rabbitmq-plugins enable rabbitmq_management
+
+# rabbitmqctl list_users
+Listing users ...
+user	tags
+guest	[administrator]
+
+# rabbitmqctl change_password guest admin
+Changing password for user "guest" ...
 ```
+
+## 登录管理界面
+http://localhost:15672/
+用户名：guest
+密码：amdin
 
 ## 重启服务
 ```
 # service rabbitmq-server restart
 ```
 
-## 添加帐号:name 密码:passwd
+# 用户管理
+## 新增一个用户
 ```
-# rabbitmqctl add_user name passwd
-```
-
-## 赋予其administrator角色
-```
-# rabbitmqctl set_user_tags name administrator
+# rabbitmqctl  add_user  Username  Password
 ```
 
-## 设置权限
+## 删除一个用户
 ```
-# rabbitmqctl set_permissions -p / name ".*" ".*" ".*"
+# rabbitmqctl  delete_user  Username
+```
+
+## 修改用户的密码
+```
+# rabbitmqctl  change_password  Username  Newpassword
+```
+
+## 查看当前用户列表
+```
+# rabbitmqctl  list_users
+```
+
+# 用户角色
+
+1. 超级管理员(administrator)
+
+可登陆管理控制台(启用management plugin的情况下)，可查看所有的信息，并且可以对用户，策略(policy)进行操作。
+
+2. 监控者(monitoring)
+
+可登陆管理控制台(启用management plugin的情况下)，同时可以查看rabbitmq节点的相关信息(进程数，内存使用情况，磁盘使用情况等)
+
+3. 策略制定者(policymaker)
+
+可登陆管理控制台(启用management plugin的情况下), 同时可以对policy进行管理。但无法查看节点的相关信息(上图红框标识的部分)。
+
+与administrator的对比，administrator能看到这些内容
+
+4. 普通管理者(management)
+
+仅可登陆管理控制台(启用management plugin的情况下)，无法看到节点信息，也无法对策略进行管理。
+
+5. 其他
+
+无法登陆管理控制台，通常就是普通的生产者和消费者。
+
+了解了这些后，就可以根据需要给不同的用户设置不同的角色，以便按需管理。
+
+设置用户角色的命令为：
+```
+# rabbitmqctl  set_user_tags  User  Tag
+```
+User为用户名， Tag为角色名(对应于上面的administrator，monitoring，policymaker，management，或其他自定义名称)。
+
+也可以给同一用户设置多个角色，例如
+```
+# rabbitmqctl  set_user_tags  hncscwc  monitoring  policymaker
+```
+
+# 用户权限
+## 设置用户权限
+```
+# rabbitmqctl  set_permissions  -p  VHostPath  User  ConfP  WriteP  ReadP
+```
+
+## 查看(指定hostpath)所有用户的权限信息
+```
+# rabbitmqctl  list_permissions  [-p  VHostPath]
+```
+
+## 查看指定用户的权限信息
+```
+# rabbitmqctl  list_user_permissions  User
+```
+
+##  清除用户的权限信息
+```
+# rabbitmqctl  clear_permissions  [-p VHostPath]  User
 ```
