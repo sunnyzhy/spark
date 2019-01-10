@@ -145,3 +145,10 @@ User为用户名， Tag为角色名(对应于上面的administrator，monitoring
 ```
 # rabbitmqctl  clear_permissions  [-p VHostPath]  User
 ```
+
+# 常见问题
+## reply-code=530, reply-text=NOT_ALLOWED - access to vhost '/' refused for user user_admin
+问题原因：用户admin没有赋予访问权限
+```
+# rabbitmqctl  set_permissions -p / admin '.*' '.*' '.*'
+```
