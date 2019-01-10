@@ -60,6 +60,8 @@ http://localhost:15672/
 用户名：guest
 密码：amdin
 
+    15762 是web管理的监控端口，5762是rabbitMQ的监控端口
+
 ## 重启服务
 ```
 # service rabbitmq-server restart
