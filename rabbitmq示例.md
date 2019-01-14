@@ -404,8 +404,18 @@ public class HelloReceiver {
 结果如下：
 ```
 Sender : hi, fanout msg
-...
+
+fanout Receiver A: hi, fanout msg
 fanout Receiver B: hi, fanout msg
-fanout Receiver A  : hi, fanout msg
 fanout Receiver C: hi, fanout msg
+```
+
+### 从RabbitMQ的管理后台取消绑定
+在Queues里选择fanout.C1队列，然后在Bindings里Unbind交换机，再发送消息。
+结果如下：
+```
+Sender : hi, fanout msg
+
+fanout Receiver A: hi, fanout msg
+fanout Receiver B: hi, fanout msg
 ```
