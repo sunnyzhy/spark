@@ -179,7 +179,7 @@ public void oneToMany() throws Exception {
 }
 ```
 结果如下：
-
+```
 Receiver 1: ****** 11
 Receiver 2: ****** 12
 Receiver 2: ****** 14
@@ -190,7 +190,7 @@ Receiver 1: ****** 18
 Receiver 2: ****** 17
 Receiver 2: ****** 19
 Receiver 1: ****** 20
-
+```
 **一个发送者，N个接受者，消息均匀地发送到N个接收者中。**
 
 ## 多对多发送
@@ -206,7 +206,7 @@ Receiver 1: ****** 20
 }
 ```
 结果如下：
-
+```
 Receiver 1: spirng boot neo queue ****** 20
 Receiver 2: spirng boot neo queue ****** 20
 Receiver 1: spirng boot neo queue ****** 21
@@ -219,6 +219,7 @@ Receiver 1: spirng boot neo queue ****** 24
 Receiver 2: spirng boot neo queue ****** 24
 Receiver 1: spirng boot neo queue ****** 25
 Receiver 2: spirng boot neo queue ****** 25
+```
 
 ## 对象的支持
 ```java
@@ -401,9 +402,10 @@ public class HelloReceiver {
 ```
 
 结果如下：
-
+```
 Sender : hi, fanout msg
 ...
 fanout Receiver B: hi, fanout msg
 fanout Receiver A  : hi, fanout msg
 fanout Receiver C: hi, fanout msg
+```
