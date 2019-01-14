@@ -207,18 +207,18 @@ Receiver 1: ****** 20
 ```
 结果如下：
 ```
-Receiver 1: spirng boot neo queue ****** 20
-Receiver 2: spirng boot neo queue ****** 20
-Receiver 1: spirng boot neo queue ****** 21
-Receiver 2: spirng boot neo queue ****** 21
-Receiver 1: spirng boot neo queue ****** 22
-Receiver 2: spirng boot neo queue ****** 22
-Receiver 1: spirng boot neo queue ****** 23
-Receiver 2: spirng boot neo queue ****** 23
-Receiver 1: spirng boot neo queue ****** 24
-Receiver 2: spirng boot neo queue ****** 24
-Receiver 1: spirng boot neo queue ****** 25
-Receiver 2: spirng boot neo queue ****** 25
+Receiver 1: ****** 20
+Receiver 2: ****** 20
+Receiver 1: ****** 21
+Receiver 2: ****** 21
+Receiver 1: ****** 22
+Receiver 2: ****** 22
+Receiver 1: ****** 23
+Receiver 2: ****** 23
+Receiver 1: ****** 24
+Receiver 2: ****** 24
+Receiver 1: ****** 25
+Receiver 2: ****** 25
 ```
 
 ## 对象的支持
