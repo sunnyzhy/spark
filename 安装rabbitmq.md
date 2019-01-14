@@ -152,3 +152,5 @@ User为用户名， Tag为角色名(对应于上面的administrator，monitoring
 ```
 # rabbitmqctl  set_permissions -p / admin '.*' '.*' '.*'
 ```
+
+**也可以在管理后台中的Admin选项卡中添加用户和授权。**
