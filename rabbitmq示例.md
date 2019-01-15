@@ -111,9 +111,9 @@ public class HelloSender {
 ### 接收者
 ```java
 @Component
-@RabbitListener(queues = "hello")
 public class HelloReceiver {
 
+    @RabbitListener(queues = "hello")
     @RabbitHandler
     public void process(String hello) {
         System.out.println("Receiver  : " + hello);
@@ -153,14 +153,15 @@ public class RabbitMqHelloTest {
 ### 接收者
 ```java
 @Component
-@RabbitListener(queues = "hello")
 public class HelloReceiver {
 
+    @RabbitListener(queues = "hello")
     @RabbitHandler
     public void process1(int i) {
         System.out.println("Receiver1  : ****** " + i);
     }
     
+    @RabbitListener(queues = "hello")
     @RabbitHandler
     public void process2(int i) {
         System.out.println("Receiver1  : ****** " + i);
@@ -419,3 +420,20 @@ Sender : hi, fanout msg
 fanout Receiver A: hi, fanout msg
 fanout Receiver B: hi, fanout msg
 ```
+
+# 在html里使用RabbitMQ
+## 启动stomp插件
+```
+rabbitmq-plugins enable rabbitmq_management rabbitmq_web_stomp rabbitmq_stomp rabbitmq_web_stomp_examples
+```
+**在管理后台的OverView/Ports and contexts/Listening ports中可以看到http/web-stomp的端口为15674。**
+
+RabbitMQ服务运行在**15672**端口，stomp服务运行在**15674**端口。
+
+## 添加依赖
+```
+cnpm install --save net
+cnpm install --save sockjs-client
+cnpm install --save stompjs
+```
+
