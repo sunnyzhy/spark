@@ -490,3 +490,17 @@ stomp.js?e8c6:134 >>> SUBSCRIBE
 id:sub-0
 destination:/queue/hello
 ```
+
+## 向hello队列发送一条测试数据"mq"
+```
+<<< MESSAGE
+subscription:sub-0
+destination:/queue/hello
+message-id:T_sub-0@@session-qlMdf5iZNTbQNG9cwj1ImA@@1
+redelivered:false
+persistent:1
+content-length:2
+
+mq
+Receive：mq
+```
