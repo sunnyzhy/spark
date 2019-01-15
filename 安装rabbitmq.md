@@ -154,3 +154,6 @@ User为用户名， Tag为角色名(对应于上面的administrator，monitoring
 ```
 
 **也可以在管理后台中的Admin选项卡中添加用户和授权。**
+
+## Caused by: org.springframework.amqp.AmqpException: No method found for class [B
+**@RabbitListener(queues="queue name") 不能放在类上，而应该直接加在方法上。**
