@@ -59,7 +59,7 @@ headers 也是根据规则匹配, 相较于 direct 和 topic 固定地使用 rou
 ## Fanout Exchange
 Fanout Exchange 消息广播的模式，不管路由键或者是路由模式，会把消息发给绑定给它的全部队列，如果配置了routing_key会被忽略。
 
-# springboot集成RabbitMQ
+# RabbitMQ之springboot应用
 ## 基础用法
 ### 配置pom包，主要是添加spring-boot-starter-amqp的支持
 ```xml
@@ -421,10 +421,10 @@ fanout Receiver A: hi, fanout msg
 fanout Receiver B: hi, fanout msg
 ```
 
-# 在html里使用RabbitMQ
-## 启动stomp插件
+# RabbitMQ之web应用
+## 启用stomp插件
 ```
-rabbitmq-plugins enable rabbitmq_management rabbitmq_web_stomp rabbitmq_stomp rabbitmq_web_stomp_examples
+rabbitmq-plugins enable rabbitmq_web_stomp rabbitmq_stomp rabbitmq_web_stomp_examples
 ```
 **在管理后台的OverView/Ports and contexts/Listening ports中可以看到http/web-stomp的端口为15674。**
 
@@ -432,8 +432,61 @@ RabbitMQ服务运行在**15672**端口，stomp服务运行在**15674**端口。
 
 ## 添加依赖
 ```
-cnpm install --save net
-cnpm install --save sockjs-client
 cnpm install --save stompjs
 ```
 
+## vue.js
+```javascript
+<script>
+  import Stomp from 'stompjs'
+  export default {
+    name: 'rabbitmq',
+    mounted () {
+      const ws = new WebSocket('ws://127.0.0.1:15674/ws')
+
+      const client = Stomp.over(ws)
+
+      client.heartbeat.outgoing = 0
+      client.heartbeat.incoming = 0
+
+      const onConnect = _ => {
+        client.subscribe('/queue/hello', data => {
+          const msg = data.body
+          console.log('Receive：' + msg)
+        })
+      }
+
+      const onError = error => {
+        console.log(error)
+      }
+
+      client.connect('admin', 'admin', onConnect, onError, '/')
+    }
+  }
+</script>
+```
+
+## 运行
+```
+Opening Web Socket...
+stomp.js?e8c6:134 Web Socket Opened...
+stomp.js?e8c6:134 >>> CONNECT
+login:admin
+passcode:admin
+host:/
+accept-version:1.1,1.0
+heart-beat:0,0
+
+Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools
+stomp.js?e8c6:134 <<< CONNECTED
+server:RabbitMQ/3.7.10
+session:session-uDQLD4DLUItx8L1cWg8LUw
+heart-beat:0,0
+version:1.1
+
+connected to server RabbitMQ/3.7.10
+stomp.js?e8c6:134 >>> SUBSCRIBE
+id:sub-0
+destination:/queue/hello
+```
