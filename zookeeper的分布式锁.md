@@ -26,7 +26,7 @@ Zookeeper实现分布式锁的流程，假设锁空间的根节点为/zklock：
 
 4. 完成业务流程后，删除对应的子节点并释放锁。
 
-![](images/zk-2.jpeg)
+![](images/zk-2.png)
 
 ## Curator分布式锁实现
 
