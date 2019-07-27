@@ -482,6 +482,9 @@ setquota -n|-b val path
 delquota [-n|-b] path
 ```
 
+- -n 表示设置znode count限制，这里表示/node这个path下的znode count个数限制为3（包括/node本身）
+- -b 表示设置znode数据的字节大小限制
+
 使用方法：
 ```
 [zk: localhost:2181(CONNECTED) 0] ls /zookeeper/quota
