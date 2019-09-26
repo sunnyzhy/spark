@@ -4,34 +4,47 @@
 ~~~
 
 # 下载安装
-- redis官网
-https://redis.io/download
+redis官网: https://redis.io/
 
-- 安装
+下载到/usr/local目录下：
 ~~~
-# mkdir redis
-# cd redis
-# tar -xzvf redis-4.0.1.tar.gz
-# cd redis-4.0.1
+# tar -xzvf redis-5.0.5.tar.gz
+
+# cd redis-5.0.5
+
 # make
+
 # cd src
-# make install
+
+# make install PREFIX=/usr/local/redis
+
 # make test
 You need tcl 8.5 or newer in order to run the Redis test
 make: *** [test] Error 1
-~~~
 
-如果报错，就说明需要安装tcl
-~~~
 # yum -y install tcl
-~~~
 
-# 配置
-~~~
-# cp redis.conf /etc/
-# vim /etc/redis.conf
+# cp ../redis.conf /usr/local/redis/bin
+
+# vim /usr/local/redis/bin/redis.conf
+bind 0.0.0.0
 daemonize yes
 ~~~
+
+# 配置开机自启动
+```
+# cp /usr/local/redis-5.0.5/utils/redis_init_script /etc/init.d/redis
+
+# vim /etc/init.d/redis
+REDISPORT=6379
+EXEC=/usr/local/redis/bin/redis-server
+CLIEXEC=/usr/local/redis/bin/redis-cli
+
+PIDFILE=/var/run/redis_${REDISPORT}.pid
+CONF="/usr/local/redis/bin/redis.conf"
+
+# $EXEC $CONF &
+```
 
 # 启动
 ~~~
