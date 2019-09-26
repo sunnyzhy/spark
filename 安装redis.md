@@ -27,8 +27,8 @@ make: *** [test] Error 1
 # cp ../redis.conf /usr/local/redis/bin
 
 # vim /usr/local/redis/bin/redis.conf
-bind 0.0.0.0
-daemonize yes
+bind 0.0.0.0 # 允许远程访问
+daemonize yes # 后台进程
 ~~~
 
 # 配置开机自启动
@@ -46,45 +46,11 @@ CONF="/usr/local/redis/bin/redis.conf"
 # chkconfig --add redis
 ```
 
-# 配置环境变量
-```
-# vim /etc/profile
-export REDIS_HOME=/usr/local/redis
-export PATH=$PATH:${REDIS_HOME}/bin
-
-# source /etc/profile
-```
-
-# 启动
-~~~
-# cd /usr/local/bin
-
-# ./redis-server /etc/redis.conf
-
-# ps -ef | grep redis
-root     14561     1  0 17:25 ?        00:00:00 ./redis-server 127.0.0.1:6379 
-root     14568  3106  0 17:26 pts/1    00:00:00 grep redis
-~~~
-
-# 允许远程访问
-    若要支持远程访问调试，除了需要开放服务器端口号6379，还需要将配置文件中的bind 127.0.0.1注释掉
-~~~
-# vim /etc/redis.conf
-# bind 127.0.0.1
-~~~
-
-# 重启
-~~~
-# /etc/init.d/redis restart
-Stopping redis-server:                                     [  OK  ]
-Starting redis-server:                                     [  OK  ]
-~~~
-
 # 启动、停止
 ~~~
-# /etc/init.d/redis start
+# service redis start
 
-# /etc/init.d/redis stop
+# service redis stop
 ~~~
 
 # 链接redis服务端
