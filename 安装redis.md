@@ -43,7 +43,16 @@ CLIEXEC=/usr/local/redis/bin/redis-cli
 PIDFILE=/var/run/redis_${REDISPORT}.pid
 CONF="/usr/local/redis/bin/redis.conf"
 
-# $EXEC $CONF &
+# chkconfig --add redis
+```
+
+# 配置环境变量
+```
+# vim /etc/profile
+export REDIS_HOME=/usr/local/redis
+export PATH=$PATH:${REDIS_HOME}/bin
+
+# source /etc/profile
 ```
 
 # 启动
